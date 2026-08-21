@@ -350,6 +350,7 @@ html[dir="rtl"] .product-card-top {
   line-height: 1.4;
   margin-bottom: 14px;
   display: -webkit-box;
+  line-clamp: 2;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
