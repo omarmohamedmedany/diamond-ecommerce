@@ -1,0 +1,148 @@
+/**
+ * Diamond E-Commerce - Arabic RTL Layout System
+ * Applied automatically when html[dir="rtl"] or body.rtl-layout is active
+ */
+
+html[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+  word-spacing: 0.08em;
+}
+
+html[dir="rtl"] body {
+  font-family: var(--font-arabic);
+  line-height: 1.8;
+  word-spacing: 0.08em;
+}
+
+/* Typography adjustment for Arabic */
+html[dir="rtl"] h1,
+html[dir="rtl"] h2,
+html[dir="rtl"] h3,
+html[dir="rtl"] h4,
+html[dir="rtl"] .brand-logo,
+html[dir="rtl"] .hero-title,
+html[dir="rtl"] .section-title,
+html[dir="rtl"] .product-card-price,
+html[dir="rtl"] .auth-title {
+  font-family: var(--font-arabic);
+  letter-spacing: normal;
+  word-spacing: 0.1em;
+  line-height: 1.4;
+}
+
+html[dir="rtl"] p,
+html[dir="rtl"] .hero-subtitle,
+html[dir="rtl"] .section-subtitle,
+html[dir="rtl"] .category-card-desc,
+html[dir="rtl"] .product-card-tagline {
+  line-height: 1.85;
+  word-spacing: 0.07em;
+}
+
+/* Nav links RTL */
+html[dir="rtl"] .nav-link::after {
+  left: auto;
+  right: 0;
+}
+
+/* Cart badge & Wishlist badge position */
+html[dir="rtl"] .cart-count-badge,
+html[dir="rtl"] .wishlist-count-badge {
+  right: auto;
+  left: -4px;
+}
+
+/* Floating WhatsApp Widget */
+html[dir="rtl"] .diamond-whatsapp-widget {
+  right: auto;
+  left: 28px;
+  align-items: flex-start;
+}
+
+/* Toast container position */
+html[dir="rtl"] .diamond-toast-container {
+  left: auto;
+  right: 24px;
+}
+
+/* Cart Drawer Panel */
+html[dir="rtl"] .cart-drawer-panel {
+  right: auto;
+  left: 0;
+  border-left: none;
+  border-right: 1px solid var(--border-subtle);
+  transform: translateX(-100%);
+}
+
+html[dir="rtl"] .cart-drawer-panel.is-open {
+  transform: translateX(0);
+}
+
+/* Mobile Nav Drawer */
+html[dir="rtl"] .mobile-nav-drawer {
+  left: auto;
+  right: 0;
+  border-right: none;
+  border-left: 1px solid var(--border-subtle);
+  transform: translateX(100%);
+}
+
+html[dir="rtl"] .mobile-nav-drawer.is-open {
+  transform: translateX(0);
+}
+
+/* Product Card Close / Actions / Remove */
+html[dir="rtl"] .cart-drawer-remove {
+  right: auto;
+  left: 12px;
+}
+
+html[dir="rtl"] .modal-close-btn {
+  right: auto;
+  left: 18px;
+}
+
+/* User dropdown menu */
+html[dir="rtl"] .user-dropdown-menu {
+  right: auto;
+  left: 0;
+}
+
+html[dir="rtl"] .dropdown-item {
+  text-align: right;
+}
+
+/* Tech Feature Item */
+html[dir="rtl"] .tech-feature-item:hover {
+  transform: translateX(-6px);
+}
+
+/* Footer link hover animation */
+html[dir="rtl"] .footer-links-list a:hover {
+  padding-left: 0;
+  padding-right: 4px;
+}
+
+/* Quantity controls */
+html[dir="rtl"] .btn-qty-minus {
+  border-left: none;
+}
+
+/* Search results pricing */
+html[dir="rtl"] .search-item-pricing {
+  text-align: left;
+}
+
+/* Table Text Alignments */
+html[dir="rtl"] .cart-table th,
+html[dir="rtl"] .cart-table td {
+  text-align: right;
+}
+
+html[dir="rtl"] .cart-table th.col-total,
+html[dir="rtl"] .cart-table td.col-total,
+html[dir="rtl"] .cart-table th.col-price,
+html[dir="rtl"] .cart-table td.col-price {
+  text-align: left;
+}

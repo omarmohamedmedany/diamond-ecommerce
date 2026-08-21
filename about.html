@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us — The Story & Heritage of Diamond</title>
+  <meta name="description" content="Discover Diamond - where aerospace titanium engineering meets master watchmaking craftsmanship and pure acoustic luxury.">
+  
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polygon points='50,5 95,35 80,95 20,95 5,35' fill='%2300f0ff'/></svg>">
+  
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/rtl.css">
+
+  <style>
+    .about-hero {
+      padding: 80px 0 60px;
+      text-align: center;
+      background: radial-gradient(circle at 50% 20%, rgba(0, 240, 255, 0.1) 0%, transparent 60%);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .about-hero h1 {
+      font-family: var(--font-display);
+      font-size: 3.2rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 14px;
+    }
+
+    .about-hero p {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      max-width: 680px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .about-story-section {
+      padding: 100px 0;
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .story-text h2 {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+
+    .story-text p {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .story-image-box {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .story-image-box img {
+      width: 100%;
+      height: 440px;
+      object-fit: cover;
+    }
+
+    /* Pillars */
+    .pillars-section {
+      padding: 80px 0 100px;
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      margin-top: 50px;
+    }
+
+    .pillar-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 36px 30px;
+      transition: all var(--transition-normal);
+    }
+
+    .pillar-card:hover {
+      border-color: var(--accent-cyan);
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-cyan-glow);
+    }
+
+    .pillar-icon {
+      font-size: 2.2rem;
+      margin-bottom: 16px;
+      color: var(--accent-cyan);
+    }
+
+    .pillar-card h3 {
+      font-size: 1.3rem;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .pillar-card p {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 992px) {
+      .story-grid {
+        grid-template-columns: 1fr;
+      }
+      .pillars-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Luxury Header -->
+  <header class="diamond-navbar">
+    <div class="container navbar-inner">
+      <a href="index.html" class="brand-logo" aria-label="Diamond Home">
+        <span class="diamond-gem-icon"></span>
+        <span class="brand-name-text" data-i18n="brandName">Diamond</span>
+      </a>
+
+      <nav class="nav-menu">
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link" data-i18n="navHome">Home</a></li>
+          <li><a href="shop.html" class="nav-link" data-i18n="navShop">Shop All</a></li>
+          <li><a href="about.html" class="nav-link is-active" data-i18n="navAbout">About Us</a></li>
+          <li><a href="contact.html" class="nav-link" data-i18n="navContact">Contact Us</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <button type="button" class="btn-lang-toggle" title="Switch Language (EN / AR)">
+          <span class="lang-text">العربية</span>
+        </button>
+
+        <button type="button" class="nav-icon-btn btn-search-trigger" aria-label="Search">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </button>
+
+        <button type="button" class="nav-icon-btn btn-wishlist-nav-trigger" aria-label="Wishlist">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+          <span class="wishlist-count-badge" style="display:none;">0</span>
+        </button>
+
+        <button type="button" class="nav-icon-btn btn-cart-trigger" aria-label="Shopping Cart">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+          <span class="cart-count-badge" style="display:none;">0</span>
+        </button>
+
+        <div class="auth-nav-container"></div>
+
+        <button type="button" class="mobile-menu-toggle" aria-label="Open Mobile Menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="mobile-nav-overlay"></div>
+  <div class="mobile-nav-drawer">
+    <div class="mobile-nav-header">
+      <a href="index.html" class="brand-logo">
+        <span class="diamond-gem-icon"></span>
+        <span>Diamond</span>
+      </a>
+      <button type="button" class="btn-close-mobile-nav modal-close-btn">&times;</button>
+    </div>
+    <ul class="mobile-nav-links">
+      <li>
+        <a href="index.html">
+          <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span data-i18n="navHome">Home</span>
+        </a>
+      </li>
+      <li>
+        <a href="shop.html">
+          <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+          <span data-i18n="navShop">Shop All</span>
+        </a>
+      </li>
+      <li>
+        <a href="about.html" class="is-active">
+          <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          <span data-i18n="navAbout">About Us</span>
+        </a>
+      </li>
+      <li>
+        <a href="contact.html">
+          <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          <span data-i18n="navContact">Contact Us</span>
+        </a>
+      </li>
+      <li>
+        <a href="cart.html">
+          <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+          <span data-i18n="navCart">Cart</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <main class="main-content">
+    <!-- Hero Banner -->
+    <section class="about-hero">
+      <div class="container">
+        <span class="section-tag" data-i18n="brandTagline">Next-Gen Tech Elegance</span>
+        <h1 data-i18n="aboutHeading">The Art of Precision</h1>
+        <p data-i18n="aboutSubheading">Bridging the worlds of aerospace materials, master gemology, and pinnacle computing.</p>
+      </div>
+    </section>
+
+    <!-- Heritage & Story -->
+    <section class="about-story-section">
+      <div class="container">
+        <div class="story-grid">
+          <div class="story-text">
+            <h2 data-i18n="aboutStoryTitle">Our Heritage & Philosophy</h2>
+            <p data-i18n="aboutStoryText1">
+              Founded with an uncompromising ambition: to transform modern technology into timeless artifacts of design and endurance. At Diamond, we believe that personal technology should not merely perform—it should inspire.
+            </p>
+            <p data-i18n="aboutStoryText2">
+              Every chassis is sculpted from Grade 5 aerospace titanium, hand-finished by master watchmakers, and verified with traceable gemological security. From bespoke 24K gold editions to the highest performing silicon on earth, Diamond represents the apex of tech luxury.
+            </p>
+            <div style="margin-top: 30px;">
+              <a href="shop.html" class="btn btn-primary" data-i18n="heroBtnExplore">Explore Collection</a>
+            </div>
+          </div>
+          <div class="story-image-box">
+            <img src="https://images.unsplash.com/photo-1591337676887-a217a6970a8a?auto=format&fit=crop&w=1000&q=85" alt="Diamond Watchmaking & Silicon Precision">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Defining Pillars -->
+    <section class="pillars-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Core Tenets</span>
+          <h2 class="section-title" data-i18n="aboutPillarsTitle">Our Defining Pillars</h2>
+        </div>
+
+        <div class="pillars-grid">
+          <div class="pillar-card">
+            <div class="pillar-icon">✦</div>
+            <h3 data-i18n="aboutPillar1">Aerospace Titanium</h3>
+            <p data-i18n="aboutPillar1Desc">Unrivaled strength-to-weight ratio with laser-etched micro precision.</p>
+          </div>
+
+          <div class="pillar-card">
+            <div class="pillar-icon">🎧</div>
+            <h3 data-i18n="aboutPillar2">Acoustic Perfection</h3>
+            <p data-i18n="aboutPillar2Desc">Custom-tuned neodymium drivers engineered for pure lossless fidelity.</p>
+          </div>
+
+          <div class="pillar-card">
+            <div class="pillar-icon">👑</div>
+            <h3 data-i18n="aboutPillar3">White-Glove Client Care</h3>
+            <p data-i18n="aboutPillar3Desc">Direct WhatsApp concierge line, 2-Year Diamond Care+, and armored courier service.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modern Rich Footer -->
+  <footer class="diamond-footer">
+    <div class="container">
+      <div class="footer-top-grid">
+        <div class="footer-brand-col">
+          <a href="index.html" class="brand-logo">
+            <span class="diamond-gem-icon"></span>
+            <span data-i18n="brandName">Diamond</span>
+          </a>
+          <p class="footer-brand-desc" data-i18n="footerDesc">
+            Diamond is the global benchmark for luxury consumer technology, curated flagships, and premium acoustic engineering.
+          </p>
+          <div class="footer-social-links">
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="Instagram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="X">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <a href="https://wa.me/97471040746" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="WhatsApp">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.032 2C6.505 2 2.025 6.48 2.025 12.008c0 1.954.563 3.778 1.541 5.321L2 22l4.832-1.528A9.957 9.957 0 0 0 12.032 22C17.56 22 22.04 17.52 22.04 12.008 22.04 6.48 17.56 2 12.032 2z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-links-col">
+          <h4 class="footer-col-title" data-i18n="footerNavQuick">Quick Navigation</h4>
+          <ul class="footer-links-list">
+            <li>
+              <a href="index.html">
+                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                <span data-i18n="navHome">Home</span>
+              </a>
+            </li>
+            <li>
+              <a href="shop.html">
+                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                <span data-i18n="navShop">Shop All</span>
+              </a>
+            </li>
+            <li>
+              <a href="about.html" class="is-active">
+                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                <span data-i18n="navAbout">About Us</span>
+              </a>
+            </li>
+            <li>
+              <a href="contact.html">
+                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                <span data-i18n="navContact">Contact Us</span>
+              </a>
+            </li>
+            <li>
+              <a href="cart.html">
+                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                <span data-i18n="navCart">Cart</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <h4 class="footer-col-title" data-i18n="footerNavSupport">Client Care</h4>
+          <ul class="footer-links-list">
+            <li>
+              <a href="https://wa.me/97471040746" target="_blank" rel="noopener noreferrer">
+                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12.032 2C6.505 2 2.025 6.48 2.025 12.008c0 1.954.563 3.778 1.541 5.321L2 22l4.832-1.528A9.957 9.957 0 0 0 12.032 22C17.56 22 22.04 17.52 22.04 12.008 22.04 6.48 17.56 2 12.032 2z"/></svg>
+                <span data-i18n="footerContact">WhatsApp Concierge</span>
+              </a>
+            </li>
+            <li>
+              <a href="about.html">
+                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                <span data-i18n="footerWarranty">Diamond Care+</span>
+              </a>
+            </li>
+            <li>
+              <a href="cart.html">
+                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                <span data-i18n="footerTrackOrder">Track Shipment</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <h4 class="footer-col-title" data-i18n="footerNavLegal">Legal & Privacy</h4>
+          <ul class="footer-links-list">
+            <li>
+              <a href="#">
+                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                <span data-i18n="footerTerms">Terms of Service</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                <span data-i18n="footerPrivacy">Privacy Policy</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="6 3 18 3 22 9 12 22 2 9 6 3"></polygon></svg>
+                <span data-i18n="footerGemology">Gemological Authenticity</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div data-i18n="footerCopyright">© 2026 Diamond Tech Inc. All rights reserved. Precision engineered.</div>
+        <div>Crafted with Grade 5 Aerospace Titanium.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/products.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

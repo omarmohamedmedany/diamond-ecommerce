@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us — Concierge & Client Support | Diamond</title>
+  <meta name="description" content="Connect 24/7 with Diamond technology specialists on WhatsApp (+97471040746) or via our direct concierge desk.">
+  
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polygon points='50,5 95,35 80,95 20,95 5,35' fill='%2300f0ff'/></svg>">
+  
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/rtl.css">
+
+  <style>
+    .contact-split-section {
+      padding: 60px 0 90px;
+      min-height: calc(100vh - var(--header-height));
+      display: flex;
+      align-items: center;
+      background: radial-gradient(circle at 20% 30%, rgba(37, 99, 235, 0.1) 0%, rgba(0, 240, 255, 0.04) 40%, transparent 70%);
+    }
+
+    .contact-split-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.35fr;
+      gap: 70px;
+      align-items: flex-start;
+    }
+
+    /* Left Sidebar: Title, Subtitle, Channels */
+    .contact-sidebar-pane {
+      padding-top: 12px;
+    }
+
+    .contact-discuss-title {
+      font-family: var(--font-display);
+      font-size: 3.4rem;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      margin-bottom: 22px;
+      color: #fff;
+    }
+
+    .contact-discuss-title .highlight-cyan {
+      color: var(--accent-cyan);
+      background: linear-gradient(135deg, var(--accent-cyan), #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: block;
+    }
+
+    .contact-discuss-desc {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: 45px;
+      max-width: 440px;
+    }
+
+    .contact-channels-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .channel-item {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      text-decoration: none;
+      padding: 14px 18px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .channel-item:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(0, 240, 255, 0.3);
+      transform: translateX(6px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    html[dir="rtl"] .channel-item:hover {
+      transform: translateX(-6px);
+    }
+
+    .channel-icon-circle {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      flex-shrink: 0;
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .whatsapp-circle {
+      background: #25D366;
+      box-shadow: 0 0 20px rgba(37, 211, 102, 0.45);
+    }
+
+    .email-circle {
+      background: #0ea5e9;
+      box-shadow: 0 0 20px rgba(14, 165, 233, 0.45);
+    }
+
+    .youtube-circle {
+      background: #ef4444;
+      box-shadow: 0 0 20px rgba(239, 68, 68, 0.45);
+    }
+
+    .region-circle {
+      background: #3b82f6;
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.45);
+    }
+
+    .channel-item:hover .channel-icon-circle {
+      transform: scale(1.1);
+    }
+
+    .channel-item:hover .whatsapp-circle {
+      box-shadow: 0 0 28px rgba(37, 211, 102, 0.7);
+    }
+    .channel-item:hover .email-circle {
+      box-shadow: 0 0 28px rgba(14, 165, 233, 0.7);
+    }
+    .channel-item:hover .youtube-circle {
+      box-shadow: 0 0 28px rgba(239, 68, 68, 0.7);
+    }
+    .channel-item:hover .region-circle {
+      box-shadow: 0 0 28px rgba(59, 130, 246, 0.7);
+    }
+
+    .channel-meta {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .channel-tag {
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      margin-bottom: 3px;
+    }
+
+    .channel-val {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #fff;
+      transition: color var(--transition-fast);
+    }
+
+    .channel-item:hover .channel-val {
+      color: var(--accent-cyan);
+    }
+
+    /* Right Form Pane */
+    .contact-form-pane {
+      width: 100%;
+    }
+
+    .inquiry-form-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 44px 40px;
+      box-shadow: var(--shadow-lg), 0 0 40px rgba(0, 240, 255, 0.04);
+      position: relative;
+    }
+
+    .inquiry-brief-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--accent-cyan);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .brief-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-cyan);
+      box-shadow: 0 0 8px var(--accent-cyan);
+    }
+
+    .inquiry-brief-heading {
+      font-size: 2.3rem;
+      font-weight: 800;
+      font-family: var(--font-display);
+      color: #fff;
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+
+    .inquiry-brief-subtitle {
+      font-size: 0.98rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    .inquiry-fields-form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .custom-input {
+      height: 52px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      padding: 0 16px;
+      font-size: 0.95rem;
+      color: #fff;
+      transition: all var(--transition-fast);
+    }
+
+    .custom-input:focus {
+      border-color: var(--accent-cyan);
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 16px rgba(0, 240, 255, 0.2);
+    }
+
+    .custom-textarea {
+      height: 110px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      padding: 14px 16px;
+      font-size: 0.95rem;
+      color: #fff;
+      resize: vertical;
+      transition: all var(--transition-fast);
+    }
+
+    .custom-textarea:focus {
+      border-color: var(--accent-cyan);
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 16px rgba(0, 240, 255, 0.2);
+    }
+
+    .compact-field-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      display: block;
+      font-weight: 600;
+    }
+
+    @media (max-width: 992px) {
+      .contact-split-grid {
+        grid-template-columns: 1fr;
+        gap: 45px;
+      }
+      .inquiry-form-card {
+        padding: 32px 24px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .form-row-2col {
+        grid-template-columns: 1fr;
+      }
+      .contact-discuss-title {
+        font-size: 2.5rem;
+      }
+      .inquiry-brief-heading {
+        font-size: 1.8rem;
+      }
+    }
+
+    /* FAQ Accordion */
+    .faq-section {
+      padding: 80px 0 100px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .faq-accordion {
+      max-width: 800px;
+      margin: 40px auto 0;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .faq-item {
+      background: linear-gradient(145deg, rgba(16, 20, 32, 0.75), rgba(9, 12, 18, 0.9));
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+      position: relative;
+    }
+
+    .faq-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .faq-item:hover {
+      border-color: rgba(0, 240, 255, 0.3);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45), 0 0 20px rgba(0, 240, 255, 0.08);
+    }
+
+    .faq-item:hover::before {
+      opacity: 0.6;
+    }
+
+    .faq-item.is-open {
+      border-color: rgba(0, 240, 255, 0.45);
+      background: linear-gradient(145deg, rgba(18, 24, 38, 0.9), rgba(10, 14, 22, 0.95));
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.5), 0 0 25px rgba(0, 240, 255, 0.12);
+      transform: translateY(-2px);
+    }
+
+    .faq-item.is-open::before {
+      opacity: 1;
+    }
+
+    .faq-question-btn {
+      width: 100%;
+      padding: 22px 26px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-align: left;
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: #fff;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      gap: 16px;
+      transition: color 0.3s ease;
+    }
+
+    html[dir="rtl"] .faq-question-btn {
+      text-align: right;
+    }
+
+    .faq-question-btn:hover {
+      color: var(--accent-cyan);
+    }
+
+    .faq-chevron-wrap {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.04);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .faq-item:hover .faq-chevron-wrap {
+      background: rgba(0, 240, 255, 0.1);
+    }
+
+    .faq-chevron {
+      transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.3s ease, filter 0.3s ease;
+      color: var(--accent-cyan);
+    }
+
+    .faq-item.is-open .faq-chevron-wrap {
+      background: rgba(0, 240, 255, 0.18);
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+    }
+
+    .faq-item.is-open .faq-chevron {
+      transform: rotate(180deg);
+      filter: drop-shadow(0 0 6px rgba(0, 240, 255, 0.8));
+    }
+
+    .faq-answer {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease, padding 0.4s ease, border-color 0.4s ease;
+      opacity: 0;
+      padding: 0 26px;
+      border-top: 1px solid transparent;
+    }
+
+    .faq-answer-inner {
+      overflow: hidden;
+      font-size: 0.96rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      transform: translateY(-8px);
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .faq-item.is-open .faq-answer {
+      grid-template-rows: 1fr;
+      opacity: 1;
+      padding: 18px 26px 26px;
+      border-top-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .faq-item.is-open .faq-answer-inner {
+      transform: translateY(0);
+    }
+
+    @media (max-width: 992px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Luxury Header -->
+  <header class="diamond-navbar">
+    <div class="container navbar-inner">
+      <a href="index.html" class="brand-logo" aria-label="Diamond Home">
+        <span class="diamond-gem-icon"></span>
+        <span class="brand-name-text" data-i18n="brandName">Diamond</span>
+      </a>
+
+      <nav class="nav-menu">
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link" data-i18n="navHome">Home</a></li>
+          <li><a href="shop.html" class="nav-link" data-i18n="navShop">Shop All</a></li>
+          <li><a href="about.html" class="nav-link" data-i18n="navAbout">About Us</a></li>
+          <li><a href="contact.html" class="nav-link is-active" data-i18n="navContact">Contact Us</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <button type="button" class="btn-lang-toggle" title="Switch Language (EN / AR)">
+          <span class="lang-text">العربية</span>
+        </button>
+
+        <button type="button" class="nav-icon-btn btn-search-trigger" aria-label="Search">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </button>
+
+        <button type="button" class="nav-icon-btn btn-wishlist-nav-trigger" aria-label="Wishlist">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+          <span class="wishlist-count-badge" style="display:none;">0</span>
+        </button>
+
+        <button type="button" class="nav-icon-btn btn-cart-trigger" aria-label="Shopping Cart">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+          <span class="cart-count-badge" style="display:none;">0</span>
+        </button>
+
+        <div class="auth-nav-container"></div>
+
+        <button type="button" class="mobile-menu-toggle" aria-label="Open Mobile Menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="mobile-nav-overlay"></div>
+  <div class="mobile-nav-drawer">
+    <div class="mobile-nav-header">
+      <a href="index.html" class="brand-logo">
+        <span class="diamond-gem-icon"></span>
+        <span>Diamond</span>
+      </a>
+      <button type="button" class="btn-close-mobile-nav modal-close-btn">&times;</button>
+    </div>
+    <ul class="mobile-nav-links">
+      <li>
+        <a href="index.html">
+          <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span data-i18n="navHome">Home</span>
+        </a>
+      </li>
+      <li>
+        <a href="shop.html">
+          <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+          <span data-i18n="navShop">Shop All</span>
+        </a>
+      </li>
+      <li>
+        <a href="about.html">
+          <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          <span data-i18n="navAbout">About Us</span>
+        </a>
+      </li>
+      <li>
+        <a href="contact.html" class="is-active">
+          <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          <span data-i18n="navContact">Contact Us</span>
+        </a>
+      </li>
+      <li>
+        <a href="cart.html">
+          <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+          <span data-i18n="navCart">Cart</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <main class="main-content">
+    <!-- Main Contact Showcase Split Section -->
+    <section class="contact-split-section">
+      <div class="container">
+        <div class="contact-split-grid">
+          
+          <!-- Left Column: Discussion Title, Subtitle, Channels with Circle Icons -->
+          <div class="contact-sidebar-pane">
+            <h1 class="contact-discuss-title">
+              <span data-i18n="contactDiscussTitle">Let's Discuss</span>
+              <span class="highlight-cyan" data-i18n="contactDiscussHighlight">Your Future</span>
+            </h1>
+            <p class="contact-discuss-desc" data-i18n="contactDiscussDesc">
+              Share your organizational challenges, strategic goals, and current setup. We will help shape the next step.
+            </p>
+
+            <div class="contact-channels-stack">
+              <!-- Channel 1: WhatsApp -->
+              <a href="https://wa.me/97471040746" target="_blank" rel="noopener noreferrer" class="channel-item">
+                <div class="channel-icon-circle whatsapp-circle">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="#ffffff">
+                    <path d="M12.032 2C6.505 2 2.025 6.48 2.025 12.008c0 1.954.563 3.778 1.541 5.321L2 22l4.832-1.528A9.957 9.957 0 0 0 12.032 22C17.56 22 22.04 17.52 22.04 12.008 22.04 6.48 17.56 2 12.032 2z"/>
+                  </svg>
+                </div>
+                <div class="channel-meta">
+                  <div class="channel-tag" data-i18n="contactChannelWa">WHATSAPP</div>
+                  <div class="channel-val">+974 6620 5660</div>
+                </div>
+              </a>
+
+              <!-- Channel 2: Email -->
+              <a href="mailto:concierge@diamond-tech.luxury" class="channel-item">
+                <div class="channel-icon-circle email-circle">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="#ffffff">
+                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                  </svg>
+                </div>
+                <div class="channel-meta">
+                  <div class="channel-tag" data-i18n="contactChannelEmail">EMAIL</div>
+                  <div class="channel-val">Email Me</div>
+                </div>
+              </a>
+
+              <!-- Channel 3: YouTube / Social -->
+              <a href="https://youtube.com/@essameldinsalama8179" target="_blank" rel="noopener noreferrer" class="channel-item">
+                <div class="channel-icon-circle youtube-circle">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="#ffffff">
+                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                  </svg>
+                </div>
+                <div class="channel-meta">
+                  <div class="channel-tag" data-i18n="contactChannelYoutube">YOUTUBE</div>
+                  <div class="channel-val">@essameldinsalama8179</div>
+                </div>
+              </a>
+
+              <!-- Channel 4: Region -->
+              <div class="channel-item">
+                <div class="channel-icon-circle region-circle">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="#ffffff">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                  </svg>
+                </div>
+                <div class="channel-meta">
+                  <div class="channel-tag" data-i18n="contactChannelRegion">REGION</div>
+                  <div class="channel-val">Doha, Qatar</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Inquiry Brief Form -->
+          <div class="contact-form-pane">
+            <div class="inquiry-form-card">
+              <div class="inquiry-brief-badge">
+                <span class="brief-dot"></span>
+                <span data-i18n="inquiryBriefTag">INQUIRY BRIEF</span>
+              </div>
+              
+              <h2 class="inquiry-brief-heading" data-i18n="inquiryBriefTitle">Tell us what you need</h2>
+              <p class="inquiry-brief-subtitle" data-i18n="inquiryBriefSubtitle">Complete every field so we can provide actionable executive advice.</p>
+
+              <form id="contact-inquiry-form" class="inquiry-fields-form">
+                <!-- Row 1: Name & Email -->
+                <div class="form-row-2col">
+                  <div class="form-group">
+                    <input type="text" name="name" class="form-input custom-input" placeholder="Full Name *" data-i18n-placeholder="fullName" required>
+                  </div>
+                  <div class="form-group">
+                    <input type="email" name="email" class="form-input custom-input" placeholder="Email Address *" data-i18n-placeholder="emailAddress" required>
+                  </div>
+                </div>
+
+                <!-- Row 2: Country & Mobile (Dial code + Phone Number) -->
+                <div class="form-row-2col">
+                  <div class="form-group">
+                    <input type="text" name="country" class="form-input custom-input" placeholder="Country *" data-i18n-placeholder="contactFieldCountry" required>
+                  </div>
+                  <div class="form-group">
+                    <div class="phone-input-group">
+                      <div class="country-code-select-wrap">
+                        <select name="phoneDial" class="country-code-select" aria-label="Country Code"></select>
+                      </div>
+                      <div class="phone-input-wrap">
+                        <input type="tel" name="phone" class="form-input phone-number-field custom-input" placeholder="7104 0746" required>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Row 3: Subject / Topic -->
+                <div class="form-group full-width-group">
+                  <input type="text" name="subject" class="form-input custom-input" placeholder="Inquiry Subject *" data-i18n-placeholder="contactSubject" required>
+                </div>
+
+                <!-- Row 4: Message -->
+                <div class="form-group full-width-group">
+                  <textarea name="message" class="form-textarea custom-textarea" placeholder="Share your message or requirements in detail..." data-i18n-placeholder="contactMessage" required></textarea>
+                </div>
+
+                <!-- Row 5: Submit Button -->
+                <button type="submit" class="btn btn-primary btn-block btn-lg" data-i18n="contactSubmitBtn">
+                  <span>Send Message</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                </button>
+              </form>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Accordion -->
+    <section class="faq-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Help & Clarity</span>
+          <h2 class="section-title" data-i18n="faqTitle">Frequently Asked Questions</h2>
+        </div>
+
+        <div class="faq-accordion">
+          <div class="faq-item">
+            <button type="button" class="faq-question-btn">
+              <span data-i18n="faq1Q">Are all devices 100% authentic with factory warranty?</span>
+              <span class="faq-chevron-wrap">
+                <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner" data-i18n="faq1A">
+                Yes. Every device is brand new, factory sealed, and includes full official international manufacturer warranty plus our exclusive 2-Year Diamond Care+ coverage.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-question-btn">
+              <span data-i18n="faq2Q">How fast is express armored courier delivery?</span>
+              <span class="faq-chevron-wrap">
+                <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner" data-i18n="faq2A">
+                Orders within Qatar and the GCC are delivered within 24 hours via our dedicated secure courier. Global deliveries take 1-3 business days.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-question-btn">
+              <span data-i18n="faq3Q">Can I customize a device with 24K Gold or diamonds?</span>
+              <span class="faq-chevron-wrap">
+                <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner" data-i18n="faq3A">
+                Yes, our bespoke atelier in Zurich crafts customized 24K gold and diamond encrusted editions. Contact our WhatsApp concierge for private commissions.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modern Rich Footer -->
+  <footer class="diamond-footer">
+    <div class="container">
+      <div class="footer-top-grid">
+        <div class="footer-brand-col">
+          <a href="index.html" class="brand-logo">
+            <span class="diamond-gem-icon"></span>
+            <span data-i18n="brandName">Diamond</span>
+          </a>
+          <p class="footer-brand-desc" data-i18n="footerDesc">
+            Diamond is the global benchmark for luxury consumer technology, curated flagships, and premium acoustic engineering.
+          </p>
+          <div class="footer-social-links">
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="Instagram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="X">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <a href="https://wa.me/97471040746" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="WhatsApp">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.032 2C6.505 2 2.025 6.48 2.025 12.008c0 1.954.563 3.778 1.541 5.321L2 22l4.832-1.528A9.957 9.957 0 0 0 12.032 22C17.56 22 22.04 17.52 22.04 12.008 22.04 6.48 17.56 2 12.032 2z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-links-col">
+          <h4 class="footer-col-title" data-i18n="footerNavQuick">Quick Navigation</h4>
+          <ul class="footer-links-list">
+            <li>
+              <a href="index.html">
+                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                <span data-i18n="navHome">Home</span>
+              </a>
+            </li>
+            <li>
+              <a href="shop.html">
+                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                <span data-i18n="navShop">Shop All</span>
+              </a>
+            </li>
+            <li>
+              <a href="about.html">
+                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                <span data-i18n="navAbout">About Us</span>
+              </a>
+            </li>
+            <li>
+              <a href="contact.html" class="is-active">
+                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                <span data-i18n="navContact">Contact Us</span>
+              </a>
+            </li>
+            <li>
+              <a href="cart.html">
+                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                <span data-i18n="navCart">Cart</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <h4 class="footer-col-title" data-i18n="footerNavSupport">Client Care</h4>
+          <ul class="footer-links-list">
+            <li>
+              <a href="https://wa.me/97471040746" target="_blank" rel="noopener noreferrer">
+                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12.032 2C6.505 2 2.025 6.48 2.025 12.008c0 1.954.563 3.778 1.541 5.321L2 22l4.832-1.528A9.957 9.957 0 0 0 12.032 22C17.56 22 22.04 17.52 22.04 12.008 22.04 6.48 17.56 2 12.032 2z"/></svg>
+                <span data-i18n="footerContact">WhatsApp Concierge</span>
+              </a>
+            </li>
+            <li>
+              <a href="about.html">
+                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                <span data-i18n="footerWarranty">Diamond Care+</span>
+              </a>
+            </li>
+            <li>
+              <a href="cart.html">
+                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                <span data-i18n="footerTrackOrder">Track Shipment</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <h4 class="footer-col-title" data-i18n="footerNavLegal">Legal & Privacy</h4>
+          <ul class="footer-links-list">
+            <li>
+              <a href="#">
+                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                <span data-i18n="footerTerms">Terms of Service</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                <span data-i18n="footerPrivacy">Privacy Policy</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="6 3 18 3 22 9 12 22 2 9 6 3"></polygon></svg>
+                <span data-i18n="footerGemology">Gemological Authenticity</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div data-i18n="footerCopyright">© 2026 Diamond Tech Inc. All rights reserved. Precision engineered.</div>
+        <div>24/7 Dedicated Client Support Desk.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/products.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+
+  <script>
+    // FAQ Accordion Toggle with fluid animations
+    document.querySelectorAll('.faq-question-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('is-open');
+        
+        // Smoothly collapse other items
+        document.querySelectorAll('.faq-item').forEach(other => {
+          if (other !== item) other.classList.remove('is-open');
+        });
+        
+        item.classList.toggle('is-open', !isOpen);
+      });
+    });
+
+    // Handle Contact Form Submit -> Open Outlook with formatted welcoming message & typed fields
+    document.getElementById('contact-inquiry-form')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const formData = new FormData(form);
+      const name = formData.get('name') || '';
+      const countryField = formData.get('country') || '';
+      const email = formData.get('email') || '';
+      const dial = formData.get('phoneDial') || '+974';
+      const phoneNum = formData.get('phone') || '';
+      const subject = formData.get('subject') || 'Concierge Inquiry';
+      const message = formData.get('message') || '';
+
+      const lang = (typeof I18n !== 'undefined') ? I18n.getLang() : 'en';
+
+      if (phoneNum && typeof CountriesHelper !== 'undefined' && typeof COUNTRIES_DATA !== 'undefined') {
+        const country = CountriesHelper.getCountryByDial(dial);
+        if (country && !CountriesHelper.validatePhoneNumber(country, phoneNum)) {
+          const msg = CountriesHelper.getValidationHint ? CountriesHelper.getValidationHint(country, lang) : (lang === 'ar' 
+            ? `يرجى إدخال رقم هاتف صحيح لـ ${country.nameAr} (${country.minLen} أرقام)`
+            : `Please enter a valid ${country.minLen}-digit phone number for ${country.nameEn}`);
+          if (typeof Toast !== 'undefined') Toast.show(msg, 'warning');
+          const phoneInput = form.querySelector('.phone-number-field, input[name="phone"]');
+          if (phoneInput) phoneInput.focus();
+          return;
+        }
+      }
+
+      const fullPhone = phoneNum ? `${dial} ${phoneNum.trim()}` : '';
+
+      let emailBody = '';
+      if (lang === 'ar') {
+        emailBody = `مرحباً بفريق كونسيرج دايموند الفاخر،
+
+يسعدني التواصل معكم وتقديم الاستفسار التالي:
+
+────────────────────────────────────────
+📋 بيانات العميل:
+────────────────────────────────────────
+• الاسم الكامل: ${name}
+• الدولة: ${countryField || 'غير محدد'}
+• البريد الإلكتروني: ${email}
+• رقم الهاتف / واتساب: ${fullPhone || 'غير محدد'}
+• موضوع الاستفسار: ${subject}
+
+────────────────────────────────────────
+💬 نص الرسالة والطلب:
+────────────────────────────────────────
+${message}
+
+────────────────────────────────────────
+مرسل عبر بوابة عملاء Diamond Tech الفاخرة
+التاريخ: ${new Date().toLocaleDateString('ar-QA', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}`;
+      } else {
+        emailBody = `Dear Diamond Concierge Team,
+
+Welcome! I am contacting you through the Diamond Client Portal regarding the following Inquiry:
+
+────────────────────────────────────────
+CLIENT CONTACT DETAILS
+────────────────────────────────────────
+• Full Name: ${name}
+• Country: ${countryField || 'N/A'}
+• Email Address: ${email}
+• Contact Phone / WhatsApp: ${fullPhone || 'Not provided'}
+• Subject: ${subject}
+
+────────────────────────────────────────
+INQUIRY & REQUIREMENTS
+────────────────────────────────────────
+${message}
+
+────────────────────────────────────────
+Submitted via Diamond Tech Client Portal
+Date: ${new Date().toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })}`;
+      }
+
+      const emailTo = 'concierge@diamond-tech.luxury';
+      const emailSubject = `[Client Inquiry] ${subject} - ${name}`;
+
+      // Open in Outlook / Default Mail Client directly
+      const mailtoUrl = `mailto:${emailTo}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+      window.location.href = mailtoUrl;
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flagship Device Details — Diamond</title>
+  <meta name="description" content="Detailed technical specifications, titanium finishes, and high fidelity acoustics of Diamond flagship devices.">
+  
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polygon points='50,5 95,35 80,95 20,95 5,35' fill='%2300f0ff'/></svg>">
+  
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/rtl.css">
+</head>
+<body>
+
+  <!-- Sticky Luxury Header -->
+  <header class="diamond-navbar">
+    <div class="container navbar-inner">
+      <a href="index.html" class="brand-logo" aria-label="Diamond Home">
+        <span class="diamond-gem-icon"></span>
+        <span class="brand-name-text" data-i18n="brandName">Diamond</span>
+      </a>
+
+      <nav class="nav-menu">
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link" data-i18n="navHome">Home</a></li>
+          <li><a href="shop.html" class="nav-link" data-i18n="navShop">Shop All</a></li>
+          <li><a href="about.html" class="nav-link" data-i18n="navAbout">About Us</a></li>
+          <li><a href="contact.html" class="nav-link" data-i18n="navContact">Contact Us</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <button type="button" class="btn-lang-toggle" title="Switch Language (EN / AR)">
+          <span class="lang-text">العربية</span>
+        </button>
+
+        <button type="button" class="nav-icon-btn btn-search-trigger" aria-label="Search">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </button>
+
+        <button type="button" class="nav-icon-btn btn-wishlist-nav-trigger" aria-label="Wishlist">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+          <span class="wishlist-count-badge" style="display:none;">0</span>
+        </button>
+
+        <button type="button" class="nav-icon-btn btn-cart-trigger" aria-label="Shopping Cart">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+          <span class="cart-count-badge" style="display:none;">0</span>
+        </button>
+
+        <div class="auth-nav-container"></div>
+
+        <button type="button" class="mobile-menu-toggle" aria-label="Open Mobile Menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="mobile-nav-overlay"></div>
+  <div class="mobile-nav-drawer">
+    <div class="mobile-nav-header">
+      <a href="index.html" class="brand-logo">
+        <span class="diamond-gem-icon"></span>
+        <span>Diamond</span>
+      </a>
+      <button type="button" class="btn-close-mobile-nav modal-close-btn">&times;</button>
+    </div>
+    <ul class="mobile-nav-links">
+      <li>
+        <a href="index.html">
+          <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span data-i18n="navHome">Home</span>
+        </a>
+      </li>
+      <li>
+        <a href="shop.html">
+          <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+          <span data-i18n="navShop">Shop All</span>
+        </a>
+      </li>
+      <li>
+        <a href="about.html">
+          <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          <span data-i18n="navAbout">About Us</span>
+        </a>
+      </li>
+      <li>
+        <a href="contact.html">
+          <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          <span data-i18n="navContact">Contact Us</span>
+        </a>
+      </li>
+      <li>
+        <a href="cart.html">
+          <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+          <span data-i18n="navCart">Cart</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <main class="main-content">
+    <!-- Breadcrumb Bar -->
+    <div class="breadcrumb-bar">
+      <div class="container">
+        <ul class="breadcrumbs-list">
+          <li><a href="index.html" data-i18n="navHome">Home</a></li>
+          <li><span>/</span></li>
+          <li><a href="shop.html" id="breadcrumb-category" data-i18n="navShop">Catalog</a></li>
+          <li><span>/</span></li>
+          <li class="is-current" id="breadcrumb-product-name">Flagship Device</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Main Product Detail Section -->
+    <section class="product-detail-section">
+      <div class="container">
+        <div class="product-detail-grid">
+          
+          <!-- Left: Gallery & Zoom -->
+          <div class="product-gallery-panel">
+            <div class="gallery-main-view">
+              <img id="product-main-image" src="" alt="Product Preview">
+              <button type="button" id="btn-product-detail-wishlist" class="gallery-wishlist-btn" title="Add to Wishlist">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+              </button>
+            </div>
+
+            <!-- Thumbnails List -->
+            <div id="product-thumbnails-container" class="gallery-thumbs-row">
+              <!-- Populated via JS -->
+            </div>
+          </div>
+
+          <!-- Right: Purchase Controls & Specs Overview -->
+          <div class="product-info-panel">
+            <div class="product-badge-row">
+              <span id="product-detail-brand" class="product-brand-tag">Apple</span>
+              <span id="product-detail-condition"></span>
+            </div>
+
+            <h1 id="product-detail-title" class="product-detail-heading">Loading Flagship...</h1>
+            <p id="product-detail-tagline" class="product-detail-subtext">Sculpted from Grade 5 Titanium.</p>
+
+            <!-- Rating & Verified Reviews -->
+            <div class="product-rating-row">
+              <div id="product-rating-stars" class="rating-stars">★★★★★</div>
+              <span id="product-rating-value" class="rating-num">4.9</span>
+              <span id="product-reviews-count" class="reviews-num">(184 verified reviews)</span>
+            </div>
+
+            <!-- Price Display (Clean Single Luxury Price) -->
+            <div class="product-pricing-box">
+              <div class="price-main-display">
+                <span id="product-current-price" class="current-price">$1,199</span>
+              </div>
+              <div class="vat-shipping-note">
+                <span data-i18n="freeDeliveryNote">Free Express Insured Delivery (1-2 business days)</span>
+              </div>
+            </div>
+
+            <!-- Short Overview Description -->
+            <p id="product-detail-desc" class="product-short-description"></p>
+
+            <!-- Configuration Options -->
+            <div class="product-configurator">
+              <!-- Color Finish -->
+              <div class="config-group">
+                <div class="config-label-row">
+                  <span class="config-label" data-i18n="selectColor">Select Finish / Color:</span>
+                  <strong id="selected-color-name" class="config-selected-val">Desert Titanium</strong>
+                </div>
+                <div id="product-colors-container" class="color-swatches-grid">
+                  <!-- Populated via JS -->
+                </div>
+              </div>
+
+              <!-- Storage / Size Variant -->
+              <div class="config-group" id="product-storage-wrap">
+                <div class="config-label-row">
+                  <span class="config-label" data-i18n="selectStorage">Select Storage / Variant:</span>
+                </div>
+                <div id="product-storage-container" class="storage-pills-grid">
+                  <!-- Populated via JS -->
+                </div>
+              </div>
+
+              <!-- Quantity & Availability -->
+              <div class="config-group">
+                <div class="config-label-row">
+                  <span class="config-label" data-i18n="quantity">Quantity:</span>
+                  <div id="product-stock-status" class="stock-status-pill">
+                    <!-- Populated via JS -->
+                  </div>
+                </div>
+                <div class="qty-and-cart-row">
+                  <div class="quantity-input-box">
+                    <button type="button" id="btn-qty-decrease" class="btn-qty-adj">-</button>
+                    <input type="number" id="product-qty-input" value="1" min="1" max="10" readonly>
+                    <button type="button" id="btn-qty-increase" class="btn-qty-adj">+</button>
+                  </div>
+                  
+                  <button type="button" id="btn-add-to-cart" class="btn btn-primary btn-lg flex-1">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    <span data-i18n="addToCart">Add to Cart</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Instant Buy Action -->
+              <div class="instant-buy-wrap">
+                <button type="button" id="btn-buy-now" class="btn btn-gold btn-block btn-lg" data-i18n="buyNow">
+                  <span>Buy Now with Instant Express Dispatch</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Trust Badges -->
+            <div class="product-trust-badges">
+              <div class="trust-badge-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                <span>2-Year Official Diamond Care+ Global Warranty</span>
+              </div>
+              <div class="trust-badge-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+                <span>Same-Day Armored Courier in Qatar & GCC</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Deep-Dive Specifications & Review Tabs -->
+    <section class="product-tabs-section">
+      <div class="container">
+        <!-- Tab Navigation -->
+        <div class="tabs-nav-bar">
+          <button type="button" class="tab-btn is-active" data-tab="description" data-i18n="tabDescription">Overview & Features</button>
+          <button type="button" class="tab-btn" data-tab="specs" data-i18n="tabSpecs">Technical Specifications</button>
+          <button type="button" class="tab-btn" data-tab="box" data-i18n="tabInTheBox">What's in the Box</button>
+          <button type="button" class="tab-btn" data-tab="reviews" data-i18n="tabReviews">Client Reviews</button>
+        </div>
+
+        <!-- Tab Content Panes -->
+        <div class="tab-panes-wrapper">
+          <!-- Overview Tab -->
+          <div class="tab-pane is-active" id="tab-content-description"></div>
+
+          <!-- Specs Tab -->
+          <div class="tab-pane" id="tab-content-specs"></div>
+
+          <!-- In the Box Tab -->
+          <div class="tab-pane" id="tab-content-box"></div>
+
+          <!-- Reviews Tab -->
+          <div class="tab-pane" id="tab-content-reviews">
+            <div class="reviews-header-summary">
+              <div>
+                <h3>Client Reviews & Ratings</h3>
+                <p>Verified purchasers from Doha, London, Zurich, and Dubai.</p>
+              </div>
+              <button type="button" class="btn btn-outline" data-i18n="writeReviewBtn">Write a Review</button>
+            </div>
+            <div id="product-reviews-list" class="reviews-grid"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Related Flagships -->
+    <section class="related-products-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag" data-i18n="relatedProductsTitle">You May Also Admire</span>
+          <h2 class="section-title">Harmonizing Ecosystem</h2>
+        </div>
+        <div id="related-products-container" class="products-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modern Rich Footer -->
+  <footer class="diamond-footer">
+    <div class="container">
+      <div class="footer-top-grid">
+        <div class="footer-brand-col">
+          <a href="index.html" class="brand-logo">
+            <span class="diamond-gem-icon"></span>
+            <span data-i18n="brandName">Diamond</span>
+          </a>
+          <p class="footer-brand-desc" data-i18n="footerDesc">
+            Diamond is the global benchmark for luxury consumer technology, curated flagships, and premium acoustic engineering.
+          </p>
+          <div class="footer-social-links">
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="Instagram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="Twitter">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <a href="https://wa.me/97471040746" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="WhatsApp">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.032 2C6.505 2 2.025 6.48 2.025 12.008c0 1.954.563 3.778 1.541 5.321L2 22l4.832-1.528A9.957 9.957 0 0 0 12.032 22C17.56 22 22.04 17.52 22.04 12.008 22.04 6.48 17.56 2 12.032 2z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-links-col">
+          <h4 class="footer-col-title" data-i18n="footerNavQuick">Quick Navigation</h4>
+          <ul class="footer-links-list">
+            <li>
+              <a href="index.html">
+                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                <span data-i18n="navHome">Home</span>
+              </a>
+            </li>
+            <li>
+              <a href="shop.html">
+                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                <span data-i18n="navShop">Shop All</span>
+              </a>
+            </li>
+            <li>
+              <a href="about.html">
+                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                <span data-i18n="navAbout">About Us</span>
+              </a>
+            </li>
+            <li>
+              <a href="contact.html">
+                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                <span data-i18n="navContact">Contact Us</span>
+              </a>
+            </li>
+            <li>
+              <a href="cart.html">
+                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                <span data-i18n="navCart">Cart</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <h4 class="footer-col-title" data-i18n="footerNavSupport">Client Care</h4>
+          <ul class="footer-links-list">
+            <li>
+              <a href="https://wa.me/97471040746" target="_blank" rel="noopener noreferrer">
+                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12.032 2C6.505 2 2.025 6.48 2.025 12.008c0 1.954.563 3.778 1.541 5.321L2 22l4.832-1.528A9.957 9.957 0 0 0 12.032 22C17.56 22 22.04 17.52 22.04 12.008 22.04 6.48 17.56 2 12.032 2z"/></svg>
+                <span data-i18n="footerContact">WhatsApp Concierge</span>
+              </a>
+            </li>
+            <li>
+              <a href="about.html">
+                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                <span data-i18n="footerWarranty">Diamond Care+</span>
+              </a>
+            </li>
+            <li>
+              <a href="cart.html">
+                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                <span data-i18n="footerTrackOrder">Track Shipment</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <h4 class="footer-col-title" data-i18n="footerNavLegal">Legal & Privacy</h4>
+          <ul class="footer-links-list">
+            <li>
+              <a href="#">
+                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                <span data-i18n="footerTerms">Terms of Service</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                <span data-i18n="footerPrivacy">Privacy Policy</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="6 3 18 3 22 9 12 22 2 9 6 3"></polygon></svg>
+                <span data-i18n="footerGemology">Gemological Authenticity</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div data-i18n="footerCopyright">© 2026 Diamond Tech Inc. All rights reserved. Precision engineered.</div>
+        <div>Complimentary Armored Courier on all orders.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/products.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/shop.js"></script>
+  <script src="js/product-detail.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
