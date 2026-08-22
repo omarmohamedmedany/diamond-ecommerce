@@ -472,6 +472,8 @@ const App = {
     this.setupScrollAnimations();
     this.setupNewsletter();
     this.setupWhatsAppWidget();
+    this.initHomeFeatured();
+    this.setupContactForm();
   },
 
   setupNavbarScroll() {
@@ -950,6 +952,107 @@ const App = {
         window.open(url, '_blank', 'noopener,noreferrer');
       });
     }
+  },
+
+  initHomeFeatured() {
+    const container = document.getElementById('home-featured-products');
+    if (!container) return;
+
+    const render = () => {
+      if (typeof ProductService === 'undefined' || typeof Shop === 'undefined') return;
+      const featured = ProductService.getFeatured().slice(0, 4);
+      const lang = (typeof I18n !== 'undefined') ? I18n.getLang() : 'en';
+      container.innerHTML = featured.map(p => Shop.renderProductCard(p, lang)).join('');
+    };
+
+    render();
+    window.addEventListener('diamond:languageChanged', render);
+  },
+
+  setupContactForm() {
+    const form = document.getElementById('contact-inquiry-form');
+    if (!form) return;
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const name = formData.get('name') || '';
+      const countryField = formData.get('country') || '';
+      const email = formData.get('email') || '';
+      const dial = formData.get('phoneDial') || '+974';
+      const phoneNum = formData.get('phone') || '';
+      const subject = formData.get('subject') || (I18n.getLang() === 'ar' ? 'استفسار طلب فاخر' : 'Luxury Tech Inquiry');
+      const message = formData.get('message') || '';
+      const lang = (typeof I18n !== 'undefined') ? I18n.getLang() : 'en';
+
+      // Check phone length
+      const country = CountriesHelper.getCountryByDial(dial);
+      if (country && phoneNum) {
+        const digits = phoneNum.replace(/\D/g, '');
+        if (digits.length < country.minLen || digits.length > country.maxLen) {
+          Toast.show(CountriesHelper.getValidationHint(country, lang), 'error');
+          const phoneInput = form.querySelector('input[name="phone"]');
+          if (phoneInput) phoneInput.focus();
+          return;
+        }
+      }
+
+      const fullPhone = phoneNum ? `${dial} ${phoneNum.trim()}` : '';
+
+      let emailBody = '';
+      if (lang === 'ar') {
+        emailBody = `مرحباً بفريق كونسيرج دايموند الفاخر،
+
+يسعدني التواصل معكم وتقديم الاستفسار التالي:
+
+────────────────────────────────────────
+📋 بيانات العميل:
+────────────────────────────────────────
+• الاسم الكامل: ${name}
+• الدولة: ${countryField || 'غير محدد'}
+• البريد الإلكتروني: ${email}
+• رقم الهاتف / واتساب: ${fullPhone || 'غير محدد'}
+• موضوع الاستفسار: ${subject}
+
+────────────────────────────────────────
+💬 نص الرسالة والطلب:
+────────────────────────────────────────
+${message}
+
+────────────────────────────────────────
+مرسل عبر بوابة عملاء Diamond Tech الفاخرة
+التاريخ: ${new Date().toLocaleDateString('ar-QA', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}`;
+      } else {
+        emailBody = `Dear Diamond Concierge Team,
+
+Welcome! I am contacting you through the Diamond Client Portal regarding the following Inquiry:
+
+────────────────────────────────────────
+CLIENT CONTACT DETAILS
+────────────────────────────────────────
+• Full Name: ${name}
+• Country: ${countryField || 'N/A'}
+• Email Address: ${email}
+• Contact Phone / WhatsApp: ${fullPhone || 'Not provided'}
+• Subject: ${subject}
+
+────────────────────────────────────────
+INQUIRY & REQUIREMENTS
+────────────────────────────────────────
+${message}
+
+────────────────────────────────────────
+Submitted via Diamond Tech Client Portal
+Date: ${new Date().toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })}`;
+      }
+
+      const emailTo = 'concierge@diamond-tech.luxury';
+      const emailSubject = `[Client Inquiry] ${subject} - ${name}`;
+
+      // Open in Outlook / Default Mail Client directly
+      const mailtoUrl = `mailto:${emailTo}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+      window.location.href = mailtoUrl;
+    });
   },
 
   injectSharedModals() {

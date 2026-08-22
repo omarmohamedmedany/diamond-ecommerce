@@ -35,6 +35,9 @@
     }
   }
   </script>
+
+  <!-- Preload High-Priority Hero LCP Asset -->
+  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=1000&q=85" fetchpriority="high">
   
   <!-- Favicon Vector -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polygon points='50,5 95,35 80,95 20,95 5,35' fill='%2300f0ff'/></svg>">
@@ -181,11 +184,11 @@
         <!-- Hero Media Showcase -->
         <div class="hero-media-wrapper reveal-on-scroll">
           <div class="hero-device-card">
-            <img src="https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=1000&q=85" alt="iPhone 16 Pro Max Desert Titanium" class="hero-img-showcase">
+            <img src="https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=1000&q=85" alt="iPhone 16 Pro Max Desert Titanium" class="hero-img-showcase" fetchpriority="high">
             <div class="hero-device-meta">
               <div>
                 <div class="hero-device-title">iPhone 16 Pro Max</div>
-                <div style="font-size: 0.85rem; color: var(--text-muted);">Desert Titanium • A18 Pro 3nm</div>
+                <div class="hero-device-subtitle">Desert Titanium • A18 Pro 3nm</div>
               </div>
               <div class="hero-device-price">$1,199</div>
             </div>
@@ -206,7 +209,7 @@
         <div class="categories-grid">
           <!-- Category 1: Phones -->
           <a href="shop.html?category=phones" class="category-card reveal-on-scroll">
-            <img src="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=800&q=80" alt="Phones" class="category-card-bg">
+            <img src="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=800&q=80" alt="Phones" class="category-card-bg" loading="lazy">
             <div class="category-card-content">
               <div class="category-card-icon">📱</div>
               <h3 class="category-card-title" data-i18n="catPhones">Phones</h3>
@@ -217,7 +220,7 @@
 
           <!-- Category 2: Smartwatches -->
           <a href="shop.html?category=watches" class="category-card reveal-on-scroll">
-            <img src="https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?auto=format&fit=crop&w=800&q=80" alt="Smartwatches" class="category-card-bg">
+            <img src="https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?auto=format&fit=crop&w=800&q=80" alt="Smartwatches" class="category-card-bg" loading="lazy">
             <div class="category-card-content">
               <div class="category-card-icon">⌚</div>
               <h3 class="category-card-title" data-i18n="catWatches">Smartwatches</h3>
@@ -228,7 +231,7 @@
 
           <!-- Category 3: Audio -->
           <a href="shop.html?category=audio" class="category-card reveal-on-scroll">
-            <img src="https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=800&q=80" alt="AirPods & Audio" class="category-card-bg">
+            <img src="https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=800&q=80" alt="AirPods & Audio" class="category-card-bg" loading="lazy">
             <div class="category-card-content">
               <div class="category-card-icon">🎧</div>
               <h3 class="category-card-title" data-i18n="catAudio">AirPods & Audio</h3>
@@ -239,7 +242,7 @@
 
           <!-- Category 4: Accessories -->
           <a href="shop.html?category=accessories" class="category-card reveal-on-scroll">
-            <img src="https://images.unsplash.com/photo-1586953208448-b95a79798f07?auto=format&fit=crop&w=800&q=80" alt="Accessories" class="category-card-bg">
+            <img src="https://images.unsplash.com/photo-1586953208448-b95a79798f07?auto=format&fit=crop&w=800&q=80" alt="Accessories" class="category-card-bg" loading="lazy">
             <div class="category-card-content">
               <div class="category-card-icon">⚡</div>
               <h3 class="category-card-title" data-i18n="catAccessories">Accessories</h3>
@@ -397,10 +400,10 @@
     <section class="newsletter-section">
       <div class="container">
         <div class="newsletter-card reveal-on-scroll">
-          <span style="font-size: 2rem; color: var(--accent-cyan);">✦</span>
+          <span class="newsletter-gem-icon">✦</span>
           <h3 data-i18n="newsletterTitle">Join the Diamond Circle</h3>
           <p data-i18n="newsletterSubtitle">Receive private launch invitations, secret drops, and tech analysis.</p>
-          <form class="newsletter-form">
+          <form class="newsletter-form" action="#" method="POST">
             <input type="email" class="newsletter-input" placeholder="Enter your email address..." data-i18n-placeholder="newsletterPlaceholder" required>
             <button type="submit" class="btn btn-primary" data-i18n="newsletterBtn">Subscribe</button>
           </form>
@@ -493,28 +496,12 @@
     </div>
   </footer>
 
-  <!-- Scripts -->
-  <script src="js/products.js"></script>
-  <script src="js/i18n.js"></script>
-  <script src="js/cart.js"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/shop.js"></script>
-  <script src="js/app.js"></script>
-
-  <!-- Inline script to render featured products on home -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const container = document.getElementById('home-featured-products');
-      if (container) {
-        const featured = ProductService.getFeatured().slice(0, 4);
-        const lang = I18n.getLang();
-        container.innerHTML = featured.map(p => Shop.renderProductCard(p, lang)).join('');
-
-        window.addEventListener('diamond:languageChanged', () => {
-          container.innerHTML = featured.map(p => Shop.renderProductCard(p, I18n.getLang())).join('');
-        });
-      }
-    });
-  </script>
+  <!-- Deferred Scripts -->
+  <script src="js/products.js" defer></script>
+  <script src="js/i18n.js" defer></script>
+  <script src="js/cart.js" defer></script>
+  <script src="js/auth.js" defer></script>
+  <script src="js/shop.js" defer></script>
+  <script src="js/app.js" defer></script>
 </body>
 </html>
