@@ -416,7 +416,40 @@ const TRANSLATIONS = {
     toastCartUpdated: "Cart updated successfully.",
     toastItemRemoved: "Item removed from cart.",
     toastWishlistAdded: "Added to your wishlist.",
-    toastWishlistRemoved: "Removed from your wishlist."
+    toastWishlistRemoved: "Removed from your wishlist.",
+
+    // Legal & Policy Pages
+    termsTitle: "Terms of Service",
+    termsSubtitle: "Precision luxury terms, client guarantees, and transparent commercial governance.",
+    termsLastUpdated: "Last updated: August 2026",
+    termsSec1Title: "1. Global Scope & Client Engagement",
+    termsSec1Text: "By purchasing through Diamond Tech Inc., you engage with a bespoke luxury hardware concierge. All transactions are governed by the highest international standards of luxury consumer electronics retailing.",
+    termsSec2Title: "2. 2-Year Diamond Care+ Warranty Coverage",
+    termsSec2Text: "Every flagship device purchased includes our complimentary 2-Year Diamond Care+ warranty. This provides priority factory repairs, certified component replacements, and dedicated concierge assistance.",
+    termsSec3Title: "3. Armored Express Courier & In-Person Inspection",
+    termsSec3Text: "All orders are dispatched in tamper-evident sealed packaging. Clients choosing Cash on Delivery (COD) are entitled to in-person courier inspection before authorizing payment.",
+    termsSec4Title: "4. Returns & Replacement Policy",
+    termsSec4Text: "Unopened, factory-sealed devices in original packaging may be returned within 14 calendar days of delivery. For customized or bespoke gold-plated editions, inspection terms apply upon delivery.",
+
+    privacyTitle: "Privacy Policy",
+    privacySubtitle: "256-bit encrypted security protocols and absolute client data confidentiality.",
+    privacyLastUpdated: "Last updated: August 2026",
+    privacySec1Title: "1. Information Collection & Client Discretion",
+    privacySec1Text: "Diamond adheres to ultra-strict privacy protocols. We only collect the minimal information required to fulfill orders, provide priority concierge communications, and ensure delivery logistics.",
+    privacySec2Title: "2. 256-Bit SSL Encryption & Payment Protection",
+    privacySec2Text: "All web transactions and communications are encrypted using enterprise-grade 256-bit SSL protocols. Payment information is securely tokenized and never stored on unencrypted local servers.",
+    privacySec3Title: "3. Third-Party Confidentiality",
+    privacySec3Text: "We strictly never sell, lease, or monetize client personal data to third parties or marketing networks. Data is strictly utilized for fulfillment and direct VIP support.",
+
+    authenticityTitle: "Gemological & Factory Authenticity",
+    authenticitySubtitle: "100% certified authentic factory-sealed luxury tech with traceable hardware pedigree.",
+    authenticityLastUpdated: "Certified Standard 2026",
+    authenticitySec1Title: "1. 100% Factory Sealed Guarantee",
+    authenticitySec1Text: "Every device in the Diamond collection is sourced directly through certified manufacturer distributors. Boxes feature tamper-evident security holograms and traceable serial numbers.",
+    authenticitySec2Title: "2. Master Materials & Grade 5 Titanium",
+    authenticitySec2Text: "Our custom editions, acoustic hardware, and luxury smartwatches utilize Grade 5 aerospace titanium, aerospace sapphire crystal, and certified noble finishes.",
+    authenticitySec3Title: "3. Hardware Verification Concierge",
+    authenticitySec3Text: "Clients may verify serial numbers and active manufacturer warranty status immediately via our direct WhatsApp concierge prior to or following dispatch."
   },
 
   ar: {
@@ -832,7 +865,40 @@ const TRANSLATIONS = {
     toastCartUpdated: "تم تحديث السلة بنجاح.",
     toastItemRemoved: "تمت إزالة الجهاز من السلة.",
     toastWishlistAdded: "تمت الإضافة إلى المفضلة.",
-    toastWishlistRemoved: "تمت الإزالة من المفضلة."
+    toastWishlistRemoved: "تمت الإزالة من المفضلة.",
+
+    // Legal & Policy Pages
+    termsTitle: "شروط الخدمة والأحكام",
+    termsSubtitle: "معايير التعامل الفاخر، ضمانات العملاء، والسياسات التجارية الموثوقة.",
+    termsLastUpdated: "آخر تحديث: أغسطس 2026",
+    termsSec1Title: "1. نطاق الخدمة والتعامل الفاخر",
+    termsSec1Text: "عند الشراء من شركة دايموند تك، فإنك تتعامل مع خدمة استشارية فاخرة لأحدث الأجهزة التقنية. تخضع كافة المعاملات لأرقى المعايير الدولية لتجارة الإلكترونيات الفاخرة.",
+    termsSec2Title: "2. ضمان دايموند كير+ الحصري لمدة عامين",
+    termsSec2Text: "تتضمن كافة أجهزتنا ضمان دايموند كير+ الممتد لمدة عامين مجاناً، والذي يشمل الصيانة الرسمية المعتمدة، استبدال القطع الأصلية، والمتابعة المباشرة عبر المستشار الخاص.",
+    termsSec3Title: "3. الشحن السريع والفحص الشخصي عند الاستلام",
+    termsSec3Text: "يتم تغليف وشحن كافة الطلبات بأختام أمان غير قابلة للتلاعب. يحق لعملاء الدفع عند الاستلام (COD) فحص ومطابقة الصندوق والختم قبل إتمام الدفع للمندوب.",
+    termsSec4Title: "4. سياسة الإرجاع والاستبدال الفوري",
+    termsSec4Text: "يمكن إرجاع الأجهزة الجديدة والمغلفة بختم المصنع الأصلي خلال 14 يوماً من تاريخ الاستلام. تخضع الإصدارات المخصصة والمطلية بالذهب لشروط الفحص المباشر عند التسليم.",
+
+    privacyTitle: "سياسة الخصوصية وأمان البيانات",
+    privacySubtitle: "بروتوكولات تشفير 256-bit SSL لحماية بيانات العملاء والحفاظ على سريتها التامة.",
+    privacyLastUpdated: "آخر تحديث: أغسطس 2026",
+    privacySec1Title: "1. جمع البيانات والسرية التامة للعملاء",
+    privacySec1Text: "تلتزم دايموند بأعلى درجات الخصوصية والسرية. نقوم فقط بجمع البيانات الأساسية اللازمة لتجهيز الطلب، والتواصل المباشر عبر الواتساب، وتوصيل الشحنة.",
+    privacySec2Title: "2. التشفير والحماية المالية",
+    privacySec2Text: "تتم كافة المعاملات عبر بروتوكولات تشفير متقدمة 256-bit SSL. لا يتم تخزين أو مشاركة أي بيانات مصرفية أو تفاصيل دفع على خوادم غير مشفرة.",
+    privacySec3Title: "3. عدم مشاركة البيانات مع أي طرف ثالث",
+    privacySec3Text: "نلتزم بعدم بيع أو مشاركة بيانات عملائنا مع أي شركات إعلانية أو جهات خارجية على الإطلاق، وتُستخدم البيانات حصرياً لخدمة العميل وتوصيل طلباته.",
+
+    authenticityTitle: "شهادة الأصالة وضمان الجودة",
+    authenticitySubtitle: "أجهزة أصلية 100% بختم المصنع وتدقيق صارم لأعلى معايير المواد والأداء.",
+    authenticityLastUpdated: "معايير الجودة المعتمدة 2026",
+    authenticitySec1Title: "1. ضمان ختم المصنع الأصلي 100%",
+    authenticitySec1Text: "كافة أجهزتنا جديدة ومغلفة بالكامل بختم المصنع وتتضمن الأرقام التسلسلية الرسمية القابلة للتحقق الفوري لدى الشركات المصنعة.",
+    authenticitySec2Title: "2. فخامة الخامات وتيتانيوم الدرجة الخامسة",
+    authenticitySec2Text: "تُصنع هياكل أجهزتنا وإصداراتنا الخاصة من تيتانيوم الدرجة الخامسة (Grade 5 Titanium) والياقوت النقي لضمان أعلى درجات المتانة والأناقة.",
+    authenticitySec3Title: "3. خدمة التحقق المباشر من الرقم التسلسلي",
+    authenticitySec3Text: "يمكن لعملائنا في أي وقت التحقق من صلاحية الضمان والرقم التسلسلي للجهاز مباشرة عبر مستشارنا التقني على الواتساب قبل أو بعد استلام الطلب."
   }
 };
 

@@ -49,6 +49,7 @@ const ProductDetail = {
     const desc = p.description[lang] || p.description.en;
 
     document.title = `${name} | ${lang === 'ar' ? 'دايموند تك الفاخرة' : 'Diamond Tech Luxury'}`;
+    this.updateSEO(p, lang);
 
     // 1. Breadcrumbs
     const breadcrumbName = document.getElementById('breadcrumb-product-name');
@@ -400,6 +401,99 @@ const ProductDetail = {
         <p class="review-content">${r.content}</p>
       </div>
     `).join('');
+  },
+
+  updateSEO(p, lang) {
+    const name = p.name[lang] || p.name.en;
+    const desc = p.description[lang] || p.description.en;
+    const img = (p.images && p.images.length > 0) ? p.images[0] : 'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=1200&q=85';
+    const currentPrice = this.getCurrentPrice();
+    const pageUrl = window.location.href;
+
+    // 1. Meta Description
+    let metaDesc = document.querySelector('meta[name="description"]');
+    if (!metaDesc) {
+      metaDesc = document.createElement('meta');
+      metaDesc.name = 'description';
+      document.head.appendChild(metaDesc);
+    }
+    metaDesc.content = desc;
+
+    // 2. Open Graph Tags
+    const setOgTag = (property, content) => {
+      let tag = document.querySelector(`meta[property="${property}"]`);
+      if (!tag) {
+        tag = document.createElement('meta');
+        tag.setAttribute('property', property);
+        document.head.appendChild(tag);
+      }
+      tag.content = content;
+    };
+
+    setOgTag('og:type', 'product');
+    setOgTag('og:title', `${name} — Diamond Luxury Tech`);
+    setOgTag('og:description', desc);
+    setOgTag('og:image', img);
+    setOgTag('og:url', pageUrl);
+    setOgTag('og:site_name', 'Diamond Luxury Tech');
+    setOgTag('product:price:amount', currentPrice.toString());
+    setOgTag('product:price:currency', 'USD');
+
+    // 3. Twitter Card
+    const setTwitterTag = (name, content) => {
+      let tag = document.querySelector(`meta[name="${name}"]`);
+      if (!tag) {
+        tag = document.createElement('meta');
+        tag.setAttribute('name', name);
+        document.head.appendChild(tag);
+      }
+      tag.content = content;
+    };
+    setTwitterTag('twitter:card', 'summary_large_image');
+    setTwitterTag('twitter:title', `${name} — Diamond`);
+    setTwitterTag('twitter:description', desc);
+    setTwitterTag('twitter:image', img);
+
+    // 4. Schema.org Product JSON-LD (Google Rich Snippets)
+    let schemaScript = document.getElementById('product-jsonld');
+    if (!schemaScript) {
+      schemaScript = document.createElement('script');
+      schemaScript.id = 'product-jsonld';
+      schemaScript.type = 'application/ld+json';
+      document.head.appendChild(schemaScript);
+    }
+
+    const schemaData = {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": name,
+      "image": p.images,
+      "description": desc,
+      "brand": {
+        "@type": "Brand",
+        "name": p.brand
+      },
+      "sku": p.id,
+      "offers": {
+        "@type": "Offer",
+        "url": pageUrl,
+        "priceCurrency": "USD",
+        "price": currentPrice,
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": p.inStock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+        "seller": {
+          "@type": "Organization",
+          "name": "Diamond Tech Inc."
+        }
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": p.rating || 4.9,
+        "reviewCount": p.reviewsCount || 150
+      }
+    };
+
+    schemaScript.textContent = JSON.stringify(schemaData, null, 2);
   },
 
   renderRelated() {

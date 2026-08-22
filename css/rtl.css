@@ -6,13 +6,11 @@
 html[dir="rtl"] {
   direction: rtl;
   text-align: right;
-  word-spacing: 0.08em;
 }
 
 html[dir="rtl"] body {
   font-family: var(--font-arabic);
   line-height: 1.8;
-  word-spacing: 0.08em;
 }
 
 /* Typography adjustment for Arabic */
@@ -26,9 +24,10 @@ html[dir="rtl"] .section-title,
 html[dir="rtl"] .product-card-price,
 html[dir="rtl"] .auth-title {
   font-family: var(--font-arabic);
-  letter-spacing: normal;
-  word-spacing: 0.1em;
-  line-height: 1.4;
+  letter-spacing: 0;
+  line-height: 1.35;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 html[dir="rtl"] p,
@@ -36,8 +35,8 @@ html[dir="rtl"] .hero-subtitle,
 html[dir="rtl"] .section-subtitle,
 html[dir="rtl"] .category-card-desc,
 html[dir="rtl"] .product-card-tagline {
-  line-height: 1.85;
-  word-spacing: 0.07em;
+  line-height: 1.8;
+  overflow-wrap: break-word;
 }
 
 /* Nav links RTL */
