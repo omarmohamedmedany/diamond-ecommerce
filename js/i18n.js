@@ -7,6 +7,7 @@ const TRANSLATIONS = {
     // Brand & Navigation
     brandName: "Diamond",
     brandTagline: "Next-Gen Tech Elegance",
+    skipToContent: "Skip to main content",
     navHome: "Home",
     navShop: "Our Store",
     navCatalog: "Our Store",
@@ -491,6 +492,7 @@ const TRANSLATIONS = {
     // Brand & Navigation
     brandName: "دايموند",
     brandTagline: "قمة الفخامة والتقنية الحديثة",
+    skipToContent: "الانتقال إلى المحتوى الرئيسي",
     navHome: "الرئيسية",
     navShop: "متجرنا",
     navCatalog: "متجرنا",
