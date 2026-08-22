@@ -375,6 +375,11 @@ Please confirm availability and express courier delivery. Thank you!`;
         btn.classList.add('is-active');
         const pane = document.getElementById(`tab-content-${targetTab}`);
         if (pane) pane.classList.add('is-active');
+
+        // Smoothly center the clicked tab in the mobile scrollable bar
+        try {
+          btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        } catch (e) {}
       });
     });
 

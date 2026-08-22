@@ -168,3 +168,9 @@ html[dir="rtl"] .sidebar-header-actions {
   flex-direction: row-reverse;
 }
 
+/* Tabs Nav Bar RTL */
+html[dir="rtl"] .tabs-nav-bar {
+  flex-direction: row;
+}
+
+

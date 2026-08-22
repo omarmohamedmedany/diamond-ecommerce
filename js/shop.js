@@ -11,7 +11,7 @@ const Shop = {
   sortBy: 'featured',
   searchQuery: '',
   viewMode: 'grid',
-  sidebarCollapsed: false,
+  sidebarCollapsed: true,
   filterDrawerOpen: false,
 
   init() {
@@ -23,6 +23,13 @@ const Shop = {
     this.renderProducts();
     this.updateActiveFilterPills();
     this.updateFilterBadge();
+
+    const toggleText = document.getElementById('btn-toggle-filters-text');
+    if (toggleText) {
+      toggleText.textContent = this.sidebarCollapsed 
+        ? I18n.t('btnShowFilters') 
+        : I18n.t('btnHideFilters');
+    }
   },
 
   parseUrlParams() {
