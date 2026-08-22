@@ -3,15 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https://images.unsplash.com https:; connect-src 'self' https:;">
   <title>Flagship Device Details — Diamond Luxury Tech</title>
   <meta name="description" content="Detailed technical specifications, titanium finishes, and high fidelity acoustics of Diamond flagship devices.">
   <link rel="canonical" href="https://diamondtech.luxury/product.html">
 
-  <!-- Preconnect & High-Speed Font Delivery -->
+  <!-- Preconnect & High-Speed Asset & Font Delivery -->
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+  <link rel="dns-prefetch" href="https://images.unsplash.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
 
   <!-- Open Graph / Facebook / WhatsApp -->
   <meta property="og:type" content="product">
@@ -46,8 +48,7 @@
       <nav class="nav-menu">
         <ul class="nav-links">
           <li><a href="index.html" class="nav-link" data-i18n="navHome">Home</a></li>
-          <li><a href="shop.html" class="nav-link" data-i18n="navShop">Shop All</a></li>
-          <li><a href="about.html" class="nav-link" data-i18n="navAbout">About Us</a></li>
+          <li><a href="shop.html" class="nav-link" data-i18n="navShop">Our Store</a></li>
           <li><a href="contact.html" class="nav-link" data-i18n="navContact">Contact Us</a></li>
         </ul>
       </nav>
@@ -63,7 +64,7 @@
 
         <button type="button" class="nav-icon-btn btn-cart-trigger" aria-label="Shopping Cart">
           <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-          <span class="cart-count-badge" style="display:none;">0</span>
+          <span class="cart-count-badge" aria-live="polite" style="display:none;">0</span>
         </button>
 
         <div class="auth-nav-container"></div>
@@ -101,13 +102,7 @@
       <li>
         <a href="shop.html">
           <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-          <span data-i18n="navShop">Shop All</span>
-        </a>
-      </li>
-      <li>
-        <a href="about.html">
-          <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-          <span data-i18n="navAbout">About Us</span>
+          <span data-i18n="navShop">Our Store</span>
         </a>
       </li>
       <li>
@@ -142,7 +137,7 @@
           <!-- Left: Gallery & Zoom -->
           <div class="product-gallery-panel">
             <div class="gallery-main-view">
-              <img id="product-main-image" src="" alt="Product Preview">
+              <img id="product-main-image" src="" alt="Product Preview" fetchpriority="high" decoding="async" width="600" height="600">
             </div>
 
             <!-- Thumbnails List -->
@@ -219,27 +214,40 @@
                     <button type="button" id="btn-qty-increase" class="btn-qty-adj">+</button>
                   </div>
                   
-                  <button type="button" id="btn-add-to-cart" class="btn btn-primary btn-lg flex-1">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                    <span data-i18n="addToCart">Add to Cart</span>
-                  </button>
+                  <div class="product-actions-cluster flex-1">
+                    <button type="button" id="btn-add-to-cart" class="btn btn-primary btn-lg flex-1">
+                      <span data-i18n="addToCart">Add to Cart</span>
+                    </button>
+                    <button type="button" id="btn-buy-now" class="btn btn-gold btn-lg btn-buy-now flex-1" data-i18n="buyNow">
+                      <span>Buy Now</span>
+                    </button>
+                    <button type="button" id="btn-product-detail-share" class="btn-product-share" title="Share Product" aria-label="Share Product" data-i18n-title="shareProduct">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                    </button>
+                  </div>
                 </div>
               </div>
 
-              <!-- Instant Buy Action -->
-              <div class="instant-buy-wrap">
-                <button type="button" id="btn-buy-now" class="btn btn-gold btn-block btn-lg" data-i18n="buyNow">
-                  <span>Buy Now with Instant Express Dispatch</span>
-                </button>
+              <!-- Direct Contact Order Buttons (Order by Call & WhatsApp) -->
+              <div class="direct-order-buttons-grid">
+                <!-- Order by Call (Phones Only) -->
+                <a href="tel:+97471040746" id="btn-order-call" class="btn btn-order-call" data-i18n="btnOrderCall">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                  <span data-i18n="btnOrderCall">Order by a Call</span>
+                </a>
+
+                <!-- Order by WhatsApp (Responsive / All Devices) -->
+                <a href="https://wa.me/97471040746" id="btn-order-whatsapp" target="_blank" rel="noopener noreferrer" class="btn btn-order-whatsapp" data-i18n="btnOrderWhatsApp">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <path fill="#ffffff" fill-rule="evenodd" clip-rule="evenodd" d="M18.403 5.638A8.955 8.955 0 0 0 12.053 3c-4.948 0-8.976 4.027-8.978 8.977 0 1.582.413 3.126 1.2 4.488L3 21l4.646-1.218a8.946 8.946 0 0 0 4.405 1.15h.004c4.947 0 8.975-4.027 8.977-8.977a8.926 8.926 0 0 0-2.629-6.317zm-6.35 13.812h-.003a7.446 7.446 0 0 1-3.799-1.041l-.272-.162-2.824.741.753-2.753-.177-.282a7.448 7.448 0 0 1-1.141-3.976c.002-4.114 3.349-7.461 7.465-7.461a7.422 7.422 0 0 1 5.279 2.188 7.42 7.42 0 0 1 2.183 5.28c-.002 4.114-3.349 7.462-7.466 7.462zm4.095-5.591c-.225-.113-1.327-.655-1.533-.73-.205-.075-.354-.112-.504.112s-.58 1.73-.711.88c-.131.15-.262.169-.487.056-.225-.113-.949-.35-1.808-1.115-.668-.596-1.12-1.332-1.251-1.557s-.014-.346.099-.458c.101-.1.225-.262.337-.393s.15-.225.225-.375c.075-.15.037-.281-.019-.394s-.504-1.216-.69-1.665c-.182-.437-.367-.378-.504-.385l-.43-.008c-.15 0-.393.056-.599.281-.206.225-.786.768-.786 1.872s.805 2.172.917 2.322c.112.15 1.583 2.417 3.835 3.39.536.231.954.369 1.28.473.538.171 1.028.147 1.415.089.431-.064 1.327-.542 1.514-1.066.187-.524.187-.973.131-1.066-.056-.093-.206-.15-.431-.262z"/>
+                  </svg>
+                  <span data-i18n="btnOrderWhatsApp">Order by WhatsApp</span>
+                </a>
               </div>
             </div>
 
             <!-- Trust Badges -->
             <div class="product-trust-badges">
-              <div class="trust-badge-item">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                <span data-i18n="trustBadge1">2-Year Official Diamond Care+ Global Warranty</span>
-              </div>
               <div class="trust-badge-item">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
                 <span data-i18n="trustBadge2">Same-Day Express Courier in Qatar & GCC</span>
@@ -280,7 +288,7 @@
                 <h3 data-i18n="reviewsHeaderTitle">Client Reviews & Ratings</h3>
                 <p data-i18n="reviewsHeaderSubtitle">Verified purchasers from Doha, London, Zurich, and Dubai.</p>
               </div>
-              <button type="button" class="btn btn-outline" data-i18n="writeReviewBtn">Write a Review</button>
+              <button type="button" class="btn btn-outline btn-write-review" id="btn-write-review" data-i18n="writeReviewBtn">Write a Review</button>
             </div>
             <div id="product-reviews-list" class="reviews-grid"></div>
           </div>
@@ -335,7 +343,7 @@
               </a>
             </li>
             <li>
-              <a href="about.html">
+              <a href="contact.html">
                 <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
                 <span data-i18n="footerWarranty">Diamond Care+</span>
               </a>

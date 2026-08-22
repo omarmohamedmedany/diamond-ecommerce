@@ -8,8 +8,8 @@ const TRANSLATIONS = {
     brandName: "Diamond",
     brandTagline: "Next-Gen Tech Elegance",
     navHome: "Home",
-    navShop: "Shop All",
-    navAbout: "About Us",
+    navShop: "Our Store",
+    navCatalog: "Our Store",
     navContact: "Contact Us",
     navSearch: "Search",
     navPhones: "Phones",
@@ -27,13 +27,18 @@ const TRANSLATIONS = {
     searchPlaceholder: "Search flagship phones, smartwatches, AirPods...",
     searchTitle: "Search Tech Catalog",
     searchNoResults: "No tech products found matching your search.",
-    currencySymbol: "$",
+    currencySymbol: "QR",
+    btnOrderCall: "Order by Call",
+    btnOrderWhatsApp: "Order by WhatsApp",
+    dynamicNoticeTitle: "System Notice",
+    dynamicNoticeMsg: "This is for a dynamic website",
+    dynamicNoticeOk: "Understood",
 
     // Hero Section
     heroBadge: "Premium Tech Collection 2026",
-    heroTitle: "Original Flagship Phones & Smart Tech.",
-    heroSubtitle: "Explore the world's most powerful smartphones, luxury smartwatches, and studio audio. 100% original with official 2-year warranty.",
-    heroBtnExplore: "Shop All Products",
+    heroTitle: "Original Phones & Smart Tech.",
+    heroSubtitle: "Explore the world's most powerful smartphones, luxury smartwatches, and studio audio.",
+    heroBtnExplore: "Our Store",
     heroBtnDiscover: "View Best Sellers",
     heroStat1Value: "100% Original",
     heroStat1Label: "Factory Sealed & Guaranteed",
@@ -58,14 +63,14 @@ const TRANSLATIONS = {
     bestSellersTag: "Popular Items",
     bestSellersTitle: "Featured Products",
     bestSellersSubtitle: "Our most popular and highest-rated devices chosen by customers.",
-    viewAllProducts: "View All Products",
+    viewAllProducts: "View Full Catalog",
     quickView: "Quick View",
     addToCart: "Add to Cart",
     addedToCart: "Added to Cart",
     buyNow: "Buy Now",
-    outOfStock: "Out of Stock",
+    outOfStock: "Sold Out",
     inStock: "In Stock",
-    itemsLeft: "units in stock",
+    itemsLeft: "units left",
 
     // Home Category Links
     shopPhonesLink: "Shop Phones →",
@@ -93,26 +98,27 @@ const TRANSLATIONS = {
 
     // Testimonials
     testimonialsTitle: "Trusted by Global Visionaries",
-    testimonialsHeader: "Client Perspectives",
-    testimonialsSubtitle: "Discover what elite tech enthusiasts say about Diamond.",
-    testimonial1Quote: "\"The iPhone 16 Pro Max is an absolute masterpiece. The weight, tactile feel of the titanium finish, and the camera clarity are unmatched.\"",
+    testimonialsHeader: "Client Impressions & Testimonials",
+    testimonialsSubtitle: "Discover why discerning clients select Diamond for their technology ecosystem.",
+    testimonial1Quote: "\"The iPhone 16 Pro Max in Desert Titanium is extraordinary. Flawless unboxing and express concierge courier delivery.\"",
     testimonial1Author: "Mansoor Al-Sulaiti",
-    testimonial1Title: "Director, Doha",
-    testimonial2Quote: "\"Diamond's 24-hour courier service delivered the Apple Watch Ultra 2 right to my doorstep in Dubai. Flawless presentation and authentic warranty.\"",
+    testimonial1Title: "Managing Director, Doha",
+    testimonial2Quote: "\"Diamond represents what tech retail should be—pure sophistication, genuine factory-sealed devices, and same-day delivery.\"",
     testimonial2Author: "Charlotte Kingston",
-    testimonial2Title: "Tech Journalist, London",
-    testimonial3Quote: "\"Exceptional customer service and instant WhatsApp response. Authentic factory sealed devices with the highest safety standards.\"",
-    testimonial3Author: "Faisal Al-Nuaimi",
-    testimonial3Title: "Entrepreneur, Riyadh",
+    testimonial2Title: "Tech Editor, London",
+    testimonial3Quote: "\"My Apple Watch Ultra 2 arrived within 24 hours with certified warranty papers. Supreme client service.\"",
+    testimonial3Author: "Faisal Al-Kuwari",
+    testimonial3Title: "Private Investor, Dubai",
 
     // Newsletter & Footer
     newsletterTitle: "Join the Diamond Circle",
     newsletterSubtitle: "Receive private launch invitations, secret drops, and tech analysis.",
+    newsletterDesc: "Receive private launch invitations, secret drops, and tech analysis.",
     newsletterPlaceholder: "Enter your email address...",
     newsletterBtn: "Subscribe",
-    newsletterSuccess: "Thank you for subscribing to Diamond updates.",
+    newsletterSuccess: "Thank you for subscribing to Diamond private access.",
     footerDesc: "Diamond is the global benchmark for luxury consumer technology, curated flagships, and premium acoustic engineering.",
-    footerNavQuick: "Quick Navigation",
+    footerNavQuick: "Quick Links",
     footerNavSupport: "Client Care",
     footerNavLegal: "Legal & Privacy",
     footerTrackOrder: "Track Shipment",
@@ -131,7 +137,7 @@ const TRANSLATIONS = {
     filterPillCategory: "Category: ",
     filterPillCondition: "Condition: ",
     filterPillBrand: "Brand: ",
-    filterPillMaxPrice: "Max Price: $",
+    filterPillMaxPrice: "Max Price: ",
     filterPillSearch: "Search: ",
     productDetailGradeA: "✨ Grade A+ • Never Used (Factory Sealed)",
     productDetailGradeB: "💎 Grade A • Like New (Used < 1 Year)",
@@ -159,6 +165,12 @@ const TRANSLATIONS = {
     shopHeading: "Explore All Devices & Tech",
     shopSubheading: "Explore the complete collection of ultra-premium smartphones, wearables, and audio gear.",
     filterTitle: "Filters",
+    btnFilters: "Filters",
+    btnHideFilters: "Hide Filters",
+    btnShowFilters: "Show Filters",
+    filterDrawerTitle: "Filter & Refine",
+    btnApplyFilters: "Apply Filters",
+    btnApplyFiltersWithCount: "Show Devices",
     filterClearAll: "Reset All",
     filterCategory: "Category",
     filterAll: "All Products",
@@ -188,6 +200,8 @@ const TRANSLATIONS = {
     brandSony: "Sony",
     brandGoogle: "Google",
     filterPriceRange: "Price Range",
+    sliderMinPrice: "100 QR",
+    sliderMaxPrice: "6,000+ QR",
     filterAvailability: "Availability",
     filterInStockOnly: "In Stock Only",
     sortBy: "Sort By:",
@@ -222,6 +236,27 @@ const TRANSLATIONS = {
     writeReviewBtn: "Write a Review",
     relatedProductsTitle: "You May Also Admire",
     relatedProductsSubtitle: "Harmonizing devices curated to elevate your ecosystem.",
+
+    // Share Modal
+    shareProduct: "Share Product",
+    shareTitle: "Share this Device",
+    shareSubtitle: "Share this luxury device with friends and family across your favorite platforms.",
+    shareCopyLink: "Copy Link",
+    shareCopied: "Copied!",
+    shareToastCopied: "Product link copied to clipboard!",
+    shareWhatsApp: "WhatsApp",
+    shareTelegram: "Telegram",
+    shareTwitter: "X / Twitter",
+    shareFacebook: "Facebook",
+    shareEmail: "Email",
+    shareMore: "More",
+    shareMorePlatforms: "More Apps & Platforms",
+    shareNativeDevice: "Device Apps & More",
+    shareLinkedIn: "LinkedIn",
+    shareReddit: "Reddit",
+    sharePinterest: "Pinterest",
+    shareSkype: "Skype",
+    shareSMS: "SMS / Messages",
 
     // Spec Keys
     specDisplay: "Display",
@@ -457,8 +492,8 @@ const TRANSLATIONS = {
     brandName: "دايموند",
     brandTagline: "قمة الفخامة والتقنية الحديثة",
     navHome: "الرئيسية",
-    navShop: "كافة المنتجات",
-    navAbout: "عن دايموند",
+    navShop: "متجرنا",
+    navCatalog: "متجرنا",
     navContact: "اتصل بنا",
     navSearch: "البحث",
     navPhones: "الهواتف الذكية",
@@ -476,13 +511,18 @@ const TRANSLATIONS = {
     searchPlaceholder: "ابحث عن أحدث الهواتف، الساعات، الإيربودز...",
     searchTitle: "بحث في كتالوج المنتجات",
     searchNoResults: "لم يتم العثور على أجهزة مطابقة لبحثك.",
-    currencySymbol: "$",
+    currencySymbol: "ر.ق",
+    btnOrderCall: "طلب عبر اتصال",
+    btnOrderWhatsApp: "طلب عبر واتساب",
+    dynamicNoticeTitle: "تنبيه تقني",
+    dynamicNoticeMsg: "هذا الإجراء مخصص لموقع ويب ديناميكي",
+    dynamicNoticeOk: "حسناً",
 
     // Hero Section
     heroBadge: "تشكيلة الأجهزة الأصلية 2026",
-    heroTitle: "أحدث الهواتف الذكية والأجهزة الأصلية.",
-    heroSubtitle: "استكشف أفضل الهواتف الذكية، الساعات الفاخرة، والسماعات عالية النقاء. منتجات أصلية 100% مع ضمان رسمي سنتين.",
-    heroBtnExplore: "تسوق كافة الأجهزة",
+    heroTitle: "الهواتف الأصلية والأجهزة الذكية.",
+    heroSubtitle: "استكشف أفضل الهواتف الذكية، الساعات الفاخرة، والسماعات عالية النقاء.",
+    heroBtnExplore: "متجرنا",
     heroBtnDiscover: "الأكثر مبيعاً",
     heroStat1Value: "أصلي 100%",
     heroStat1Label: "جديد ومغلف بالكرتون",
@@ -557,6 +597,7 @@ const TRANSLATIONS = {
     // Newsletter & Footer
     newsletterTitle: "انضم إلى نادي دايموند",
     newsletterSubtitle: "احصل على دعوات حصرية للإطلاقات الجديدة وعروض الأجهزة الحصرية.",
+    newsletterDesc: "احصل على دعوات حصرية للإطلاقات الجديدة وعروض الأجهزة الحصرية.",
     newsletterPlaceholder: "أدخل بريدك الإلكتروني...",
     newsletterBtn: "اشتراك الآن",
     newsletterSuccess: "شكراً لاشتراكك في قائمة دايموند.",
@@ -574,13 +615,12 @@ const TRANSLATIONS = {
     footerSecuritySSL: "دفع إلكتروني آمن ومشفر بأعلى معايير 256-bit SSL.",
     footerSupportDesk: "مكتب خدمة ودعم العملاء المخصص على مدار الساعة.",
     footerCourierComplimentary: "شحن سريع ومجاني مؤمن لكافة الطلبات.",
-    indexFooterDesigned: "مصمم بفخامة التيتانيوم المتوافقة مع أنظمة iOS وأندرويد.",
 
     // Shop Filter Pills & UI
     filterPillCategory: "التصنيف: ",
     filterPillCondition: "الحالة: ",
     filterPillBrand: "العلامة التجارية: ",
-    filterPillMaxPrice: "أقصى سعر: $",
+    filterPillMaxPrice: "أقصى سعر: ",
     filterPillSearch: "البحث: ",
     productDetailGradeA: "✨ جديد كلياً (مغلف بختم المصنع)",
     productDetailGradeB: "💎 كالجديد (استعمال أقل من سنة)",
@@ -608,6 +648,12 @@ const TRANSLATIONS = {
     shopHeading: "تصفح كافة الأجهزة والمنتجات",
     shopSubheading: "استكشف التشكيلة الكاملة من الهواتف الذكية والساعات والسماعات الفاخرة.",
     filterTitle: "تصفية المنتجات",
+    btnFilters: "تصفية المنتجات",
+    btnHideFilters: "إخفاء الفلاتر",
+    btnShowFilters: "إظهار الفلاتر",
+    filterDrawerTitle: "تصفية ومعايير البحث",
+    btnApplyFilters: "تطبيق التصفية",
+    btnApplyFiltersWithCount: "عرض الأجهزة",
     filterClearAll: "إعادة ضبط",
     filterCategory: "التصنيف",
     filterAll: "كافة الأجهزة",
@@ -637,6 +683,8 @@ const TRANSLATIONS = {
     brandSony: "سوني",
     brandGoogle: "جوجل",
     filterPriceRange: "نطاق السعر",
+    sliderMinPrice: "100 ر.ق",
+    sliderMaxPrice: "+6,000 ر.ق",
     filterAvailability: "التوفر",
     filterInStockOnly: "المتوفر بالمخزون فقط",
     sortBy: "ترتيب حسب:",
@@ -671,6 +719,27 @@ const TRANSLATIONS = {
     writeReviewBtn: "كتابة تقييم",
     relatedProductsTitle: "أجهزة أخرى قد تثير إعجابك",
     relatedProductsSubtitle: "أجهزة متناسقة تم اختيارها بعناية لتعزيز منظومتك التقنية.",
+
+    // Share Modal
+    shareProduct: "مشاركة المنتج",
+    shareTitle: "مشاركة هذا الجهاز",
+    shareSubtitle: "شارك هذا الجهاز الفاخر مع الأصدقاء والعائلة عبر منصاتك المفضلة.",
+    shareCopyLink: "نسخ الرابط",
+    shareCopied: "تم النسخ!",
+    shareToastCopied: "تم نسخ رابط المنتج إلى الحافظة!",
+    shareWhatsApp: "واتساب",
+    shareTelegram: "تيليجرام",
+    shareTwitter: "إكس / تويتر",
+    shareFacebook: "فيسبوك",
+    shareEmail: "البريد الإلكتروني",
+    shareMore: "المزيد",
+    shareMorePlatforms: "المزيد من التطبيقات والمنصات",
+    shareNativeDevice: "تطبيقات الهاتف والمزيد",
+    shareLinkedIn: "لينكد إن",
+    shareReddit: "ريديت",
+    sharePinterest: "بينتريست",
+    shareSkype: "سكايب",
+    shareSMS: "رسائل SMS",
 
     // Spec Keys
     specDisplay: "الشاشة",
@@ -959,6 +1028,19 @@ const I18n = {
     return size.replace(/GB/gi, ' جيجابايت').replace(/TB/gi, ' تيرابايت');
   },
 
+  formatPrice(amount, lang = this.currentLang) {
+    if (amount === undefined || amount === null || isNaN(amount)) return '';
+    const num = Math.round(Number(amount));
+    if (lang === 'ar') {
+      const formatted = num.toLocaleString('en-US');
+      const arabicDigits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+      const arabicNum = formatted.replace(/\d/g, d => arabicDigits[d]).replace(/,/g, '،');
+      return `${arabicNum} ر.ق`;
+    } else {
+      return `${num.toLocaleString('en-US')} QR`;
+    }
+  },
+
   setLanguage(lang) {
     if (lang !== 'en' && lang !== 'ar') lang = 'en';
     this.currentLang = lang;
@@ -1012,6 +1094,13 @@ const I18n = {
         ? `<span class="lang-text">العربية</span>`
         : `<span class="lang-text">English</span>`;
     });
+
+    const priceDisplay = document.getElementById('price-range-val');
+    const priceSlider = document.getElementById('price-range-slider');
+    if (priceDisplay && priceSlider) {
+      const currentVal = parseInt(priceSlider.value, 10) || 6000;
+      priceDisplay.textContent = this.formatPrice(currentVal, lang);
+    }
   },
 
   bindEvents() {
@@ -1024,6 +1113,8 @@ const I18n = {
     });
   }
 };
+
+window.I18n = I18n;
 
 document.addEventListener('DOMContentLoaded', () => {
   I18n.init();

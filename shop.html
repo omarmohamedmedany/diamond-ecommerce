@@ -3,15 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https://images.unsplash.com https:; connect-src 'self' https:;">
   <title>Flagship Catalog — Diamond Luxury Tech & Curated Hardware</title>
   <meta name="description" content="Browse our luxury catalog of smartphones, smartwatches, AirPods, and accessories. Filter by brand, condition, and price.">
   <link rel="canonical" href="https://diamondtech.luxury/shop.html">
 
-  <!-- Preconnect & High-Speed Font Delivery -->
+  <!-- Preconnect & High-Speed Asset & Font Delivery -->
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+  <link rel="dns-prefetch" href="https://images.unsplash.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
@@ -46,8 +48,7 @@
       <nav class="nav-menu">
         <ul class="nav-links">
           <li><a href="index.html" class="nav-link" data-i18n="navHome">Home</a></li>
-          <li><a href="shop.html" class="nav-link is-active" data-i18n="navShop">Shop All</a></li>
-          <li><a href="about.html" class="nav-link" data-i18n="navAbout">About Us</a></li>
+          <li><a href="shop.html" class="nav-link is-active" data-i18n="navShop">Our Store</a></li>
           <li><a href="contact.html" class="nav-link" data-i18n="navContact">Contact Us</a></li>
         </ul>
       </nav>
@@ -63,7 +64,7 @@
 
         <button type="button" class="nav-icon-btn btn-cart-trigger" aria-label="Shopping Cart">
           <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-          <span class="cart-count-badge" style="display:none;">0</span>
+          <span class="cart-count-badge" aria-live="polite" style="display:none;">0</span>
         </button>
 
         <div class="auth-nav-container"></div>
@@ -101,13 +102,7 @@
       <li>
         <a href="shop.html" class="is-active">
           <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-          <span data-i18n="navShop">Shop All</span>
-        </a>
-      </li>
-      <li>
-        <a href="about.html">
-          <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-          <span data-i18n="navAbout">About Us</span>
+          <span data-i18n="navShop">Our Store</span>
         </a>
       </li>
       <li>
@@ -137,16 +132,22 @@
 
     <!-- Main Catalog Layout with Sticky Independent Filter Scroll -->
     <section class="shop-layout-section">
-      <div class="container shop-grid-container">
+      <!-- Filter Drawer Overlay for Mobile & Collapsed States -->
+      <div id="filter-drawer-overlay" class="filter-drawer-overlay"></div>
+
+      <div class="container shop-grid-container" id="shop-grid-container">
         
-        <!-- Sticky Sidebar with Custom Scroll -->
-        <aside class="shop-sidebar">
+        <!-- Sidebar Filter Panel / Slide-out Drawer -->
+        <aside class="shop-sidebar" id="shop-sidebar">
           <div class="sidebar-header">
             <div class="sidebar-title-wrap">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
               <h3 data-i18n="filterTitle">Filters</h3>
             </div>
-            <button type="button" class="btn-clear-filters" id="btn-clear-filters" data-i18n="filterClearAll">Reset All</button>
+            <div class="sidebar-header-actions">
+              <button type="button" class="btn-clear-filters" id="btn-clear-filters" onclick="event.preventDefault(); event.stopPropagation(); Shop.resetFilters()" data-i18n="filterClearAll">Reset All</button>
+              <button type="button" class="btn-close-filter-drawer" id="btn-close-filter-drawer" aria-label="Close Filters">&times;</button>
+            </div>
           </div>
 
           <!-- Category Filter -->
@@ -154,38 +155,38 @@
             <h4 class="filter-group-title" data-i18n="filterCategory">Category</h4>
             <div class="filter-options-list">
               <label class="filter-radio-label">
-                <span>
+                <div class="filter-label-left">
                   <input type="radio" name="filter-cat" value="all" checked>
                   <span data-i18n="filterAll">All Products</span>
-                </span>
+                </div>
                 <span class="count-pill" id="cat-count-all">100</span>
               </label>
               <label class="filter-radio-label">
-                <span>
+                <div class="filter-label-left">
                   <input type="radio" name="filter-cat" value="phones">
                   <span data-i18n="catPhones">Phones</span>
-                </span>
+                </div>
                 <span class="count-pill" id="cat-count-phones">37</span>
               </label>
               <label class="filter-radio-label">
-                <span>
+                <div class="filter-label-left">
                   <input type="radio" name="filter-cat" value="watches">
                   <span data-i18n="catWatches">Smartwatches</span>
-                </span>
+                </div>
                 <span class="count-pill" id="cat-count-watches">22</span>
               </label>
               <label class="filter-radio-label">
-                <span>
+                <div class="filter-label-left">
                   <input type="radio" name="filter-cat" value="audio">
                   <span data-i18n="catAudio">AirPods & Audio</span>
-                </span>
+                </div>
                 <span class="count-pill" id="cat-count-audio">24</span>
               </label>
               <label class="filter-radio-label">
-                <span>
+                <div class="filter-label-left">
                   <input type="radio" name="filter-cat" value="accessories">
                   <span data-i18n="catAccessories">Accessories</span>
-                </span>
+                </div>
                 <span class="count-pill" id="cat-count-accessories">17</span>
               </label>
             </div>
@@ -211,15 +212,22 @@
           <div class="filter-group">
             <div class="filter-title-row">
               <h4 class="filter-group-title" data-i18n="filterPriceRange">Price Range</h4>
-              <span id="price-range-val" class="price-val-display">$6,000</span>
+              <span id="price-range-val" class="price-val-display">6,000 QR</span>
             </div>
             <div class="price-slider-wrap">
               <input type="range" id="price-range-slider" min="100" max="6000" step="50" value="6000">
               <div class="slider-labels">
-                <span>$100</span>
-                <span>$6,000+</span>
+                <span id="slider-min-label" data-i18n="sliderMinPrice">100 QR</span>
+                <span id="slider-max-label" data-i18n="sliderMaxPrice">6,000+ QR</span>
               </div>
             </div>
+          </div>
+
+          <!-- Mobile / Drawer Apply Footer -->
+          <div class="sidebar-apply-footer">
+            <button type="button" class="btn-drawer-apply" id="btn-apply-filter-drawer">
+              <span data-i18n="btnApplyFilters">Apply Filters</span>
+            </button>
           </div>
         </aside>
 
@@ -227,8 +235,26 @@
         <section class="shop-main-content">
           <!-- Top Control Bar -->
           <div class="shop-control-bar">
-            <div id="shop-results-count" class="shop-results-count">
-              <!-- Populated by JS -->
+            <div class="shop-control-left">
+              <button type="button" id="btn-toggle-filters" class="btn-filter-trigger" title="Toggle Filters">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="4" y1="21" x2="4" y2="14"></line>
+                  <line x1="4" y1="10" x2="4" y2="3"></line>
+                  <line x1="12" y1="21" x2="12" y2="12"></line>
+                  <line x1="12" y1="8" x2="12" y2="3"></line>
+                  <line x1="20" y1="21" x2="20" y2="16"></line>
+                  <line x1="20" y1="12" x2="20" y2="3"></line>
+                  <line x1="1" y1="14" x2="7" y2="14"></line>
+                  <line x1="9" y1="8" x2="15" y2="8"></line>
+                  <line x1="17" y1="16" x2="23" y2="16"></line>
+                </svg>
+                <span id="btn-toggle-filters-text" data-i18n="btnFilters">Filters</span>
+                <span id="filter-active-count-badge" class="filter-count-badge" style="display:none;">0</span>
+              </button>
+
+              <div id="shop-results-count" class="shop-results-count">
+                <!-- Populated by JS -->
+              </div>
             </div>
 
             <div class="shop-sort-controls">
@@ -300,7 +326,7 @@
               </a>
             </li>
             <li>
-              <a href="about.html">
+              <a href="contact.html">
                 <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
                 <span data-i18n="footerWarranty">Diamond Care+</span>
               </a>

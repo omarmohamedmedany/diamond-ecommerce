@@ -31,11 +31,11 @@ const Cart = {
   },
 
   addItem(productId, quantity = 1, options = {}) {
-    const product = ProductService.getById(productId);
+    const product = (typeof ProductService !== 'undefined') ? ProductService.getById(productId) : null;
     if (!product) return false;
 
     const cart = this.getCart();
-    const selectedColor = options.color || product.colors[0];
+    const selectedColor = options.color || (product.colors && product.colors[0]) || { name: 'Standard', hex: '#000000', code: 'default' };
     const selectedStorage = options.storage || (product.storageOptions ? product.storageOptions[0] : null);
     
     // Calculate final unit price based on storage option
@@ -44,7 +44,9 @@ const Cart = {
       unitPrice = Math.round(product.basePrice * selectedStorage.priceMultiplier);
     }
 
-    const uniqueId = `${product.id}-${selectedColor.code}-${selectedStorage ? selectedStorage.size.replace(/\s+/g, '') : 'std'}`;
+    const colorCode = selectedColor.code || 'default';
+    const storageSize = selectedStorage ? String(selectedStorage.size).replace(/\s+/g, '') : 'std';
+    const uniqueId = `${product.id}-${colorCode}-${storageSize}`;
 
     const existingIndex = cart.findIndex(item => item.cartItemId === uniqueId);
     if (existingIndex > -1) {
@@ -67,29 +69,43 @@ const Cart = {
 
     this.saveCart(cart);
     
-    const lang = I18n.getLang();
-    const productName = product.name[lang] || product.name.en;
-    Toast.show(`${productName} ${I18n.t('addedToCart')}`, 'success');
+    const lang = (typeof I18n !== 'undefined') ? I18n.getLang() : 'en';
+    const productName = (product.name && typeof product.name === 'object') ? (product.name[lang] || product.name.en) : product.name;
+    const addedText = (typeof I18n !== 'undefined' && I18n.t) ? I18n.t('addedToCart') : (lang === 'ar' ? 'تمت إضافته إلى السلة' : 'added to cart');
+    
+    if (typeof Toast !== 'undefined') {
+      Toast.show(`${productName} ${addedText}`, 'success');
+    }
+    
+    // Open the Cart drawer so the user immediately sees the confirmation and cart summary
+    this.openDrawer();
     
     return true;
   },
 
   removeItem(cartItemId) {
+    if (!cartItemId) return;
+    const cleanId = String(cartItemId).trim();
     let cart = this.getCart();
-    cart = cart.filter(item => item.cartItemId !== cartItemId);
+    cart = cart.filter(item => String(item.cartItemId).trim() !== cleanId && String(item.productId).trim() !== cleanId);
     this.saveCart(cart);
-    Toast.show(I18n.t('toastItemRemoved'), 'info');
+    const lang = (typeof I18n !== 'undefined') ? I18n.getLang() : 'en';
+    const msg = (typeof I18n !== 'undefined' && I18n.t) ? I18n.t('toastItemRemoved') : (lang === 'ar' ? 'تم حذف العنصر من السلة' : 'Item removed from cart');
+    if (typeof Toast !== 'undefined') Toast.show(msg, 'info');
   },
 
   updateQuantity(cartItemId, quantity) {
+    if (!cartItemId) return;
+    const cleanId = String(cartItemId).trim();
+    let num = parseInt(quantity, 10);
+    if (isNaN(num) || num <= 0) {
+      this.removeItem(cleanId);
+      return;
+    }
     let cart = this.getCart();
-    const item = cart.find(i => i.cartItemId === cartItemId);
+    const item = cart.find(i => String(i.cartItemId).trim() === cleanId || String(i.productId).trim() === cleanId);
     if (item) {
-      if (quantity <= 0) {
-        this.removeItem(cartItemId);
-        return;
-      }
-      item.quantity = quantity;
+      item.quantity = num;
       this.saveCart(cart);
     }
   },
@@ -135,6 +151,10 @@ const Cart = {
     if (!coupon || !this.validCoupons[coupon]) return 0;
     const rate = this.validCoupons[coupon];
     return Math.round(this.getSubtotal() * rate);
+  },
+
+  getCouponDiscount() {
+    return this.getDiscountAmount();
   },
 
   getTaxAmount() {
@@ -192,16 +212,18 @@ const Cart = {
       badge.textContent = count;
       badge.style.display = count > 0 ? 'inline-flex' : 'none';
       badge.classList.remove('badge-pop');
-      void badge.offsetWidth; // force reflow for animation trigger
-      if (count > 0) badge.classList.add('badge-pop');
+      if (count > 0) {
+        requestAnimationFrame(() => badge.classList.add('badge-pop'));
+      }
     });
 
     document.querySelectorAll('.wishlist-count-badge').forEach(badge => {
       badge.textContent = wishlistCount;
       badge.style.display = wishlistCount > 0 ? 'inline-flex' : 'none';
       badge.classList.remove('badge-pop');
-      void badge.offsetWidth; // force reflow
-      if (wishlistCount > 0) badge.classList.add('badge-pop');
+      if (wishlistCount > 0) {
+        requestAnimationFrame(() => badge.classList.add('badge-pop'));
+      }
     });
   },
 
@@ -237,7 +259,7 @@ const Cart = {
       return `
         <div class="cart-drawer-item" data-cart-id="${item.cartItemId}">
           <div class="cart-drawer-img">
-            <img src="${item.image}" alt="${name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=200&q=80'">
+            <img src="${item.image}" alt="${name}" loading="lazy" decoding="async" width="80" height="80" onerror="this.src='https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=200&q=80'">
           </div>
           <div class="cart-drawer-info">
             <div class="cart-drawer-brand">${brandName}</div>
@@ -248,15 +270,15 @@ const Cart = {
               ${storageSize ? `<span class="variant-separator">•</span><span>${storageSize}</span>` : ''}
             </div>
             <div class="cart-drawer-row">
-              <div class="cart-drawer-qty">
-                <button type="button" class="btn-qty-minus" onclick="Cart.updateQuantity('${item.cartItemId}', ${item.quantity - 1})">-</button>
+              <div class="cart-drawer-qty" data-cart-id="${item.cartItemId}">
+                <button type="button" class="btn-qty-minus" data-action="qty-minus" data-cart-id="${item.cartItemId}" aria-label="Decrease quantity">-</button>
                 <span class="qty-number">${item.quantity}</span>
-                <button type="button" class="btn-qty-plus" onclick="Cart.updateQuantity('${item.cartItemId}', ${item.quantity + 1})">+</button>
+                <button type="button" class="btn-qty-plus" data-action="qty-plus" data-cart-id="${item.cartItemId}" aria-label="Increase quantity">+</button>
               </div>
-              <div class="cart-drawer-price">$${(item.unitPrice * item.quantity).toLocaleString()}</div>
+              <div class="cart-drawer-price">${(typeof I18n !== 'undefined' && I18n.formatPrice) ? I18n.formatPrice(item.unitPrice * item.quantity, lang) : ((item.unitPrice * item.quantity).toLocaleString() + ' QR')}</div>
             </div>
           </div>
-          <button type="button" class="cart-drawer-remove" onclick="Cart.removeItem('${item.cartItemId}')" title="${I18n.t('tableAction')}">
+          <button type="button" class="cart-drawer-remove" data-action="cart-remove" data-cart-id="${item.cartItemId}" title="${I18n.t('tableAction')}" aria-label="Remove item">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
           </button>
         </div>
@@ -264,13 +286,18 @@ const Cart = {
     }).join('');
 
     if (drawerSubtotal) {
-      drawerSubtotal.textContent = `$${this.getSubtotal().toLocaleString()}`;
+      drawerSubtotal.textContent = (typeof I18n !== 'undefined' && I18n.formatPrice) ? I18n.formatPrice(this.getSubtotal(), lang) : (`$${this.getSubtotal().toLocaleString()}`);
     }
   },
 
   openDrawer() {
-    const drawer = document.getElementById('cart-drawer');
-    const overlay = document.getElementById('cart-drawer-overlay');
+    let drawer = document.getElementById('cart-drawer');
+    let overlay = document.getElementById('cart-drawer-overlay');
+    if (!drawer && typeof App !== 'undefined' && App.injectSharedModals) {
+      App.injectSharedModals();
+      drawer = document.getElementById('cart-drawer');
+      overlay = document.getElementById('cart-drawer-overlay');
+    }
     if (drawer && overlay) {
       this.renderDrawer();
       drawer.classList.add('is-open');
@@ -282,28 +309,75 @@ const Cart = {
   closeDrawer() {
     const drawer = document.getElementById('cart-drawer');
     const overlay = document.getElementById('cart-drawer-overlay');
-    if (drawer && overlay) {
-      drawer.classList.remove('is-open');
-      overlay.classList.remove('is-open');
-      document.body.classList.remove('drawer-open');
-    }
+    if (drawer) drawer.classList.remove('is-open');
+    if (overlay) overlay.classList.remove('is-open');
+    document.body.classList.remove('drawer-open');
   },
 
   init() {
     this.updateBadges();
     this.renderDrawer();
 
-    // Bind drawer trigger buttons
-    document.addEventListener('click', (e) => {
-      if (e.target.closest('.btn-cart-trigger')) {
-        // If not on cart.html, open drawer. If on cart.html, can still open or navigate
-        if (!window.location.pathname.endsWith('cart.html')) {
-          e.preventDefault();
-          this.openDrawer();
-        }
+    // Bind drawer trigger buttons with full touch & click support
+    const handleCartTrigger = (e) => {
+      const trigger = e.target.closest('.btn-cart-trigger');
+      if (trigger) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.openDrawer();
       }
+    };
+
+    document.addEventListener('click', handleCartTrigger);
+
+    document.addEventListener('click', (e) => {
+      // Drawer close buttons & backdrop
       if (e.target.closest('.btn-close-drawer') || e.target.id === 'cart-drawer-overlay') {
+        e.preventDefault();
         this.closeDrawer();
+        return;
+      }
+
+      // Quantity Minus Handler
+      const btnMinus = e.target.closest('.btn-qty-minus, .btn-qty-sub, [data-action="qty-minus"]');
+      if (btnMinus) {
+        e.preventDefault();
+        const itemEl = btnMinus.closest('[data-cart-id], [data-id], .cart-drawer-item, .cart-table-row');
+        const cartId = btnMinus.getAttribute('data-cart-id') || itemEl?.getAttribute('data-cart-id') || itemEl?.getAttribute('data-id');
+        if (cartId) {
+          const item = this.getCart().find(i => String(i.cartItemId) === String(cartId) || String(i.productId) === String(cartId));
+          if (item) {
+            this.updateQuantity(item.cartItemId, item.quantity - 1);
+          }
+        }
+        return;
+      }
+
+      // Quantity Plus Handler
+      const btnPlus = e.target.closest('.btn-qty-plus, .btn-qty-add, [data-action="qty-plus"]');
+      if (btnPlus) {
+        e.preventDefault();
+        const itemEl = btnPlus.closest('[data-cart-id], [data-id], .cart-drawer-item, .cart-table-row');
+        const cartId = btnPlus.getAttribute('data-cart-id') || itemEl?.getAttribute('data-cart-id') || itemEl?.getAttribute('data-id');
+        if (cartId) {
+          const item = this.getCart().find(i => String(i.cartItemId) === String(cartId) || String(i.productId) === String(cartId));
+          if (item) {
+            this.updateQuantity(item.cartItemId, item.quantity + 1);
+          }
+        }
+        return;
+      }
+
+      // Item Remove Handler
+      const btnRemove = e.target.closest('.cart-drawer-remove, .btn-table-remove, .btn-cart-remove, [data-action="cart-remove"]');
+      if (btnRemove) {
+        e.preventDefault();
+        const itemEl = btnRemove.closest('[data-cart-id], [data-id], .cart-drawer-item, .cart-table-row');
+        const cartId = btnRemove.getAttribute('data-cart-id') || itemEl?.getAttribute('data-cart-id') || itemEl?.getAttribute('data-id');
+        if (cartId) {
+          this.removeItem(cartId);
+        }
+        return;
       }
     });
 
@@ -356,6 +430,9 @@ const Toast = {
     }, duration);
   }
 };
+
+window.Cart = Cart;
+window.Toast = Toast;
 
 document.addEventListener('DOMContentLoaded', () => {
   Cart.init();

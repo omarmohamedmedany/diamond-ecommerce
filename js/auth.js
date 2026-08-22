@@ -122,7 +122,14 @@ const Auth = {
     return { success: true };
   },
 
-  updateProfile(name, email, phone, avatarBase64) {
+  updateProfile(nameOrData, email, phone, avatarBase64) {
+    let name = nameOrData;
+    if (typeof nameOrData === 'object' && nameOrData !== null) {
+      name = nameOrData.name;
+      email = nameOrData.email;
+      phone = nameOrData.phone;
+      avatarBase64 = nameOrData.avatar;
+    }
     const currentUser = this.getCurrentUser();
     if (!currentUser) return { success: false };
 
@@ -131,9 +138,9 @@ const Auth = {
 
     const updatedUser = {
       ...currentUser,
-      name: (name || currentUser.name).trim(),
-      email: (email || currentUser.email).trim().toLowerCase(),
-      phone: (phone || currentUser.phone || '').trim(),
+      name: (name !== undefined && name !== null ? String(name) : currentUser.name).trim(),
+      email: (email !== undefined && email !== null ? String(email) : currentUser.email).trim().toLowerCase(),
+      phone: (phone !== undefined && phone !== null ? String(phone) : (currentUser.phone || '')).trim(),
       avatar: avatarBase64 !== undefined ? avatarBase64 : currentUser.avatar
     };
 
@@ -147,7 +154,28 @@ const Auth = {
     this.closeModals();
     Toast.show(I18n.t('profileSuccessSaved'), 'success');
     window.dispatchEvent(new CustomEvent('diamond:authChanged', { detail: { user: updatedUser } }));
-    return { success: true };
+    return updatedUser;
+  },
+
+  saveOrder(order) {
+    try {
+      const history = JSON.parse(localStorage.getItem(this.ordersHistoryKey) || '[]');
+      history.unshift(order);
+      localStorage.setItem(this.ordersHistoryKey, JSON.stringify(history));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  },
+
+  getUserOrders(email) {
+    try {
+      const history = JSON.parse(localStorage.getItem(this.ordersHistoryKey) || '[]');
+      if (!email) return history;
+      return history.filter(o => !o.shipping || !o.shipping.email || o.shipping.email.toLowerCase() === email.toLowerCase() || (o.email && o.email.toLowerCase() === email.toLowerCase()));
+    } catch (e) {
+      return [];
+    }
   },
 
   logout() {
@@ -160,6 +188,10 @@ const Auth = {
   // Modal Openers
   openSignInModal() {
     this.closeModals();
+    if (typeof App !== 'undefined' && App.showDynamicNotice) {
+      App.showDynamicNotice();
+      return;
+    }
     const modal = document.getElementById('auth-signin-modal');
     if (modal) modal.classList.add('is-open');
     document.body.classList.add('modal-open');
@@ -167,6 +199,10 @@ const Auth = {
 
   openSignUpModal() {
     this.closeModals();
+    if (typeof App !== 'undefined' && App.showDynamicNotice) {
+      App.showDynamicNotice();
+      return;
+    }
     const modal = document.getElementById('auth-signup-modal');
     if (modal) modal.classList.add('is-open');
     document.body.classList.add('modal-open');
@@ -571,6 +607,8 @@ const Auth = {
     });
   }
 };
+
+window.Auth = Auth;
 
 document.addEventListener('DOMContentLoaded', () => {
   Auth.init();

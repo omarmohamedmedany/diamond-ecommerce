@@ -72,7 +72,7 @@ const ProductDetail = {
     if (thumbsContainer) {
       thumbsContainer.innerHTML = p.images.map((img, i) => `
         <button type="button" class="gallery-thumb-btn ${i === 0 ? 'is-active' : ''}" data-index="${i}">
-          <img src="${img}" alt="${name} angle ${i + 1}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=200&q=80'">
+          <img src="${img}" alt="${name} angle ${i + 1}" loading="lazy" decoding="async" width="100" height="100" onerror="this.src='https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=200&q=80'">
         </button>
       `).join('');
 
@@ -196,7 +196,43 @@ const ProductDetail = {
   updatePriceDisplay() {
     const priceEl = document.getElementById('product-current-price');
     const currPrice = this.getCurrentPrice();
-    if (priceEl) priceEl.textContent = `$${currPrice.toLocaleString()}`;
+    const lang = (typeof I18n !== 'undefined') ? I18n.getLang() : 'en';
+    if (priceEl) priceEl.textContent = (typeof I18n !== 'undefined' && I18n.formatPrice) ? I18n.formatPrice(currPrice, lang) : (`$${currPrice.toLocaleString()}`);
+    this.updateWhatsAppLink();
+  },
+
+  updateWhatsAppLink() {
+    const waBtn = document.getElementById('btn-order-whatsapp');
+    if (!waBtn || !this.product) return;
+
+    const lang = (typeof I18n !== 'undefined') ? I18n.getLang() : 'en';
+    const prodName = this.product.name[lang] || this.product.name.en;
+    const colorName = this.selectedColor ? (this.selectedColor.name[lang] || this.selectedColor.name.en) : '';
+    const storageName = this.selectedStorage ? ((typeof I18n !== 'undefined' && I18n.formatStorage) ? I18n.formatStorage(this.selectedStorage.size, lang) : this.selectedStorage.size) : '';
+    const formattedPrice = (typeof I18n !== 'undefined' && I18n.formatPrice) ? I18n.formatPrice(this.getCurrentPrice(), lang) : (`$${this.getCurrentPrice().toLocaleString()}`);
+
+    let msg = '';
+    if (lang === 'ar') {
+      msg = `مرحباً دايموند تك، أود طلب الجهاز التالي مباشرة عبر الواتساب:
+• الجهاز: ${prodName}
+• اللون / التشطيب: ${colorName || 'الافتراضي'}
+• السعة / الإصدار: ${storageName || 'الأساسي'}
+• السعر: ${formattedPrice}
+• الكمية: ${this.quantity || 1}
+
+يرجى تأكيد التوافر وتفاصيل الشحن السريع. شكراً لكم!`;
+    } else {
+      msg = `Hello Diamond Tech Concierge, I would like to order this flagship device directly via WhatsApp:
+• Device: ${prodName}
+• Color / Finish: ${colorName || 'Default'}
+• Storage / Variant: ${storageName || 'Standard'}
+• Price: ${formattedPrice}
+• Quantity: ${this.quantity || 1}
+
+Please confirm availability and express courier delivery. Thank you!`;
+    }
+
+    waBtn.href = `https://wa.me/97471040746?text=${encodeURIComponent(msg)}`;
   },
 
   translateBoxItem(item, lang, p) {
@@ -240,11 +276,6 @@ const ProductDetail = {
               <h4>${I18n.t('featureHl2Title')}</h4>
               <p>${I18n.t('featureHl2Desc')}</p>
             </div>
-            <div class="highlight-box">
-              <div class="hl-icon">🛡️</div>
-              <h4>${I18n.t('featureHl3Title')}</h4>
-              <p>${I18n.t('featureHl3Desc')}</p>
-            </div>
           </div>
         </div>
       `;
@@ -286,24 +317,30 @@ const ProductDetail = {
     const btnMinus = document.getElementById('btn-qty-decrease');
     const btnPlus = document.getElementById('btn-qty-increase');
 
-    if (btnMinus && qtyInput) {
-      btnMinus.addEventListener('click', () => {
-        let val = parseInt(qtyInput.value, 10) || 1;
-        if (val > 1) {
-          qtyInput.value = val - 1;
-          this.quantity = val - 1;
-        }
-      });
+    const updateDetailQty = (delta) => {
+      const input = document.getElementById('product-qty-input') || qtyInput;
+      let currentVal = parseInt(input ? input.value : this.quantity, 10) || 1;
+      let newVal = currentVal + delta;
+      if (newVal < 1) newVal = 1;
+      if (newVal > 10) newVal = 10;
+      if (input) input.value = newVal;
+      this.quantity = newVal;
+    };
+
+    if (btnMinus) {
+      btnMinus.onclick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        updateDetailQty(-1);
+      };
     }
 
-    if (btnPlus && qtyInput) {
-      btnPlus.addEventListener('click', () => {
-        let val = parseInt(qtyInput.value, 10) || 1;
-        if (val < 10) {
-          qtyInput.value = val + 1;
-          this.quantity = val + 1;
-        }
-      });
+    if (btnPlus) {
+      btnPlus.onclick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        updateDetailQty(1);
+      };
     }
 
     const btnAddCart = document.getElementById('btn-add-to-cart');
@@ -319,12 +356,13 @@ const ProductDetail = {
 
     const btnBuyNow = document.getElementById('btn-buy-now');
     if (btnBuyNow) {
-      btnBuyNow.addEventListener('click', () => {
-        Cart.addItem(this.product.id, this.quantity, {
-          color: this.selectedColor,
-          storage: this.selectedStorage
-        });
-        window.location.href = 'cart.html';
+      btnBuyNow.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (typeof App !== 'undefined' && App.showDynamicNotice) {
+          App.showDynamicNotice();
+        } else {
+          alert('This is for a dynamic website');
+        }
       });
     }
 
@@ -340,12 +378,177 @@ const ProductDetail = {
       });
     });
 
-    const btnWish = document.getElementById('btn-product-detail-wishlist');
-    if (btnWish) {
-      btnWish.addEventListener('click', () => {
-        const isAdded = Cart.toggleWishlist(this.product.id);
-        btnWish.classList.toggle('is-active', isAdded);
+    const btnShare = document.getElementById('btn-product-detail-share');
+    if (btnShare) {
+      btnShare.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (typeof App !== 'undefined' && App.openShareModal) {
+          App.openShareModal(this.product.id);
+        }
       });
+    }
+
+    const btnWriteReview = document.getElementById('btn-write-review') || document.querySelector('.btn-write-review, [data-i18n="writeReviewBtn"]');
+    if (btnWriteReview) {
+      btnWriteReview.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.openReviewModal();
+      });
+    }
+
+    const mainImg = document.getElementById('product-main-image');
+    if (mainImg) {
+      mainImg.style.cursor = 'zoom-in';
+      mainImg.addEventListener('click', () => {
+        this.openImageZoom(mainImg.src);
+      });
+    }
+
+    // Direct WhatsApp order button pre-fill
+    const waBtn = document.getElementById('btn-order-whatsapp');
+    if (waBtn && this.product) {
+      const lang = (typeof I18n !== 'undefined') ? I18n.getLang() : 'en';
+      const name = this.product.name[lang] || this.product.name.en;
+      const brandName = (typeof I18n !== 'undefined') ? I18n.getBrandName(this.product.brand, lang) : this.product.brand;
+      const priceText = (typeof I18n !== 'undefined' && I18n.formatPrice) ? I18n.formatPrice(this.getCurrentPrice(), lang) : (`${this.getCurrentPrice()} QR`);
+      const waMsg = (lang === 'ar')
+        ? `مرحباً، أود طلب جهاز ${name} (${brandName}) بسعر ${priceText} من متجر دايموند.`
+        : `Hello Diamond Concierge, I would like to order ${name} (${brandName}) priced at ${priceText}.`;
+      waBtn.href = `https://wa.me/97471040746?text=${encodeURIComponent(waMsg)}`;
+    }
+  },
+
+  openImageZoom(imgSrc) {
+    let modal = document.getElementById('image-zoom-modal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'image-zoom-modal';
+      modal.className = 'diamond-modal-container';
+      modal.innerHTML = `
+        <div class="modal-backdrop" onclick="document.getElementById('image-zoom-modal').classList.remove('is-open'); document.body.classList.remove('modal-open');"></div>
+        <div class="image-zoom-card" style="position: relative; max-width: 90vw; max-height: 90vh; display: flex; align-items: center; justify-content: center; z-index: 10001;">
+          <button type="button" class="modal-close-btn btn-close-modal" style="position: absolute; top: 16px; right: 16px; background: rgba(0,0,0,0.6); color: #ffffff; border-radius: 50%; width: 40px; height: 40px; border: 1px solid rgba(255,255,255,0.2); font-size: 24px; cursor: pointer;" onclick="document.getElementById('image-zoom-modal').classList.remove('is-open'); document.body.classList.remove('modal-open');">&times;</button>
+          <img id="image-zoom-img" src="${imgSrc}" alt="Zoomed View" style="max-width: 100%; max-height: 85vh; object-fit: contain; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.5);">
+        </div>
+      `;
+      document.body.appendChild(modal);
+    } else {
+      const img = modal.querySelector('#image-zoom-img');
+      if (img) img.src = imgSrc;
+    }
+    modal.classList.add('is-open');
+    document.body.classList.add('modal-open');
+  },
+
+  openReviewModal() {
+    let modal = document.getElementById('product-review-modal');
+    const lang = (typeof I18n !== 'undefined') ? I18n.getLang() : 'en';
+    const isAr = lang === 'ar';
+
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'product-review-modal';
+      modal.className = 'diamond-modal-container';
+      modal.innerHTML = `
+        <div class="modal-backdrop" onclick="ProductDetail.closeReviewModal()"></div>
+        <div class="auth-modal-card" style="max-width: 520px;">
+          <button type="button" class="modal-close-btn btn-close-modal" onclick="ProductDetail.closeReviewModal()">&times;</button>
+          <div class="auth-card-header">
+            <h3 class="auth-title">${isAr ? 'كتابة تقييم للعميل' : 'Write a Client Review'}</h3>
+            <p class="auth-subtitle">${isAr ? 'شارك تجربتك وانطباعك حول هذا الجهاز الفاخر.' : 'Share your verified impressions and performance review.'}</p>
+          </div>
+          <form id="form-submit-product-review" class="auth-form">
+            <div class="form-group">
+              <label class="form-label">${isAr ? 'الاسم الكريم' : 'Your Name'}</label>
+              <input type="text" id="review-author-input" class="form-input" placeholder="${isAr ? 'مثال: محمد السليطي' : 'e.g. Alexander Vance'}" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">${isAr ? 'التقييم' : 'Overall Rating'}</label>
+              <div class="review-stars-picker" style="display: flex; gap: 8px; font-size: 1.6rem; color: #fbbf24; cursor: pointer; user-select: none;">
+                <span class="star-pick" data-val="1">★</span>
+                <span class="star-pick" data-val="2">★</span>
+                <span class="star-pick" data-val="3">★</span>
+                <span class="star-pick" data-val="4">★</span>
+                <span class="star-pick" data-val="5">★</span>
+              </div>
+              <input type="hidden" id="review-rating-val" value="5">
+            </div>
+            <div class="form-group">
+              <label class="form-label">${isAr ? 'عنوان التقييم' : 'Review Title'}</label>
+              <input type="text" id="review-title-input" class="form-input" placeholder="${isAr ? 'مثال: أداء استثنائي وخامات فاخرة' : 'e.g. Absolute pinnacle of engineering'}" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">${isAr ? 'تفاصيل التجربة' : 'Review Details'}</label>
+              <textarea id="review-body-input" class="form-textarea" rows="4" placeholder="${isAr ? 'شارك رأيك حول خامات الجهاز، دقة الشاشة، سرعة التوصيل...' : 'Describe build quality, acoustic clarity, courier handling...'}" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block btn-lg">${isAr ? 'نشر التقييم' : 'Submit Review'}</button>
+          </form>
+        </div>
+      `;
+      document.body.appendChild(modal);
+
+      modal.querySelectorAll('.star-pick').forEach(star => {
+        star.addEventListener('click', (e) => {
+          const val = parseInt(e.target.dataset.val, 10);
+          document.getElementById('review-rating-val').value = val;
+          modal.querySelectorAll('.star-pick').forEach((s, idx) => {
+            s.style.opacity = idx < val ? '1' : '0.3';
+          });
+        });
+      });
+
+      const form = modal.querySelector('#form-submit-product-review');
+      if (form) {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const author = document.getElementById('review-author-input')?.value || (isAr ? 'عميل موثق' : 'Verified Client');
+          const rating = parseInt(document.getElementById('review-rating-val')?.value || 5, 10);
+          const title = document.getElementById('review-title-input')?.value || (isAr ? 'تقييم ممتاز' : 'Exceptional Quality');
+          const content = document.getElementById('review-body-input')?.value || '';
+
+          const reviewsContainer = document.getElementById('product-reviews-list');
+          if (reviewsContainer) {
+            const today = new Date().toLocaleDateString(isAr ? 'ar-QA' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            const cardHtml = `
+              <div class="review-card" style="border: 1px solid rgba(0, 240, 255, 0.4); animation: fadeIn 0.4s ease;">
+                <div class="review-header">
+                  <div class="review-author-info">
+                    <div class="review-avatar">${author.charAt(0).toUpperCase()}</div>
+                    <div>
+                      <div class="review-author-name">${author}</div>
+                      <span class="review-verified-badge">✓ ${isAr ? 'مشتري موثق' : 'Verified Buyer'}</span>
+                    </div>
+                  </div>
+                  <div class="review-meta">
+                    <div class="rating-stars">${'★'.repeat(rating)}</div>
+                    <span class="review-date">${today}</span>
+                  </div>
+                </div>
+                <h4 class="review-title">${title}</h4>
+                <p class="review-content">${content}</p>
+              </div>
+            `;
+            reviewsContainer.insertAdjacentHTML('afterbegin', cardHtml);
+          }
+
+          ProductDetail.closeReviewModal();
+          if (typeof Toast !== 'undefined') {
+            Toast.show(isAr ? 'تم نشر تقييمك بنجاح! شكراً لمشاركتك.' : 'Review submitted successfully! Thank you.', 'success');
+          }
+          form.reset();
+        });
+      }
+    }
+
+    modal.classList.add('is-open');
+    document.body.classList.add('modal-open');
+  },
+
+  closeReviewModal() {
+    const modal = document.getElementById('product-review-modal');
+    if (modal) {
+      modal.classList.remove('is-open');
+      document.body.classList.remove('modal-open');
     }
   },
 
@@ -506,6 +709,8 @@ const ProductDetail = {
     container.innerHTML = related.map(p => Shop.renderProductCard(p, lang)).join('');
   }
 };
+
+window.ProductDetail = ProductDetail;
 
 document.addEventListener('DOMContentLoaded', () => {
   if (document.getElementById('product-main-image')) {

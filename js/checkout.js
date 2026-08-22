@@ -57,7 +57,7 @@ const Checkout = {
           <td class="col-product">
             <div class="cart-item-flex">
               <a href="product.html?id=${item.productId}" class="cart-item-thumb">
-                <img src="${item.image}" alt="${name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=200&q=80'">
+                <img src="${item.image}" alt="${name}" loading="lazy" decoding="async" width="80" height="80" onerror="this.src='https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=200&q=80'">
               </a>
               <div class="cart-item-details">
                 <div class="cart-item-brand">${brandName}</div>
@@ -71,20 +71,20 @@ const Checkout = {
             </div>
           </td>
           <td class="col-price">
-            <span class="unit-price">$${item.unitPrice.toLocaleString()}</span>
+            <span class="unit-price">${(typeof I18n !== 'undefined' && I18n.formatPrice) ? I18n.formatPrice(item.unitPrice, lang) : (item.unitPrice.toLocaleString() + ' QR')}</span>
           </td>
           <td class="col-qty">
-            <div class="table-qty-control">
-              <button type="button" class="btn-qty-sub" onclick="Cart.updateQuantity('${item.cartItemId}', ${item.quantity - 1})">-</button>
+            <div class="table-qty-control" data-cart-id="${item.cartItemId}">
+              <button type="button" class="btn-qty-sub" data-action="qty-minus" data-cart-id="${item.cartItemId}" aria-label="Decrease quantity">-</button>
               <span class="qty-val">${item.quantity}</span>
-              <button type="button" class="btn-qty-add" onclick="Cart.updateQuantity('${item.cartItemId}', ${item.quantity + 1})">+</button>
+              <button type="button" class="btn-qty-add" data-action="qty-plus" data-cart-id="${item.cartItemId}" aria-label="Increase quantity">+</button>
             </div>
           </td>
           <td class="col-total">
-            <span class="line-total-price">$${lineTotal.toLocaleString()}</span>
+            <span class="line-total-price">${(typeof I18n !== 'undefined' && I18n.formatPrice) ? I18n.formatPrice(lineTotal, lang) : (lineTotal.toLocaleString() + ' QR')}</span>
           </td>
           <td class="col-action">
-            <button type="button" class="btn-table-remove" onclick="Cart.removeItem('${item.cartItemId}')" title="${I18n.t('tableAction')}">
+            <button type="button" class="btn-table-remove" data-action="cart-remove" data-cart-id="${item.cartItemId}" title="${I18n.t('tableAction')}" aria-label="Remove item">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
             </button>
           </td>
@@ -97,14 +97,15 @@ const Checkout = {
     const subtotalEl = document.getElementById('summary-subtotal');
     const taxEl = document.getElementById('summary-tax');
     const totalEl = document.getElementById('summary-total');
+    const lang = (typeof I18n !== 'undefined') ? I18n.getLang() : 'en';
 
     const subtotal = Cart.getSubtotal();
     const tax = Cart.getTaxAmount();
     const total = Cart.getFinalTotal();
 
-    if (subtotalEl) subtotalEl.textContent = `$${subtotal.toLocaleString()}`;
-    if (taxEl) taxEl.textContent = `$${tax.toLocaleString()}`;
-    if (totalEl) totalEl.textContent = `$${total.toLocaleString()}`;
+    if (subtotalEl) subtotalEl.textContent = (typeof I18n !== 'undefined' && I18n.formatPrice) ? I18n.formatPrice(subtotal, lang) : (`$${subtotal.toLocaleString()}`);
+    if (taxEl) taxEl.textContent = (typeof I18n !== 'undefined' && I18n.formatPrice) ? I18n.formatPrice(tax, lang) : (`$${tax.toLocaleString()}`);
+    if (totalEl) totalEl.textContent = (typeof I18n !== 'undefined' && I18n.formatPrice) ? I18n.formatPrice(total, lang) : (`$${total.toLocaleString()}`);
   },
 
   bindEvents() {
@@ -116,6 +117,48 @@ const Checkout = {
           return;
         }
         this.openCheckoutModal();
+      });
+    }
+
+    // Delegated touch & click handlers for Cart Table items
+    const tableBody = document.getElementById('cart-table-body');
+    if (tableBody) {
+      tableBody.addEventListener('click', (e) => {
+        const removeBtn = e.target.closest('.btn-table-remove');
+        if (removeBtn) {
+          e.preventDefault();
+          e.stopPropagation();
+          const row = removeBtn.closest('.cart-table-row');
+          const cartId = row ? row.dataset.id : null;
+          if (cartId) Cart.removeItem(cartId);
+          return;
+        }
+
+        const subBtn = e.target.closest('.btn-qty-sub');
+        if (subBtn) {
+          e.preventDefault();
+          e.stopPropagation();
+          const row = subBtn.closest('.cart-table-row');
+          const cartId = row ? row.dataset.id : null;
+          if (cartId) {
+            const item = Cart.getCart().find(i => i.cartItemId === cartId);
+            if (item) Cart.updateQuantity(cartId, item.quantity - 1);
+          }
+          return;
+        }
+
+        const addBtn = e.target.closest('.btn-qty-add');
+        if (addBtn) {
+          e.preventDefault();
+          e.stopPropagation();
+          const row = addBtn.closest('.cart-table-row');
+          const cartId = row ? row.dataset.id : null;
+          if (cartId) {
+            const item = Cart.getCart().find(i => i.cartItemId === cartId);
+            if (item) Cart.updateQuantity(cartId, item.quantity + 1);
+          }
+          return;
+        }
       });
     }
 
@@ -271,6 +314,49 @@ const Checkout = {
     });
   },
 
+  validateStep1(data) {
+    const errors = [];
+    if (!data) return { valid: false, errors: ['No data provided'] };
+    const name = data.fullName || data.name || '';
+    const email = data.email || '';
+    const phone = data.phone || '';
+    const city = data.city || '';
+    const address = data.address || '';
+
+    if (!name.trim()) errors.push('Full name is required');
+    if (!email.trim() || !email.includes('@')) errors.push('Valid email is required');
+    if (!phone.trim()) errors.push('Phone number is required');
+    if (!city.trim()) errors.push('City is required');
+    if (!address.trim()) errors.push('Address is required');
+
+    return {
+      valid: errors.length === 0,
+      errors
+    };
+  },
+
+  validateStep2(paymentMethod, data) {
+    const method = paymentMethod || this.selectedPayment || 'card';
+    if (method === 'cod' || method === 'apple') {
+      return { valid: true, errors: [] };
+    }
+    const errors = [];
+    if (!data) return { valid: false, errors: ['Card details required'] };
+    if (!data.number || data.number.replace(/\s/g, '').length < 15) errors.push('Valid card number required');
+    if (!data.name || !data.name.trim()) errors.push('Cardholder name required');
+    if (!data.expiry || !data.expiry.includes('/')) errors.push('Expiry date required');
+    if (!data.cvv || data.cvv.length < 3) errors.push('CVV required');
+
+    return {
+      valid: errors.length === 0,
+      errors
+    };
+  },
+
+  processPayment() {
+    return this.processOrder();
+  },
+
   processOrder() {
     const btnSubmit = document.getElementById('btn-submit-order');
     if (btnSubmit) {
@@ -329,11 +415,12 @@ const Checkout = {
     if (order.paymentMethod === 'cod') paymentName = I18n.t('payCashOnDelivery');
     if (order.paymentMethod === 'crypto') paymentName = I18n.t('payCrypto');
 
-    const itemsListText = order.items.map(i => `• ${i.name[lang] || i.name.en} (${i.quantity}x) - $${(i.unitPrice * i.quantity).toLocaleString()}`).join('\n');
+    const itemsListText = order.items.map(i => `• ${i.name[lang] || i.name.en} (${i.quantity}x) - ${((typeof I18n !== 'undefined' && I18n.formatPrice) ? I18n.formatPrice(i.unitPrice * i.quantity, lang) : ((i.unitPrice * i.quantity).toLocaleString() + ' QR'))}`).join('\n');
+    const formattedTotal = (typeof I18n !== 'undefined' && I18n.formatPrice) ? I18n.formatPrice(order.total, lang) : (order.total.toLocaleString() + ' QR');
     
     const waText = lang === 'ar'
-      ? `*تأكيد طلب متجر دايموند تك*\nرقم الطلب: ${order.orderId}\nاسم العميل: ${order.shipping.fullName}\nرقم الهاتف: ${order.shipping.phone}\nعنوان التوصيل: ${order.shipping.address}، ${order.shipping.city}\nوسيلة الدفع: ${paymentName}\n\n*الأجهزة المطلوبة:*\n${itemsListText}\n\n*المبلغ الإجمالي المدفوع:* $${order.total.toLocaleString()}\nشكراً لثقتكم واختياركم دايموند تك.`
-      : `*DIAMOND TECH ORDER CONFIRMATION*\nOrder ID: ${order.orderId}\nCustomer: ${order.shipping.fullName}\nPhone: ${order.shipping.phone}\nAddress: ${order.shipping.address}, ${order.shipping.city}\nPayment: ${paymentName}\n\n*Ordered Items:*\n${itemsListText}\n\n*Total Paid:* $${order.total.toLocaleString()}\nThank you for choosing Diamond.`;
+      ? `*تأكيد طلب متجر دايموند تك*\nرقم الطلب: ${order.orderId}\nاسم العميل: ${order.shipping.fullName}\nرقم الهاتف: ${order.shipping.phone}\nعنوان التوصيل: ${order.shipping.address}، ${order.shipping.city}\nوسيلة الدفع: ${paymentName}\n\n*الأجهزة المطلوبة:*\n${itemsListText}\n\n*المبلغ الإجمالي المدفوع:* ${formattedTotal}\nشكراً لثقتكم واختياركم دايموند تك.`
+      : `*DIAMOND TECH ORDER CONFIRMATION*\nOrder ID: ${order.orderId}\nCustomer: ${order.shipping.fullName}\nPhone: ${order.shipping.phone}\nAddress: ${order.shipping.address}, ${order.shipping.city}\nPayment: ${paymentName}\n\n*Ordered Items:*\n${itemsListText}\n\n*Total Paid:* ${formattedTotal}\nThank you for choosing Diamond.`;
     
     const waUrl = `https://wa.me/97471040746?text=${encodeURIComponent(waText)}`;
 
@@ -376,18 +463,18 @@ const Checkout = {
                 <strong>${item.name[lang] || item.name.en}</strong>
                 <div class="receipt-item-opt">
                   <span>${item.color.name[lang] || item.color.name.en}</span>
-                  ${item.storage ? ` • <span>${item.storage.size}</span>` : ''}
+                  ${item.storage ? ` • <span>${(typeof I18n !== 'undefined' && I18n.formatStorage) ? I18n.formatStorage(item.storage.size, lang) : item.storage.size}</span>` : ''}
                 </div>
               </div>
               <div class="receipt-item-qty">x${item.quantity}</div>
-              <div class="receipt-item-price">$${(item.unitPrice * item.quantity).toLocaleString()}</div>
+              <div class="receipt-item-price">${(typeof I18n !== 'undefined' && I18n.formatPrice) ? I18n.formatPrice(item.unitPrice * item.quantity, lang) : ((item.unitPrice * item.quantity).toLocaleString() + ' QR')}</div>
             </div>
           `).join('')}
         </div>
 
         <div class="receipt-total-row">
           <span data-i18n="orderTotalPaid">${I18n.t('orderTotalPaid')}</span>
-          <strong class="receipt-final-amount">$${order.total.toLocaleString()}</strong>
+          <strong class="receipt-final-amount">${formattedTotal}</strong>
         </div>
 
         <div class="receipt-actions no-print">
@@ -404,6 +491,8 @@ const Checkout = {
     `;
   }
 };
+
+window.Checkout = Checkout;
 
 document.addEventListener('DOMContentLoaded', () => {
   if (document.getElementById('cart-table-body')) {

@@ -3,15 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https://images.unsplash.com https:; connect-src 'self' https:;">
   <title>Privacy Policy — Diamond Luxury Tech & Flagships</title>
   <meta name="description" content="Read the Privacy Policy for Diamond Tech Inc. Learn how we safeguard your data with 256-bit SSL encryption and strict VIP confidentiality protocols.">
   <link rel="canonical" href="https://diamondtech.luxury/privacy.html">
 
-  <!-- Preconnect & High-Speed Font Delivery -->
+  <!-- Preconnect & High-Speed Asset & Font Delivery -->
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+  <link rel="dns-prefetch" href="https://images.unsplash.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
@@ -47,8 +49,7 @@
       <nav class="nav-menu">
         <ul class="nav-links">
           <li><a href="index.html" class="nav-link" data-i18n="navHome">Home</a></li>
-          <li><a href="shop.html" class="nav-link" data-i18n="navShop">Shop All</a></li>
-          <li><a href="about.html" class="nav-link" data-i18n="navAbout">About Us</a></li>
+          <li><a href="shop.html" class="nav-link" data-i18n="navShop">Our Store</a></li>
           <li><a href="contact.html" class="nav-link" data-i18n="navContact">Contact Us</a></li>
         </ul>
       </nav>
@@ -69,7 +70,7 @@
         <!-- Cart Trigger Icon -->
         <button type="button" class="nav-icon-btn btn-cart-trigger" aria-label="Shopping Cart">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-          <span class="cart-count-badge">0</span>
+          <span class="cart-count-badge" aria-live="polite" style="display:none;">0</span>
         </button>
 
         <!-- Desktop User Profile / Sign In -->
@@ -109,13 +110,7 @@
       <li>
         <a href="shop.html">
           <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-          <span data-i18n="navShop">Shop All</span>
-        </a>
-      </li>
-      <li>
-        <a href="about.html">
-          <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-          <span data-i18n="navAbout">About Us</span>
+          <span data-i18n="navShop">Our Store</span>
         </a>
       </li>
       <li>
@@ -205,8 +200,7 @@
           <h4 class="footer-col-title" data-i18n="footerNavQuick">Quick Navigation</h4>
           <ul class="footer-links-list">
             <li><a href="index.html"><span data-i18n="navHome">Home</span></a></li>
-            <li><a href="shop.html"><span data-i18n="navShop">Shop All</span></a></li>
-            <li><a href="about.html"><span data-i18n="navAbout">About Us</span></a></li>
+            <li><a href="shop.html"><span data-i18n="navShop">Our Store</span></a></li>
             <li><a href="contact.html"><span data-i18n="navContact">Contact Us</span></a></li>
           </ul>
         </div>
@@ -215,7 +209,7 @@
           <h4 class="footer-col-title" data-i18n="footerNavSupport">Client Care</h4>
           <ul class="footer-links-list">
             <li><a href="https://wa.me/97471040746" target="_blank" rel="noopener noreferrer"><span data-i18n="footerContact">WhatsApp Concierge</span></a></li>
-            <li><a href="authenticity.html"><span data-i18n="footerWarranty">Diamond Care+</span></a></li>
+            <li><a href="contact.html"><span data-i18n="footerWarranty">Diamond Care+</span></a></li>
             <li><a href="cart.html"><span data-i18n="footerTrackOrder">Track Shipment</span></a></li>
           </ul>
         </div>

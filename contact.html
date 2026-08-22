@@ -3,15 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https://images.unsplash.com https:; connect-src 'self' https:;">
   <title>Contact Us — Concierge & Client Support | Diamond Luxury Tech</title>
   <meta name="description" content="Connect 24/7 with Diamond technology specialists on WhatsApp (+97471040746) or via our direct bespoke concierge desk.">
   <link rel="canonical" href="https://diamondtech.luxury/contact.html">
 
-  <!-- Preconnect & High-Speed Font Delivery -->
+  <!-- Preconnect & High-Speed Asset & Font Delivery -->
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+  <link rel="dns-prefetch" href="https://images.unsplash.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
@@ -46,8 +48,7 @@
       <nav class="nav-menu">
         <ul class="nav-links">
           <li><a href="index.html" class="nav-link" data-i18n="navHome">Home</a></li>
-          <li><a href="shop.html" class="nav-link" data-i18n="navShop">Shop All</a></li>
-          <li><a href="about.html" class="nav-link" data-i18n="navAbout">About Us</a></li>
+          <li><a href="shop.html" class="nav-link" data-i18n="navShop">Our Store</a></li>
           <li><a href="contact.html" class="nav-link is-active" data-i18n="navContact">Contact Us</a></li>
         </ul>
       </nav>
@@ -63,7 +64,7 @@
 
         <button type="button" class="nav-icon-btn btn-cart-trigger" aria-label="Shopping Cart">
           <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-          <span class="cart-count-badge" style="display:none;">0</span>
+          <span class="cart-count-badge" aria-live="polite" style="display:none;">0</span>
         </button>
 
         <div class="auth-nav-container"></div>
@@ -101,13 +102,7 @@
       <li>
         <a href="shop.html">
           <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-          <span data-i18n="navShop">Shop All</span>
-        </a>
-      </li>
-      <li>
-        <a href="about.html">
-          <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-          <span data-i18n="navAbout">About Us</span>
+          <span data-i18n="navShop">Our Store</span>
         </a>
       </li>
       <li>
@@ -276,7 +271,7 @@
               </a>
             </li>
             <li>
-              <a href="about.html">
+              <a href="contact.html">
                 <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
                 <span data-i18n="footerWarranty">Diamond Care+</span>
               </a>

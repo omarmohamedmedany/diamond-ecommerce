@@ -26,9 +26,9 @@ const DIAMOND_PRODUCTS = [
     inStock: true,
     stockCount: 45,
     images: [
-      "https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=1000&q=85",
+      "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=1000&q=85",
       "https://images.unsplash.com/photo-1695048133149-1a0e05eb5519?auto=format&fit=crop&w=1000&q=85",
-      "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=1000&q=85"
+      "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&w=1000&q=85"
     ],
     colors: [
       { name: { en: "Desert Titanium", ar: "تيتانيوم صحراوي" }, hex: "#c5b6a1", code: "desert" },
@@ -73,7 +73,7 @@ const DIAMOND_PRODUCTS = [
     stockCount: 38,
     images: [
       "https://images.unsplash.com/photo-1695048133149-1a0e05eb5519?auto=format&fit=crop&w=1000&q=85",
-      "https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=1000&q=85"
+      "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=1000&q=85"
     ],
     colors: [
       { name: { en: "Natural Titanium", ar: "تيتانيوم طبيعي" }, hex: "#9b9790", code: "natural" },
@@ -3473,21 +3473,57 @@ const ProductService = {
       if (!allTokensMatch) return;
 
       let score = 0;
-      // Exact name match
-      if (nameEn === normQ || nameAr === normQ) score += 100;
-      // Name starts with query
-      else if (nameEn.startsWith(normQ) || nameAr.startsWith(normQ)) score += 60;
-      // Name contains full query
-      else if (nameEn.includes(normQ) || nameAr.includes(normQ)) score += 40;
-      // Brand match
-      if (brand.includes(normQ) || brandAliases.some(b => b === normQ)) score += 30;
-      // Category match
-      if (cat.includes(normQ) || catAliases.some(c => c === normQ)) score += 20;
-      // Tagline match
-      if (taglineEn.includes(normQ) || taglineAr.includes(normQ)) score += 15;
-      // Featured / Bestseller bonus
-      if (p.isFeatured) score += 5;
-      if (p.isBestSeller) score += 3;
+
+      // 1. Exact Name match
+      if (nameEn === normQ || nameAr === normQ) {
+        score += 300;
+      }
+      // 2. Name starts with query
+      else if (nameEn.startsWith(normQ) || nameAr.startsWith(normQ)) {
+        score += 200;
+      }
+      // 3. Name contains word starting with query (e.g. "Watch" for "w" or "wa")
+      else if (nameEn.split(/\s+/).some(w => w.startsWith(normQ)) || nameAr.split(/\s+/).some(w => w.startsWith(normQ))) {
+        score += 150;
+      }
+      // 4. Name contains query substring
+      else if (nameEn.includes(normQ) || nameAr.includes(normQ)) {
+        score += 60;
+      }
+
+      // 5. Category matches
+      if (cat === normQ || catAliases.some(c => c === normQ)) {
+        score += 180;
+      } else if (cat.startsWith(normQ) || catAliases.some(c => c.startsWith(normQ))) {
+        score += 140;
+      } else if (cat.includes(normQ) || catAliases.some(c => c.includes(normQ))) {
+        score += 40;
+      }
+
+      // 6. Brand matches
+      if (brand === normQ || brandAliases.some(b => b === normQ)) {
+        score += 100;
+      } else if (brand.startsWith(normQ) || brandAliases.some(b => b.startsWith(normQ))) {
+        score += 70;
+      } else if (brand.includes(normQ) || brandAliases.some(b => b.includes(normQ))) {
+        score += 30;
+      }
+
+      // 7. Tagline matches
+      if (taglineEn.split(/\s+/).some(w => w.startsWith(normQ)) || taglineAr.split(/\s+/).some(w => w.startsWith(normQ))) {
+        score += 30;
+      } else if (taglineEn.includes(normQ) || taglineAr.includes(normQ)) {
+        score += 15;
+      }
+
+      // 8. Description match (low weight)
+      if (descEn.includes(normQ) || descAr.includes(normQ)) {
+        score += 5;
+      }
+
+      // Bonus for featured / bestseller
+      if (p.isFeatured) score += 2;
+      if (p.isBestSeller) score += 1;
 
       scored.push({ product: p, score: score });
     });
@@ -3496,3 +3532,7 @@ const ProductService = {
     return scored.map(s => s.product);
   }
 };
+
+window.ProductService = ProductService;
+window.DIAMOND_PRODUCTS = DIAMOND_PRODUCTS;
+window.PRODUCTS = DIAMOND_PRODUCTS;

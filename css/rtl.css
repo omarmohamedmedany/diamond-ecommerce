@@ -39,11 +39,6 @@ html[dir="rtl"] .product-card-tagline {
   overflow-wrap: break-word;
 }
 
-/* Nav links RTL */
-html[dir="rtl"] .nav-link::after {
-  left: auto;
-  right: 0;
-}
 
 /* Cart badge & Wishlist badge position */
 html[dir="rtl"] .cart-count-badge,
@@ -60,15 +55,6 @@ html[dir="rtl"] .diamond-whatsapp-widget {
   align-items: flex-end !important;
 }
 
-html[dir="rtl"] .whatsapp-bubble-tooltip {
-  text-align: right;
-}
-
-html[dir="rtl"] .tooltip-header {
-  flex-direction: row-reverse;
-  justify-content: flex-end;
-}
-
 /* Toast container position */
 html[dir="rtl"] .diamond-toast-container {
   left: auto;
@@ -82,10 +68,14 @@ html[dir="rtl"] .cart-drawer-panel {
   border-left: none;
   border-right: 1px solid var(--border-subtle);
   transform: translateX(-100%);
+  visibility: hidden;
+  box-shadow: none;
 }
 
 html[dir="rtl"] .cart-drawer-panel.is-open {
   transform: translateX(0);
+  visibility: visible;
+  box-shadow: 10px 0 40px rgba(15, 23, 42, 0.12);
 }
 
 /* Mobile Nav Drawer */
@@ -95,13 +85,22 @@ html[dir="rtl"] .mobile-nav-drawer {
   border-right: none;
   border-left: 1px solid var(--border-subtle);
   transform: translateX(100%);
+  visibility: hidden;
+  box-shadow: none;
 }
 
 html[dir="rtl"] .mobile-nav-drawer.is-open {
   transform: translateX(0);
+  visibility: visible;
+  box-shadow: -10px 0 40px rgba(15, 23, 42, 0.12);
 }
 
-/* Product Card Close / Actions / Remove */
+/* Product Card Close / Actions / Remove / Share */
+html[dir="rtl"] .btn-card-share {
+  right: auto;
+  left: 14px;
+}
+
 html[dir="rtl"] .cart-drawer-remove {
   right: auto;
   left: 12px;
@@ -155,3 +154,17 @@ html[dir="rtl"] .cart-table th.col-price,
 html[dir="rtl"] .cart-table td.col-price {
   text-align: left;
 }
+
+/* Filter Button & Drawer RTL */
+html[dir="rtl"] .shop-control-left {
+  flex-direction: row;
+}
+
+html[dir="rtl"] .btn-filter-trigger svg {
+  margin-left: 4px;
+}
+
+html[dir="rtl"] .sidebar-header-actions {
+  flex-direction: row-reverse;
+}
+

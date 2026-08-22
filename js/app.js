@@ -463,17 +463,22 @@ const CountriesHelper = {
 const App = {
   init() {
     this.injectSharedModals();
-    CountriesHelper.init();
     this.setupNavbarScroll();
     this.setupMobileMenu();
     this.setupSearchModal();
     this.setupWishlistDrawer();
     this.setupQuickViewModal();
-    this.setupScrollAnimations();
-    this.setupNewsletter();
     this.setupWhatsAppWidget();
-    this.initHomeFeatured();
+    this.setupNewsletter();
     this.setupContactForm();
+    this.initHomeFeatured();
+
+    // Background task scheduling for heavy background data
+    const deferInit = window.requestIdleCallback || ((cb) => setTimeout(cb, 1));
+    deferInit(() => {
+      CountriesHelper.init();
+      this.setupScrollAnimations();
+    });
   },
 
   setupNavbarScroll() {
@@ -617,7 +622,7 @@ const App = {
       return `
         <a href="product.html?id=${p.id}" class="search-result-item">
           <div class="search-item-img">
-            <img src="${p.images[0]}" alt="${name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=300&q=80'">
+            <img src="${p.images[0]}" alt="${name}" loading="lazy" decoding="async" width="80" height="80" onerror="this.src='https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=200&q=80'">
           </div>
           <div class="search-item-details">
             <div class="search-item-brand">${brandName}</div>
@@ -625,7 +630,7 @@ const App = {
             <div class="search-item-tagline">${tagline}</div>
           </div>
           <div class="search-item-pricing">
-            <span class="search-item-price">$${p.basePrice.toLocaleString()}</span>
+            <span class="search-item-price">${(typeof I18n !== 'undefined' && I18n.formatPrice) ? I18n.formatPrice(p.basePrice, lang) : (p.basePrice.toLocaleString() + ' QR')}</span>
           </div>
         </a>
       `;
@@ -682,15 +687,16 @@ const App = {
     container.innerHTML = products.map(p => {
       const name = p.name[lang] || p.name.en;
       const brandName = (typeof I18n !== 'undefined') ? I18n.getBrandName(p.brand, lang) : p.brand;
+      const formattedPrice = (typeof I18n !== 'undefined' && I18n.formatPrice) ? I18n.formatPrice(p.basePrice, lang) : (p.basePrice.toLocaleString() + ' QR');
       return `
         <div class="cart-drawer-item">
           <div class="cart-drawer-img">
-            <img src="${p.images[0]}" alt="${name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=300&q=80'">
+            <img src="${p.images[0]}" alt="${name}" loading="lazy" decoding="async" width="80" height="80" onerror="this.src='https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=200&q=80'">
           </div>
           <div class="cart-drawer-info">
             <div class="cart-drawer-brand">${brandName}</div>
             <h4 class="cart-drawer-title"><a href="product.html?id=${p.id}">${name}</a></h4>
-            <div class="cart-drawer-price">$${p.basePrice.toLocaleString()}</div>
+            <div class="cart-drawer-price">${formattedPrice}</div>
             <button type="button" class="btn btn-primary btn-sm" style="margin-top: 8px; padding: 6px 12px; font-size: 0.78rem;" onclick="Cart.addItem('${p.id}', 1); Cart.toggleWishlist('${p.id}');">
               ${I18n.t('addToCart')}
             </button>
@@ -766,12 +772,12 @@ const App = {
       <div class="quickview-grid">
         <div class="quickview-gallery">
           <div class="quickview-main-image">
-            <img id="qv-main-img" src="${product.images[0]}" alt="${name}" onerror="this.src='https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=800&q=80'">
+            <img id="qv-main-img" src="${product.images[0]}" alt="${name}" decoding="async" width="400" height="400" onerror="this.src='https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=600&q=80'">
           </div>
           <div class="quickview-thumbs">
             ${product.images.map((img, i) => `
               <button type="button" class="qv-thumb ${i === 0 ? 'active' : ''}" onclick="document.getElementById('qv-main-img').src = '${img}'; document.querySelectorAll('.qv-thumb').forEach(t=>t.classList.remove('active')); this.classList.add('active');">
-                <img src="${img}" alt="${name}" onerror="this.src='https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=200&q=80'">
+                <img src="${img}" alt="${name}" loading="lazy" decoding="async" width="80" height="80" onerror="this.src='https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=200&q=80'">
               </button>
             `).join('')}
           </div>
@@ -801,7 +807,7 @@ const App = {
           </div>
 
           <div class="quickview-price-row">
-            <span class="quickview-price" id="qv-price-display">$${product.basePrice.toLocaleString()}</span>
+            <span class="quickview-price" id="qv-price-display">${(typeof I18n !== 'undefined' && I18n.formatPrice) ? I18n.formatPrice(product.basePrice, lang) : (product.basePrice.toLocaleString() + ' QR')}</span>
           </div>
 
           <p class="quickview-desc">${desc}</p>
@@ -847,7 +853,7 @@ const App = {
         const mult = parseFloat(e.target.dataset.multiplier) || 1.0;
         const newPrice = Math.round(product.basePrice * mult);
         const priceEl = document.getElementById('qv-price-display');
-        if (priceEl) priceEl.textContent = `$${newPrice.toLocaleString()}`;
+        if (priceEl) priceEl.textContent = (typeof I18n !== 'undefined' && I18n.formatPrice) ? I18n.formatPrice(newPrice, lang) : (`$${newPrice.toLocaleString()}`);
         content.querySelectorAll('.storage-option').forEach(o => o.classList.remove('active'));
         e.target.closest('.storage-option').classList.add('active');
       });
@@ -1020,8 +1026,8 @@ const App = {
 ${message}
 
 ────────────────────────────────────────
-مرسل عبر بوابة عملاء Diamond Tech الفاخرة
-التاريخ: ${new Date().toLocaleDateString('ar-QA', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}`;
+مع خالص التحيات والتقدير،
+${name}`;
       } else {
         emailBody = `Dear Diamond Concierge Team,
 
@@ -1042,8 +1048,8 @@ INQUIRY & REQUIREMENTS
 ${message}
 
 ────────────────────────────────────────
-Submitted via Diamond Tech Client Portal
-Date: ${new Date().toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })}`;
+Kind regards,
+${name}`;
       }
 
       const emailTo = 'concierge@diamond-tech.luxury';
@@ -1291,7 +1297,7 @@ Date: ${new Date().toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'sh
           <div id="cart-drawer-footer" class="cart-drawer-footer">
             <div class="drawer-subtotal-row">
               <span data-i18n="subtotal">${I18n.t('subtotal')}</span>
-              <span id="cart-drawer-subtotal" class="drawer-subtotal-amount">$0</span>
+              <span id="cart-drawer-subtotal" class="drawer-subtotal-amount">0 QR</span>
             </div>
             <div class="drawer-footer-actions">
               <a href="cart.html" class="btn btn-primary btn-block btn-lg" data-i18n="proceedToCheckout">${I18n.t('proceedToCheckout')}</a>
@@ -1299,15 +1305,149 @@ Date: ${new Date().toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'sh
           </div>
         </div>
 
+        <!-- Dynamic Website Notice Modal -->
+        <div id="diamond-dynamic-notice-modal" class="diamond-modal-container">
+          <div class="modal-backdrop" onclick="App.closeDynamicNotice()"></div>
+          <div class="dynamic-notice-modal-card">
+            <div class="dynamic-notice-icon">⚡</div>
+            <h3 class="dynamic-notice-title" id="dynamic-notice-title-el" data-i18n="dynamicNoticeTitle">${I18n.t('dynamicNoticeTitle')}</h3>
+            <p class="dynamic-notice-msg" id="dynamic-notice-msg-el" data-i18n="dynamicNoticeMsg">${I18n.t('dynamicNoticeMsg')}</p>
+            <button type="button" class="btn btn-primary btn-block btn-lg btn-dynamic-notice-close" id="btn-dynamic-notice-ok" onclick="App.closeDynamicNotice()" data-i18n="dynamicNoticeOk">${I18n.t('dynamicNoticeOk')}</button>
+          </div>
+        </div>
+
+        <!-- Luxury Share Product Modal -->
+        <div id="diamond-share-modal" class="diamond-modal-container">
+          <div class="modal-backdrop" onclick="App.closeShareModal()"></div>
+          <div class="share-modal-card">
+            <button type="button" class="modal-close-btn btn-close-modal" onclick="App.closeShareModal()">&times;</button>
+            <div class="share-modal-header">
+              <div class="share-icon-badge">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+              </div>
+              <div>
+                <h3 class="share-modal-title" id="share-modal-title-el" data-i18n="shareTitle">${I18n.t('shareTitle')}</h3>
+                <p class="share-modal-subtitle" id="share-modal-subtitle-el" data-i18n="shareSubtitle">${I18n.t('shareSubtitle')}</p>
+              </div>
+            </div>
+
+            <div class="share-product-preview" id="share-product-preview">
+              <img src="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=600&q=80" id="share-preview-img" alt="Product" class="share-preview-img">
+              <div class="share-preview-info">
+                <div class="share-preview-brand" id="share-preview-brand">Diamond</div>
+                <div class="share-preview-name" id="share-preview-name">Luxury Smartphone</div>
+                <div class="share-preview-price" id="share-preview-price">3,999 QR</div>
+              </div>
+            </div>
+
+            <!-- Social Share Channels Row (4 Main Apps + More) -->
+            <div class="share-channels-grid">
+              <a href="#" id="share-channel-whatsapp" target="_blank" rel="noopener noreferrer" class="share-channel-btn share-btn-whatsapp" title="WhatsApp">
+                <div class="share-channel-icon-wrap">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12.032 2C6.505 2 2.025 6.48 2.025 12.008c0 1.954.563 3.778 1.541 5.321L2 22l4.832-1.528A9.957 9.957 0 0 0 12.032 22C17.56 22 22.04 17.52 22.04 12.008 22.04 6.48 17.56 2 12.032 2z"/></svg>
+                </div>
+                <span data-i18n="shareWhatsApp">${I18n.t('shareWhatsApp')}</span>
+              </a>
+
+              <a href="#" id="share-channel-telegram" target="_blank" rel="noopener noreferrer" class="share-channel-btn share-btn-telegram" title="Telegram">
+                <div class="share-channel-icon-wrap">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+                </div>
+                <span data-i18n="shareTelegram">${I18n.t('shareTelegram')}</span>
+              </a>
+
+              <a href="#" id="share-channel-twitter" target="_blank" rel="noopener noreferrer" class="share-channel-btn share-btn-twitter" title="X / Twitter">
+                <div class="share-channel-icon-wrap">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </div>
+                <span data-i18n="shareTwitter">${I18n.t('shareTwitter')}</span>
+              </a>
+
+              <a href="#" id="share-channel-facebook" target="_blank" rel="noopener noreferrer" class="share-channel-btn share-btn-facebook" title="Facebook">
+                <div class="share-channel-icon-wrap">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>
+                </div>
+                <span data-i18n="shareFacebook">${I18n.t('shareFacebook')}</span>
+              </a>
+
+              <button type="button" id="btn-share-toggle-more" class="share-channel-btn share-btn-more" onclick="App.toggleMoreSharePlatforms()" title="More Platforms">
+                <div class="share-channel-icon-wrap">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="1.5"></circle><circle cx="6" cy="12" r="1.5"></circle><circle cx="18" cy="12" r="1.5"></circle></svg>
+                </div>
+                <span id="share-more-btn-label" data-i18n="shareMore">${I18n.t('shareMore')}</span>
+              </button>
+            </div>
+
+            <!-- Expandable More Platforms Tray -->
+            <div id="share-more-platforms-panel" class="share-more-platforms-panel" style="display: none;">
+              <div class="share-more-header">
+                <span data-i18n="shareMorePlatforms">${I18n.t('shareMorePlatforms')}</span>
+              </div>
+              <div class="share-more-grid">
+                <a href="#" id="share-channel-email" class="share-channel-btn share-btn-email" title="Email">
+                  <div class="share-channel-icon-wrap">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                  </div>
+                  <span data-i18n="shareEmail">${I18n.t('shareEmail')}</span>
+                </a>
+
+                <a href="#" id="share-channel-linkedin" target="_blank" rel="noopener noreferrer" class="share-channel-btn share-btn-linkedin" title="LinkedIn">
+                  <div class="share-channel-icon-wrap">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+                  </div>
+                  <span data-i18n="shareLinkedIn">${I18n.t('shareLinkedIn')}</span>
+                </a>
+
+                <a href="#" id="share-channel-reddit" target="_blank" rel="noopener noreferrer" class="share-channel-btn share-btn-reddit" title="Reddit">
+                  <div class="share-channel-icon-wrap">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.56 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.56 12 8 12.56 8 13.25c0 .688.56 1.25 1.25 1.25.688 0 1.25-.562 1.25-1.25 0-.69-.562-1.25-1.25-1.25zm5.5 0c-.688 0-1.25.56-1.25 1.25 0 .688.562 1.25 1.25 1.25.69 0 1.25-.562 1.25-1.25 0-.69-.56-1.25-1.25-1.25zm-5.465 4.11a.57.57 0 0 0-.17.408c0 .314.254.57.57.57.086 0 .17-.02.247-.06 1.15-.623 2.6-.623 3.75 0a.569.569 0 0 0 .247.06.57.57 0 0 0 .57-.57.57.57 0 0 0-.17-.408c-1.39-1.02-3.654-1.02-5.044 0z"/></svg>
+                  </div>
+                  <span data-i18n="shareReddit">${I18n.t('shareReddit')}</span>
+                </a>
+
+                <a href="#" id="share-channel-pinterest" target="_blank" rel="noopener noreferrer" class="share-channel-btn share-btn-pinterest" title="Pinterest">
+                  <div class="share-channel-icon-wrap">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"/></svg>
+                  </div>
+                  <span data-i18n="sharePinterest">${I18n.t('sharePinterest')}</span>
+                </a>
+
+                <a href="#" id="share-channel-skype" target="_blank" rel="noopener noreferrer" class="share-channel-btn share-btn-skype" title="Skype">
+                  <div class="share-channel-icon-wrap">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C8.6 0 5.6 1.4 3.5 3.5 1.4 5.6 0 8.6 0 12c0 2.2.6 4.3 1.7 6.1L.5 23.5l5.4-1.2C7.7 23.4 9.8 24 12 24c3.4 0 6.4-1.4 8.5-3.5 2.1-2.1 3.5-5.1 3.5-8.5 0-2.2-.6-4.3-1.7-6.1l1.2-5.4-5.4 1.2C16.3.6 14.2 0 12 0zm0 18.5c-3.6 0-5.8-1.8-5.8-3.7 0-1.1.8-1.8 1.9-1.8 2.2 0 1.6 3.1 3.9 3.1 1.2 0 2.1-.7 2.1-1.7 0-.9-.7-1.4-2.3-1.9l-1.9-.6C7.5 11.2 6.5 9.8 6.5 8c0-2.7 2.2-4.5 5.5-4.5 3.1 0 5.2 1.6 5.2 3.4 0 1-.8 1.6-1.7 1.6-1.9 0-1.5-2.6-3.5-2.6-1.1 0-1.8.6-1.8 1.4 0 .9.8 1.3 2.3 1.8l1.6.5c2.7.9 3.8 2.3 3.8 4.2 0 2.7-2.3 4.7-5.9 4.7z"/></svg>
+                  </div>
+                  <span data-i18n="shareSkype">${I18n.t('shareSkype')}</span>
+                </a>
+
+                <a href="#" id="share-channel-sms" class="share-channel-btn share-btn-sms" title="SMS Messages">
+                  <div class="share-channel-icon-wrap">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                  </div>
+                  <span data-i18n="shareSMS">${I18n.t('shareSMS')}</span>
+                </a>
+
+                <button type="button" id="share-channel-native" class="share-channel-btn share-btn-native" onclick="App.triggerNativeShare()" title="Device Share">
+                  <div class="share-channel-icon-wrap">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+                  </div>
+                  <span data-i18n="shareNativeDevice">${I18n.t('shareNativeDevice')}</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Copy Link Bar -->
+            <div class="share-copy-bar">
+              <input type="text" id="share-copy-input" readonly class="share-copy-input" value="">
+              <button type="button" class="btn btn-primary btn-copy-share-link" id="btn-copy-share-link" onclick="App.copyShareLink()">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <span id="share-copy-btn-text" data-i18n="shareCopyLink">${I18n.t('shareCopyLink')}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
         <!-- Floating WhatsApp Widget -->
         <div class="diamond-whatsapp-widget" id="diamond-whatsapp">
-          <div class="whatsapp-bubble-tooltip">
-            <div class="tooltip-header">
-              <span class="online-indicator"></span>
-              <strong data-i18n="whatsappWidgetTitle">${I18n.t('whatsappWidgetTitle')}</strong>
-            </div>
-            <p data-i18n="whatsappWidgetPrompt">${I18n.t('whatsappWidgetPrompt')}</p>
-          </div>
           <button type="button" class="btn-whatsapp-floating" id="btn-whatsapp-floating" aria-label="WhatsApp Concierge">
             <span class="whatsapp-beacon"></span>
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
@@ -1321,10 +1461,278 @@ Date: ${new Date().toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'sh
         I18n.applyLanguage(I18n.getLang());
       }
     }
+  },
+
+  openShareModal(productId) {
+    this.injectSharedModals();
+    let product = null;
+    if (productId && typeof ProductService !== 'undefined') {
+      product = ProductService.getById(productId);
+    }
+    if (!product && typeof ProductDetail !== 'undefined' && ProductDetail.product) {
+      product = ProductDetail.product;
+    }
+    if (!product && typeof ProductService !== 'undefined') {
+      const all = ProductService.getAll();
+      if (all && all.length > 0) product = all[0];
+    }
+
+    const modal = document.getElementById('diamond-share-modal');
+    if (!modal) return;
+
+    const lang = (typeof I18n !== 'undefined') ? I18n.getLang() : 'en';
+    const prodName = product ? (typeof product.name === 'object' ? (product.name[lang] || product.name.en) : product.name) : 'Diamond Product';
+    const prodBrand = product ? ((typeof I18n !== 'undefined') ? I18n.getBrandName(product.brand, lang) : product.brand) : 'Diamond';
+    const prodPrice = product ? ((typeof I18n !== 'undefined' && I18n.formatPrice) ? I18n.formatPrice(product.basePrice, lang) : (`${product.basePrice} QR`)) : '';
+    const prodImg = (product && product.images && product.images[0]) ? product.images[0] : 'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=600&q=80';
+
+    // Construct full clean absolute URL
+    let baseUrl = window.location.href.split('?')[0];
+    if (!baseUrl.endsWith('product.html')) {
+      baseUrl = baseUrl.replace(/[^/]*$/, '') + 'product.html';
+    }
+    const shareUrl = product ? `${baseUrl}?id=${encodeURIComponent(product.id)}` : window.location.href;
+    const shareText = `${prodName} - ${prodPrice} | Diamond Luxury Tech`;
+
+    // Populate Preview Elements
+    const imgEl = document.getElementById('share-preview-img');
+    const brandEl = document.getElementById('share-preview-brand');
+    const nameEl = document.getElementById('share-preview-name');
+    const priceEl = document.getElementById('share-preview-price');
+    const inputEl = document.getElementById('share-copy-input');
+
+    if (imgEl) {
+      imgEl.src = prodImg;
+      imgEl.alt = prodName;
+    }
+    if (brandEl) brandEl.textContent = prodBrand;
+    if (nameEl) nameEl.textContent = prodName;
+    if (priceEl) priceEl.textContent = prodPrice;
+    if (inputEl) inputEl.value = shareUrl;
+
+    // Reset copy button text
+    const btnText = document.getElementById('share-copy-btn-text');
+    if (btnText) btnText.textContent = (typeof I18n !== 'undefined') ? I18n.t('shareCopyLink') : 'Copy Link';
+
+    // Direct Product Link for All Messaging Apps
+    const waBtn = document.getElementById('share-channel-whatsapp');
+    if (waBtn) waBtn.href = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareUrl)}`;
+
+    const tgBtn = document.getElementById('share-channel-telegram');
+    if (tgBtn) tgBtn.href = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}`;
+
+    const twBtn = document.getElementById('share-channel-twitter');
+    if (twBtn) twBtn.href = `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}`;
+
+    const fbBtn = document.getElementById('share-channel-facebook');
+    if (fbBtn) fbBtn.href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+
+    const mailBtn = document.getElementById('share-channel-email');
+    if (mailBtn) mailBtn.href = `mailto:?subject=${encodeURIComponent(prodName)}&body=${encodeURIComponent(shareUrl)}`;
+
+    const inBtn = document.getElementById('share-channel-linkedin');
+    if (inBtn) inBtn.href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`;
+
+    const rdBtn = document.getElementById('share-channel-reddit');
+    if (rdBtn) rdBtn.href = `https://reddit.com/submit?url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(prodName)}`;
+
+    const pinBtn = document.getElementById('share-channel-pinterest');
+    if (pinBtn) pinBtn.href = `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(shareUrl)}&media=${encodeURIComponent(prodImg)}&description=${encodeURIComponent(prodName)}`;
+
+    const skBtn = document.getElementById('share-channel-skype');
+    if (skBtn) skBtn.href = `https://web.skype.com/share?url=${encodeURIComponent(shareUrl)}`;
+
+    const smsBtn = document.getElementById('share-channel-sms');
+    if (smsBtn) smsBtn.href = `sms:?&body=${encodeURIComponent(shareUrl)}`;
+
+    // Reset more panel visibility
+    const morePanel = document.getElementById('share-more-platforms-panel');
+    if (morePanel) morePanel.style.display = 'none';
+    const moreBtn = document.getElementById('btn-share-toggle-more');
+    if (moreBtn) moreBtn.classList.remove('is-active');
+
+    modal.classList.add('is-open');
+    document.body.classList.add('modal-open');
+    document.documentElement.classList.add('modal-open');
+  },
+
+  toggleMoreSharePlatforms() {
+    const panel = document.getElementById('share-more-platforms-panel');
+    const moreBtn = document.getElementById('btn-share-toggle-more');
+    if (!panel) return;
+
+    const isVisible = panel.style.display !== 'none';
+    if (isVisible) {
+      panel.style.display = 'none';
+      if (moreBtn) moreBtn.classList.remove('is-active');
+    } else {
+      panel.style.display = 'block';
+      if (moreBtn) moreBtn.classList.add('is-active');
+    }
+  },
+
+  triggerNativeShare() {
+    const inputEl = document.getElementById('share-copy-input');
+    const url = (inputEl && inputEl.value) ? inputEl.value : window.location.href;
+    const nameEl = document.getElementById('share-preview-name');
+    const prodName = nameEl ? nameEl.textContent : 'Diamond Tech';
+
+    if (navigator.share) {
+      navigator.share({
+        title: prodName,
+        url: url
+      }).catch((err) => {
+        if (err.name !== 'AbortError') {
+          this.copyShareLink();
+        }
+      });
+    } else {
+      this.copyShareLink();
+    }
+  },
+
+  closeShareModal() {
+    const modal = document.getElementById('diamond-share-modal');
+    if (modal) {
+      modal.classList.remove('is-open');
+    }
+    document.body.classList.remove('modal-open');
+    document.documentElement.classList.remove('modal-open');
+  },
+
+  copyShareLink() {
+    const inputEl = document.getElementById('share-copy-input');
+    const url = (inputEl && inputEl.value) ? inputEl.value : window.location.href;
+
+    const btnText = document.getElementById('share-copy-btn-text');
+    const copyBtn = document.getElementById('btn-copy-share-link');
+    const svgIcon = copyBtn ? copyBtn.querySelector('svg') : null;
+
+    const onSuccess = () => {
+      const lang = (typeof I18n !== 'undefined') ? I18n.getLang() : 'en';
+      const copiedWord = (typeof I18n !== 'undefined' && I18n.t) ? I18n.t('shareCopied') : (lang === 'ar' ? 'تم النسخ!' : 'Copied!');
+      const toastMsg = (typeof I18n !== 'undefined' && I18n.t) ? I18n.t('shareToastCopied') : (lang === 'ar' ? 'تم نسخ رابط المنتج إلى الحافظة!' : 'Product link copied to clipboard!');
+
+      if (btnText) btnText.textContent = copiedWord;
+      if (copyBtn) {
+        copyBtn.classList.add('is-copied');
+        copyBtn.style.background = '#059669';
+        copyBtn.style.borderColor = '#059669';
+        copyBtn.style.boxShadow = '0 4px 14px rgba(5, 150, 105, 0.35)';
+      }
+      if (svgIcon) {
+        svgIcon.innerHTML = '<polyline points="20 6 9 17 4 12"></polyline>';
+        svgIcon.setAttribute('stroke', '#ffffff');
+      }
+
+      if (typeof Toast !== 'undefined') {
+        Toast.show(toastMsg, 'success');
+      }
+
+      setTimeout(() => {
+        if (btnText) btnText.textContent = (typeof I18n !== 'undefined' && I18n.t) ? I18n.t('shareCopyLink') : (lang === 'ar' ? 'نسخ الرابط' : 'Copy Link');
+        if (copyBtn) {
+          copyBtn.classList.remove('is-copied');
+          copyBtn.style.background = '';
+          copyBtn.style.borderColor = '';
+          copyBtn.style.boxShadow = '';
+        }
+        if (svgIcon) {
+          svgIcon.innerHTML = '<rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>';
+        }
+      }, 2500);
+    };
+
+    // Robust multi-layered copy method that works across all protocols (file://, http://, https://) and devices
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(url).then(onSuccess).catch(() => {
+          this.fallbackCopyText(url, onSuccess);
+        });
+      } else {
+        this.fallbackCopyText(url, onSuccess);
+      }
+    } catch (err) {
+      this.fallbackCopyText(url, onSuccess);
+    }
+  },
+
+  fallbackCopyText(text, callback) {
+    // 1. Try selecting existing input
+    const inputEl = document.getElementById('share-copy-input');
+    if (inputEl) {
+      inputEl.removeAttribute('readonly');
+      inputEl.focus();
+      inputEl.select();
+      inputEl.setSelectionRange(0, 99999);
+      try {
+        const success = document.execCommand('copy');
+        inputEl.setAttribute('readonly', 'readonly');
+        if (success) {
+          if (typeof callback === 'function') callback();
+          return;
+        }
+      } catch (e) {
+        inputEl.setAttribute('readonly', 'readonly');
+      }
+    }
+
+    // 2. Fallback using temporary textarea
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.top = '0';
+    textarea.style.left = '0';
+    textarea.style.width = '2em';
+    textarea.style.height = '2em';
+    textarea.style.padding = '0';
+    textarea.style.border = 'none';
+    textarea.style.outline = 'none';
+    textarea.style.boxShadow = 'none';
+    textarea.style.background = 'transparent';
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+    textarea.setSelectionRange(0, 99999);
+    try {
+      document.execCommand('copy');
+    } catch (e) {
+      console.warn('execCommand copy fallback failed', e);
+    }
+    document.body.removeChild(textarea);
+    if (typeof callback === 'function') callback();
+  },
+
+  showDynamicNotice(title, msg) {
+    this.injectSharedModals();
+    const lang = (typeof I18n !== 'undefined') ? I18n.getLang() : 'en';
+    const defaultTitle = (typeof I18n !== 'undefined' && I18n.t) ? I18n.t('dynamicNoticeTitle') : (lang === 'ar' ? 'إشعار توضيحي' : 'Dynamic Platform Notice');
+    const defaultMsg = (typeof I18n !== 'undefined' && I18n.t) ? I18n.t('dynamicNoticeMsg') : (lang === 'ar' ? 'هذا الإجراء مخصص لموقع ويب ديناميكي' : 'This is for a dynamic website');
+    
+    const modal = document.getElementById('diamond-dynamic-notice-modal');
+    if (!modal) return;
+    
+    const titleEl = document.getElementById('dynamic-notice-title-el');
+    const msgEl = document.getElementById('dynamic-notice-msg-el');
+    if (titleEl) titleEl.textContent = title || defaultTitle;
+    if (msgEl) msgEl.textContent = msg || defaultMsg;
+    
+    modal.classList.add('is-open');
+    document.body.classList.add('modal-open');
+    document.documentElement.classList.add('modal-open');
+  },
+
+  closeDynamicNotice() {
+    const modal = document.getElementById('diamond-dynamic-notice-modal');
+    if (modal) {
+      modal.classList.remove('is-open');
+    }
+    document.body.classList.remove('modal-open');
+    document.documentElement.classList.remove('modal-open');
   }
 };
 
-// Global Fallback for any image load failure
+// Global Fallback for any image load failure & Global Click Handlers
 window.addEventListener('error', (e) => {
   if (e.target && e.target.tagName === 'IMG') {
     const fallbackSrc = 'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=800&q=80';
@@ -1333,6 +1741,151 @@ window.addEventListener('error', (e) => {
     }
   }
 }, true);
+
+document.addEventListener('click', (e) => {
+  // Share Modal Trigger (Card button or Product Detail share button or generic data-action)
+  const shareBtn = e.target.closest('.btn-card-share, .btn-product-share, #btn-product-detail-share, [data-action="share"]');
+  if (shareBtn) {
+    e.preventDefault();
+    e.stopPropagation();
+    const card = shareBtn.closest('.product-card');
+    const productId = shareBtn.getAttribute('data-product-id') || (card ? card.getAttribute('data-id') : null);
+    App.openShareModal(productId);
+    return;
+  }
+
+  // Copy Share Link Button Interceptor
+  const copyShareBtn = e.target.closest('#btn-copy-share-link, .btn-copy-share-link');
+  if (copyShareBtn) {
+    e.preventDefault();
+    e.stopPropagation();
+    App.copyShareLink();
+    return;
+  }
+
+  // More Share Platforms Toggle Interceptor
+  const toggleMoreBtn = e.target.closest('#btn-share-toggle-more, .share-btn-more');
+  if (toggleMoreBtn) {
+    e.preventDefault();
+    e.stopPropagation();
+    App.toggleMoreSharePlatforms();
+    return;
+  }
+
+  // Native Share Sheet Trigger Interceptor
+  const nativeShareBtn = e.target.closest('#share-channel-native, .share-btn-native');
+  if (nativeShareBtn) {
+    e.preventDefault();
+    e.stopPropagation();
+    App.triggerNativeShare();
+    return;
+  }
+
+  // Share Modal Dismiss Handlers
+  const closeShareBtn = e.target.closest('.btn-close-share-modal, #diamond-share-modal .modal-close-btn');
+  if (closeShareBtn) {
+    e.preventDefault();
+    e.stopPropagation();
+    App.closeShareModal();
+    return;
+  }
+
+  const shareBackdrop = e.target.closest('#diamond-share-modal .modal-backdrop');
+  if (shareBackdrop) {
+    e.preventDefault();
+    e.stopPropagation();
+    App.closeShareModal();
+    return;
+  }
+
+  // Dynamic Notice Dismiss Handlers (Understood Button & Backdrop)
+  const closeNoticeBtn = e.target.closest('#btn-dynamic-notice-ok, .btn-dynamic-notice-close, [data-action="close-dynamic-notice"]');
+  if (closeNoticeBtn) {
+    e.preventDefault();
+    e.stopPropagation();
+    App.closeDynamicNotice();
+    return;
+  }
+
+  const noticeBackdrop = e.target.closest('#diamond-dynamic-notice-modal .modal-backdrop');
+  if (noticeBackdrop) {
+    e.preventDefault();
+    e.stopPropagation();
+    App.closeDynamicNotice();
+    return;
+  }
+
+  // Card Add to Cart Click Interceptor
+  const addCartBtn = e.target.closest('.btn-card-addcart, [data-action="add-to-cart"]');
+  if (addCartBtn) {
+    e.preventDefault();
+    e.stopPropagation();
+    const card = addCartBtn.closest('.product-card');
+    const productId = addCartBtn.getAttribute('data-product-id') || (card ? card.getAttribute('data-id') : null);
+    if (productId && typeof Cart !== 'undefined') {
+      Cart.addItem(productId, 1);
+    }
+    return;
+  }
+
+  // Quick View Button Click Interceptor
+  const qvBtn = e.target.closest('.btn-card-quickview, .btn-quick-view, [data-action="quickview"]');
+  if (qvBtn) {
+    e.preventDefault();
+    e.stopPropagation();
+    const card = qvBtn.closest('.product-card');
+    const productId = qvBtn.getAttribute('data-product-id') || (card ? card.getAttribute('data-id') : null);
+    if (productId) {
+      App.openQuickView(productId);
+    }
+    return;
+  }
+
+  // Clear / Reset Filters Interceptor
+  const resetFiltersBtn = e.target.closest('#btn-reset-empty-filters, .btn-reset-empty, #btn-clear-filters, .btn-clear-filters, [data-action="reset-filters"]');
+  if (resetFiltersBtn) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (typeof Shop !== 'undefined' && Shop.resetFilters) {
+      Shop.resetFilters();
+    }
+    return;
+  }
+
+  // Whole Product Card Click Navigator
+  const productCard = e.target.closest('.product-card');
+  if (productCard) {
+    // If clicking on any interactive button or control, ignore
+    if (e.target.closest('button, input, select, textarea, [data-action]')) {
+      return;
+    }
+    const productId = productCard.getAttribute('data-id') || productCard.getAttribute('data-product-id');
+    if (productId) {
+      window.location.href = `product.html?id=${encodeURIComponent(productId)}`;
+      return;
+    }
+  }
+
+  // Buy Now Notice Click Interceptor
+  const buyNowBtn = e.target.closest('.btn-buy-now, #btn-buy-now, [data-action="buynow"]');
+  if (buyNowBtn) {
+    e.preventDefault();
+    e.stopPropagation();
+    App.showDynamicNotice();
+    return;
+  }
+  
+  // Sign In Notice Click Interceptor
+  const signInBtn = e.target.closest('.btn-auth-signin, .btn-sign-in-trigger, #btn-open-signin, [data-action="signin"]');
+  if (signInBtn) {
+    e.preventDefault();
+    e.stopPropagation();
+    App.showDynamicNotice();
+    return;
+  }
+});
+
+window.App = App;
 
 document.addEventListener('DOMContentLoaded', () => {
   App.init();
