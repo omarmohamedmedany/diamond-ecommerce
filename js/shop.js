@@ -63,37 +63,51 @@ const Shop = {
     const countCertified = allProducts.filter(p => (p.condition || 'new') === 'certified').length;
 
     const allText = I18n.t('filterAllConditions');
-    const newText = I18n.t('conditionNeverUsed');
-    const likeNewText = I18n.t('conditionLikeNew');
-    const certifiedText = I18n.t('conditionCertified');
+    const newTitle = I18n.t('conditionNewTitle') || 'Brand New';
+    const newBracket = I18n.t('conditionNewBracket') || '(Sealed Box)';
+    const likeNewTitle = I18n.t('conditionLikeNewTitle') || 'Like New';
+    const likeNewBracket = I18n.t('conditionLikeNewBracket') || '(Used < 1 Year)';
+    const certTitle = I18n.t('conditionCertifiedTitle') || 'Certified Used';
+    const certBracket = I18n.t('conditionCertifiedBracket') || '(< 3 Years)';
 
     container.innerHTML = `
-      <label class="filter-radio-label">
-        <span>
+      <label class="filter-radio-label condition-filter-label">
+        <div class="filter-label-left">
           <input type="radio" name="filter-condition-radio" value="all" ${this.activeCondition === 'all' ? 'checked' : ''}>
-          <span data-i18n="filterAllConditions">${allText}</span>
-        </span>
+          <div class="condition-text-block">
+            <span class="condition-main-name" data-i18n="filterAllConditions">${allText}</span>
+          </div>
+        </div>
         <span class="count-pill">${allCount}</span>
       </label>
-      <label class="filter-radio-label">
-        <span>
+      <label class="filter-radio-label condition-filter-label">
+        <div class="filter-label-left">
           <input type="radio" name="filter-condition-radio" value="new" ${this.activeCondition === 'new' ? 'checked' : ''}>
-          <span data-i18n="conditionNeverUsed">✨ ${newText}</span>
-        </span>
+          <div class="condition-text-block">
+            <span class="condition-main-name" data-i18n="conditionNewTitle">${newTitle}</span>
+            <span class="condition-sub-bracket" data-i18n="conditionNewBracket">${newBracket}</span>
+          </div>
+        </div>
         <span class="count-pill">${countNew}</span>
       </label>
-      <label class="filter-radio-label">
-        <span>
+      <label class="filter-radio-label condition-filter-label">
+        <div class="filter-label-left">
           <input type="radio" name="filter-condition-radio" value="like-new" ${this.activeCondition === 'like-new' ? 'checked' : ''}>
-          <span data-i18n="conditionLikeNew">💎 ${likeNewText}</span>
-        </span>
+          <div class="condition-text-block">
+            <span class="condition-main-name" data-i18n="conditionLikeNewTitle">${likeNewTitle}</span>
+            <span class="condition-sub-bracket" data-i18n="conditionLikeNewBracket">${likeNewBracket}</span>
+          </div>
+        </div>
         <span class="count-pill">${countLikeNew}</span>
       </label>
-      <label class="filter-radio-label">
-        <span>
+      <label class="filter-radio-label condition-filter-label">
+        <div class="filter-label-left">
           <input type="radio" name="filter-condition-radio" value="certified" ${this.activeCondition === 'certified' ? 'checked' : ''}>
-          <span data-i18n="conditionCertified">🛡️ ${certifiedText}</span>
-        </span>
+          <div class="condition-text-block">
+            <span class="condition-main-name" data-i18n="conditionCertifiedTitle">${certTitle}</span>
+            <span class="condition-sub-bracket" data-i18n="conditionCertifiedBracket">${certBracket}</span>
+          </div>
+        </div>
         <span class="count-pill">${countCertified}</span>
       </label>
     `;
@@ -114,6 +128,7 @@ const Shop = {
     const allProducts = ProductService.getAll();
     const allCount = allProducts.length;
     const allBrandsText = (typeof I18n !== 'undefined') ? I18n.t('filterAllBrands') : 'All Brands';
+    const lang = (typeof I18n !== 'undefined') ? I18n.getLang() : 'en';
 
     let html = `
       <label class="filter-radio-label">
@@ -127,11 +142,12 @@ const Shop = {
 
     brands.forEach(brand => {
       const count = allProducts.filter(p => p.brand.toLowerCase() === brand.toLowerCase()).length;
+      const brandDisplayName = (typeof I18n !== 'undefined') ? I18n.getBrandName(brand, lang) : brand;
       html += `
         <label class="filter-radio-label">
           <span>
             <input type="radio" name="filter-brand-radio" value="${brand}" ${this.activeBrand.toLowerCase() === brand.toLowerCase() ? 'checked' : ''}>
-            <span>${brand}</span>
+            <span>${brandDisplayName}</span>
           </span>
           <span class="count-pill">${count}</span>
         </label>
@@ -281,12 +297,9 @@ const Shop = {
     list = list.filter(p => p.basePrice <= this.maxPrice);
 
     if (this.searchQuery && this.searchQuery.trim() !== '') {
-      const q = this.searchQuery.toLowerCase().trim();
-      list = list.filter(p => {
-        const name = (p.name[lang] || p.name.en).toLowerCase();
-        const desc = (p.description[lang] || p.description.en).toLowerCase();
-        return name.includes(q) || desc.includes(q) || p.brand.toLowerCase().includes(q);
-      });
+      const searchMatches = ProductService.search(this.searchQuery, lang);
+      const matchIds = new Set(searchMatches.map(p => p.id));
+      list = list.filter(p => matchIds.has(p.id));
     }
 
     list = [...list].sort((a, b) => {
@@ -338,29 +351,24 @@ const Shop = {
     window.dispatchEvent(new CustomEvent('diamond:productsRendered'));
   },
 
-  renderProductCard(product, lang = 'en') {
-    const name = product.name[lang] || product.name.en;
-    const tagline = product.tagline[lang] || product.tagline.en;
+  renderProductCard(product, lang = (typeof I18n !== 'undefined' ? I18n.getLang() : 'en')) {
+    const name = (typeof product.name === 'object') ? (product.name[lang] || product.name.en) : product.name;
+    const tagline = (typeof product.tagline === 'object') ? (product.tagline[lang] || product.tagline.en) : product.tagline;
+    const brandName = (typeof I18n !== 'undefined') ? I18n.getBrandName(product.brand, lang) : product.brand;
     const isWishlisted = Cart.isInWishlist(product.id);
     const colorsHtml = (product.colors || []).slice(0, 4).map(c => `
-      <span class="color-preview-dot" style="background-color: ${c.hex}" title="${c.name[lang] || c.name.en}"></span>
+      <span class="color-preview-dot" style="background-color: ${c.hex}" title="${(c.name && typeof c.name === 'object') ? (c.name[lang] || c.name.en) : (c.name || '')}"></span>
     `).join('');
 
     return `
       <div class="product-card" data-id="${product.id}">
-        <div class="product-card-top">
-          <button type="button" class="btn-wishlist-toggle ${isWishlisted ? 'is-active' : ''}" onclick="Cart.toggleWishlist('${product.id}')" title="${I18n.t('navWishlist')}">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="${isWishlisted ? '#ef4444' : 'none'}" stroke="${isWishlisted ? '#ef4444' : 'currentColor'}" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-          </button>
-        </div>
-
         <a href="product.html?id=${product.id}" class="product-card-img-wrap">
           <img src="${product.images[0]}" alt="${name}" class="product-card-img" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=800&q=80'">
         </a>
 
         <div class="product-card-body">
           <div class="product-card-meta">
-            <span class="product-card-brand">${product.brand}</span>
+            <span class="product-card-brand">${brandName}</span>
             <div class="product-card-colors">${colorsHtml}</div>
           </div>
 
@@ -399,31 +407,33 @@ const Shop = {
     const container = document.getElementById('active-filter-pills');
     if (!container) return;
 
+    const lang = (typeof I18n !== 'undefined') ? I18n.getLang() : 'en';
     const pills = [];
 
     if (this.activeCategory !== 'all') {
       const catKey = `cat${this.activeCategory.charAt(0).toUpperCase() + this.activeCategory.slice(1)}`;
-      pills.push({ label: `Category: ${I18n.t(catKey) || this.activeCategory}`, reset: () => { this.activeCategory = 'all'; const r = document.querySelector('input[name="filter-cat"][value="all"]'); if (r) r.checked = true; } });
+      pills.push({ label: `${I18n.t('filterPillCategory')}${I18n.t(catKey) || this.activeCategory}`, reset: () => { this.activeCategory = 'all'; const r = document.querySelector('input[name="filter-cat"][value="all"]'); if (r) r.checked = true; } });
     }
 
     if (this.activeCondition !== 'all') {
-      let label = 'Condition: ';
-      if (this.activeCondition === 'new') label += I18n.t('conditionNeverUsed');
-      else if (this.activeCondition === 'like-new') label += I18n.t('conditionLikeNew');
-      else label += I18n.t('conditionCertified');
-      pills.push({ label, reset: () => { this.activeCondition = 'all'; const c = document.querySelector('input[name="filter-condition-radio"][value="all"]'); if (c) c.checked = true; } });
+      let condLabel = I18n.t('filterPillCondition');
+      if (this.activeCondition === 'new') condLabel += I18n.t('conditionNeverUsed');
+      else if (this.activeCondition === 'like-new') condLabel += I18n.t('conditionLikeNew');
+      else condLabel += I18n.t('conditionCertified');
+      pills.push({ label: condLabel, reset: () => { this.activeCondition = 'all'; const c = document.querySelector('input[name="filter-condition-radio"][value="all"]'); if (c) c.checked = true; } });
     }
 
     if (this.activeBrand !== 'all') {
-      pills.push({ label: `Brand: ${this.activeBrand}`, reset: () => { this.activeBrand = 'all'; const b = document.querySelector('input[name="filter-brand-radio"][value="all"]'); if (b) b.checked = true; } });
+      const brandLabel = (typeof I18n !== 'undefined') ? I18n.getBrandName(this.activeBrand, lang) : this.activeBrand;
+      pills.push({ label: `${I18n.t('filterPillBrand')}${brandLabel}`, reset: () => { this.activeBrand = 'all'; const b = document.querySelector('input[name="filter-brand-radio"][value="all"]'); if (b) b.checked = true; } });
     }
 
     if (this.maxPrice < 6000) {
-      pills.push({ label: `Max Price: $${this.maxPrice.toLocaleString()}`, reset: () => { this.maxPrice = 6000; const p = document.getElementById('price-range-slider'); if (p) p.value = 6000; } });
+      pills.push({ label: `${I18n.t('filterPillMaxPrice')}${this.maxPrice.toLocaleString()}`, reset: () => { this.maxPrice = 6000; const p = document.getElementById('price-range-slider'); if (p) p.value = 6000; } });
     }
 
     if (this.searchQuery) {
-      pills.push({ label: `Search: "${this.searchQuery}"`, reset: () => { this.searchQuery = ''; const s = document.getElementById('shop-search-input'); if (s) s.value = ''; } });
+      pills.push({ label: `${I18n.t('filterPillSearch')}"${this.searchQuery}"`, reset: () => { this.searchQuery = ''; const s = document.getElementById('shop-search-input'); if (s) s.value = ''; } });
     }
 
     if (pills.length === 0) {

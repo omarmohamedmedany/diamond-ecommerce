@@ -55,9 +55,19 @@ html[dir="rtl"] .wishlist-count-badge {
 
 /* Floating WhatsApp Widget */
 html[dir="rtl"] .diamond-whatsapp-widget {
-  right: auto;
-  left: 28px;
-  align-items: flex-start;
+  right: 24px !important;
+  left: auto !important;
+  bottom: 24px !important;
+  align-items: flex-end !important;
+}
+
+html[dir="rtl"] .whatsapp-bubble-tooltip {
+  text-align: right;
+}
+
+html[dir="rtl"] .tooltip-header {
+  flex-direction: row-reverse;
+  justify-content: flex-end;
 }
 
 /* Toast container position */

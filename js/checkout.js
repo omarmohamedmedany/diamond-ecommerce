@@ -44,9 +44,12 @@ const Checkout = {
     if (fullState) fullState.style.display = 'grid';
 
     tableBody.innerHTML = cart.map(item => {
-      const name = item.name[lang] || item.name.en;
-      const colorName = item.color.name[lang] || item.color.name.en;
-      const storageSize = item.storage ? item.storage.size : '';
+      const prod = ProductService.getById(item.productId);
+      const name = prod ? (prod.name[lang] || prod.name.en) : (typeof item.name === 'object' ? (item.name[lang] || item.name.en) : item.name);
+      const brand = prod ? prod.brand : item.brand;
+      const brandName = (typeof I18n !== 'undefined') ? I18n.getBrandName(brand, lang) : brand;
+      const colorName = (item.color && typeof item.color.name === 'object') ? (item.color.name[lang] || item.color.name.en) : (item.color?.name || '');
+      const storageSize = item.storage ? ((typeof I18n !== 'undefined') ? I18n.formatStorage(item.storage, lang) : (item.storage.size || item.storage)) : '';
       const lineTotal = item.unitPrice * item.quantity;
 
       return `
@@ -57,7 +60,7 @@ const Checkout = {
                 <img src="${item.image}" alt="${name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=200&q=80'">
               </a>
               <div class="cart-item-details">
-                <div class="cart-item-brand">${item.brand}</div>
+                <div class="cart-item-brand">${brandName}</div>
                 <h4 class="cart-item-title"><a href="product.html?id=${item.productId}">${name}</a></h4>
                 <div class="cart-item-variant">
                   <span class="color-dot" style="background-color: ${item.color.hex}"></span>
@@ -326,8 +329,12 @@ const Checkout = {
     if (order.paymentMethod === 'cod') paymentName = I18n.t('payCashOnDelivery');
     if (order.paymentMethod === 'crypto') paymentName = I18n.t('payCrypto');
 
-    const itemsListText = order.items.map(i => `• ${i.name.en} (${i.quantity}x) - $${(i.unitPrice * i.quantity).toLocaleString()}`).join('\n');
-    const waText = `*DIAMOND TECH ORDER CONFIRMATION*\nOrder ID: ${order.orderId}\nCustomer: ${order.shipping.fullName}\nPhone: ${order.shipping.phone}\nAddress: ${order.shipping.address}, ${order.shipping.city}\nPayment: ${paymentName}\n\n*Ordered Items:*\n${itemsListText}\n\n*Total Paid:* $${order.total.toLocaleString()}\nThank you for choosing Diamond.`;
+    const itemsListText = order.items.map(i => `• ${i.name[lang] || i.name.en} (${i.quantity}x) - $${(i.unitPrice * i.quantity).toLocaleString()}`).join('\n');
+    
+    const waText = lang === 'ar'
+      ? `*تأكيد طلب متجر دايموند تك*\nرقم الطلب: ${order.orderId}\nاسم العميل: ${order.shipping.fullName}\nرقم الهاتف: ${order.shipping.phone}\nعنوان التوصيل: ${order.shipping.address}، ${order.shipping.city}\nوسيلة الدفع: ${paymentName}\n\n*الأجهزة المطلوبة:*\n${itemsListText}\n\n*المبلغ الإجمالي المدفوع:* $${order.total.toLocaleString()}\nشكراً لثقتكم واختياركم دايموند تك.`
+      : `*DIAMOND TECH ORDER CONFIRMATION*\nOrder ID: ${order.orderId}\nCustomer: ${order.shipping.fullName}\nPhone: ${order.shipping.phone}\nAddress: ${order.shipping.address}, ${order.shipping.city}\nPayment: ${paymentName}\n\n*Ordered Items:*\n${itemsListText}\n\n*Total Paid:* $${order.total.toLocaleString()}\nThank you for choosing Diamond.`;
+    
     const waUrl = `https://wa.me/97471040746?text=${encodeURIComponent(waText)}`;
 
     container.innerHTML = `
@@ -335,10 +342,10 @@ const Checkout = {
         <div class="receipt-header">
           <div class="receipt-brand-logo">
             <span class="diamond-gem-symbol">✦</span>
-            <strong>DIAMOND</strong>
+            <strong>${I18n.t('brandName').toUpperCase()}</strong>
           </div>
           <div class="receipt-status-badge">
-            <span>✓ VERIFIED & CONFIRMED</span>
+            <span data-i18n="receiptVerifiedBadge">${I18n.t('receiptVerifiedBadge')}</span>
           </div>
         </div>
 
@@ -362,7 +369,7 @@ const Checkout = {
         </div>
 
         <div class="receipt-items-table">
-          <h4>Purchased Devices:</h4>
+          <h4 data-i18n="purchasedDevicesHeading">${I18n.t('purchasedDevicesHeading')}</h4>
           ${order.items.map(item => `
             <div class="receipt-item-row">
               <div class="receipt-item-main">

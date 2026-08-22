@@ -4,88 +4,205 @@
  */
 
 const COUNTRIES_DATA = [
-  // Primary / GCC & Middle East
-  { code: 'QA', dial: '+974', labelEn: 'Qatar', labelAr: 'قطر', nameEn: 'Qatar', nameAr: 'قطر', startDigits: ['3', '5', '6', '7'], minLen: 8, maxLen: 8, placeholder: '7104 0746' },
-  { code: 'SA', dial: '+966', labelEn: 'Saudi', labelAr: 'السعودية', nameEn: 'Saudi Arabia', nameAr: 'المملكة العربية السعودية', startDigits: ['5'], minLen: 9, maxLen: 9, placeholder: '50 123 4567' },
-  { code: 'AE', dial: '+971', labelEn: 'UAE', labelAr: 'الإمارات', nameEn: 'United Arab Emirates', nameAr: 'الإمارات العربية المتحدة', startDigits: ['5'], minLen: 9, maxLen: 9, placeholder: '50 123 4567' },
-  { code: 'KW', dial: '+965', labelEn: 'Kuwait', labelAr: 'الكويت', nameEn: 'Kuwait', nameAr: 'الكويت', startDigits: ['5', '6', '9'], minLen: 8, maxLen: 8, placeholder: '9876 5432' },
-  { code: 'BH', dial: '+973', labelEn: 'Bahrain', labelAr: 'البحرين', nameEn: 'Bahrain', nameAr: 'البحرين', startDigits: ['3', '6', '9'], minLen: 8, maxLen: 8, placeholder: '3600 1234' },
-  { code: 'OM', dial: '+968', labelEn: 'Oman', labelAr: 'عُمان', nameEn: 'Oman', nameAr: 'سلطنة عمان', startDigits: ['7', '9'], minLen: 8, maxLen: 8, placeholder: '9123 4567' },
-  { code: 'EG', dial: '+20', labelEn: 'Egypt', labelAr: 'مصر', nameEn: 'Egypt', nameAr: 'مصر', startDigits: ['10', '11', '12', '15', '1'], minLen: 10, maxLen: 10, placeholder: '10 1234 5678' },
-  { code: 'JO', dial: '+962', labelEn: 'Jordan', labelAr: 'الأردن', nameEn: 'Jordan', nameAr: 'الأردن', startDigits: ['7'], minLen: 9, maxLen: 9, placeholder: '7 9123 4567' },
-  { code: 'LB', dial: '+961', labelEn: 'Lebanon', labelAr: 'لبنان', nameEn: 'Lebanon', nameAr: 'لبنان', startDigits: ['3', '7', '8'], minLen: 7, maxLen: 8, placeholder: '71 123 456' },
-  { code: 'IQ', dial: '+964', labelEn: 'Iraq', labelAr: 'العراق', nameEn: 'Iraq', nameAr: 'العراق', startDigits: ['7'], minLen: 10, maxLen: 10, placeholder: '770 123 4567' },
-  { code: 'MA', dial: '+212', labelEn: 'Morocco', labelAr: 'المغرب', nameEn: 'Morocco', nameAr: 'المغرب', startDigits: ['6', '7'], minLen: 9, maxLen: 9, placeholder: '612 345678' },
-  { code: 'TN', dial: '+216', labelEn: 'Tunisia', labelAr: 'تونس', nameEn: 'Tunisia', nameAr: 'تونس', startDigits: ['2', '4', '5', '9'], minLen: 8, maxLen: 8, placeholder: '20 123 456' },
-  { code: 'DZ', dial: '+213', labelEn: 'Algeria', labelAr: 'الجزائر', nameEn: 'Algeria', nameAr: 'الجزائر', startDigits: ['5', '6', '7'], minLen: 9, maxLen: 9, placeholder: '551 234 567' },
-  { code: 'PS', dial: '+970', labelEn: 'Palestine', labelAr: 'فلسطين', nameEn: 'Palestine', nameAr: 'فلسطين', startDigits: ['5'], minLen: 9, maxLen: 9, placeholder: '59 123 4567' },
-  { code: 'YE', dial: '+967', labelEn: 'Yemen', labelAr: 'اليمن', nameEn: 'Yemen', nameAr: 'اليمن', startDigits: ['7'], minLen: 9, maxLen: 9, placeholder: '771 234 567' },
-  { code: 'SY', dial: '+963', labelEn: 'Syria', labelAr: 'سوريا', nameEn: 'Syria', nameAr: 'سوريا', startDigits: ['9'], minLen: 9, maxLen: 9, placeholder: '944 123 456' },
-  { code: 'SD', dial: '+249', labelEn: 'Sudan', labelAr: 'السودان', nameEn: 'Sudan', nameAr: 'السودان', startDigits: ['9', '1'], minLen: 9, maxLen: 9, placeholder: '91 234 5678' },
-  { code: 'LY', dial: '+218', labelEn: 'Libya', labelAr: 'ليبيا', nameEn: 'Libya', nameAr: 'ليبيا', startDigits: ['9'], minLen: 9, maxLen: 9, placeholder: '91 234 5678' },
-  
-  // Major Global Economies & Countries
-  { code: 'GB', dial: '+44', labelEn: 'UK', labelAr: 'بريطانيا', nameEn: 'United Kingdom', nameAr: 'المملكة المتحدة', startDigits: ['7'], minLen: 10, maxLen: 10, placeholder: '7911 123456' },
-  { code: 'US', dial: '+1', labelEn: 'USA', labelAr: 'أمريكا', nameEn: 'United States', nameAr: 'الولايات المتحدة', startDigits: ['2', '3', '4', '5', '6', '7', '8', '9'], minLen: 10, maxLen: 10, placeholder: '555 123 4567' },
-  { code: 'CA', dial: '+1', labelEn: 'Canada', labelAr: 'كندا', nameEn: 'Canada', nameAr: 'كندا', startDigits: ['2', '3', '4', '5', '6', '7', '8', '9'], minLen: 10, maxLen: 10, placeholder: '555 123 4567' },
-  { code: 'CH', dial: '+41', labelEn: 'Swiss', labelAr: 'سويسرا', nameEn: 'Switzerland', nameAr: 'سويسرا', startDigits: ['7'], minLen: 9, maxLen: 9, placeholder: '78 123 45 67' },
-  { code: 'DE', dial: '+49', labelEn: 'Germany', labelAr: 'ألمانيا', nameEn: 'Germany', nameAr: 'ألمانيا', startDigits: ['15', '16', '17', '1'], minLen: 10, maxLen: 11, placeholder: '151 12345678' },
-  { code: 'FR', dial: '+33', labelEn: 'France', labelAr: 'فرنسا', nameEn: 'France', nameAr: 'فرنسا', startDigits: ['6', '7'], minLen: 9, maxLen: 9, placeholder: '6 12 34 56 78' },
-  { code: 'IT', dial: '+39', labelEn: 'Italy', labelAr: 'إيطاليا', nameEn: 'Italy', nameAr: 'إيطاليا', startDigits: ['3'], minLen: 9, maxLen: 10, placeholder: '312 345 6789' },
-  { code: 'ES', dial: '+34', labelEn: 'Spain', labelAr: 'إسبانيا', nameEn: 'Spain', nameAr: 'إسبانيا', startDigits: ['6', '7'], minLen: 9, maxLen: 9, placeholder: '612 345 678' },
-  { code: 'TR', dial: '+90', labelEn: 'Turkey', labelAr: 'تركيا', nameEn: 'Turkey', nameAr: 'تركيا', startDigits: ['5'], minLen: 10, maxLen: 10, placeholder: '532 123 4567' },
-  { code: 'IN', dial: '+91', labelEn: 'India', labelAr: 'الهند', nameEn: 'India', nameAr: 'الهند', startDigits: ['6', '7', '8', '9'], minLen: 10, maxLen: 10, placeholder: '98765 43210' },
-  { code: 'PK', dial: '+92', labelEn: 'Pakistan', labelAr: 'باكستان', nameEn: 'Pakistan', nameAr: 'باكستان', startDigits: ['3'], minLen: 10, maxLen: 10, placeholder: '300 1234567' },
-  { code: 'BD', dial: '+880', labelEn: 'Bangladesh', labelAr: 'بنغلاديش', nameEn: 'Bangladesh', nameAr: 'بنغلاديش', startDigits: ['1'], minLen: 10, maxLen: 10, placeholder: '1712 345678' },
-  { code: 'CN', dial: '+86', labelEn: 'China', labelAr: 'الصين', nameEn: 'China', nameAr: 'الصين', startDigits: ['1'], minLen: 11, maxLen: 11, placeholder: '138 1234 5678' },
-  { code: 'JP', dial: '+81', labelEn: 'Japan', labelAr: 'اليابان', nameEn: 'Japan', nameAr: 'اليابان', startDigits: ['7', '8', '9'], minLen: 10, maxLen: 10, placeholder: '90 1234 5678' },
-  { code: 'KR', dial: '+82', labelEn: 'Korea', labelAr: 'كوريا', nameEn: 'South Korea', nameAr: 'كوريا الجنوبية', startDigits: ['10', '1'], minLen: 9, maxLen: 10, placeholder: '10 1234 5678' },
-  { code: 'AU', dial: '+61', labelEn: 'Australia', labelAr: 'أستراليا', nameEn: 'Australia', nameAr: 'أستراليا', startDigits: ['4'], minLen: 9, maxLen: 9, placeholder: '412 345 678' },
-  { code: 'NZ', dial: '+64', labelEn: 'NZ', labelAr: 'نيوزيلندا', nameEn: 'New Zealand', nameAr: 'نيوزيلندا', startDigits: ['2'], minLen: 8, maxLen: 9, placeholder: '21 123 4567' },
-  { code: 'SG', dial: '+65', labelEn: 'Singapore', labelAr: 'سنغافورة', nameEn: 'Singapore', nameAr: 'سنغافورة', startDigits: ['8', '9'], minLen: 8, maxLen: 8, placeholder: '8123 4567' },
-  { code: 'MY', dial: '+60', labelEn: 'Malaysia', labelAr: 'ماليزيا', nameEn: 'Malaysia', nameAr: 'ماليزيا', startDigits: ['1'], minLen: 9, maxLen: 10, placeholder: '12 345 6789' },
-  { code: 'ID', dial: '+62', labelEn: 'Indonesia', labelAr: 'إندونيسيا', nameEn: 'Indonesia', nameAr: 'إندونيسيا', startDigits: ['8'], minLen: 9, maxLen: 12, placeholder: '812 3456 7890' },
-  { code: 'PH', dial: '+63', labelEn: 'Philippines', labelAr: 'الفلبين', nameEn: 'Philippines', nameAr: 'الفلبين', startDigits: ['9'], minLen: 10, maxLen: 10, placeholder: '917 123 4567' },
-  { code: 'TH', dial: '+66', labelEn: 'Thailand', labelAr: 'تايلاند', nameEn: 'Thailand', nameAr: 'تايلاند', startDigits: ['6', '8', '9'], minLen: 9, maxLen: 9, placeholder: '81 234 5678' },
-  { code: 'VN', dial: '+84', labelEn: 'Vietnam', labelAr: 'فيتنام', nameEn: 'Vietnam', nameAr: 'فيتنام', startDigits: ['3', '5', '7', '8', '9'], minLen: 9, maxLen: 10, placeholder: '91 234 5678' },
-  { code: 'RU', dial: '+7', labelEn: 'Russia', labelAr: 'روسيا', nameEn: 'Russia', nameAr: 'روسيا', startDigits: ['9'], minLen: 10, maxLen: 10, placeholder: '912 345 6789' },
-  { code: 'BR', dial: '+55', labelEn: 'Brazil', labelAr: 'البرازيل', nameEn: 'Brazil', nameAr: 'البرازيل', startDigits: ['9', '6', '7', '8'], minLen: 10, maxLen: 11, placeholder: '11 91234 5678' },
-  { code: 'MX', dial: '+52', labelEn: 'Mexico', labelAr: 'المكسيك', nameEn: 'Mexico', nameAr: 'المكسيك', startDigits: ['1', '2', '3', '4', '5', '6', '7', '8', '9'], minLen: 10, maxLen: 10, placeholder: '55 1234 5678' },
-  { code: 'AR', dial: '+54', labelEn: 'Argentina', labelAr: 'الأرجنتين', nameEn: 'Argentina', nameAr: 'الأرجنتين', startDigits: ['9', '1'], minLen: 10, maxLen: 10, placeholder: '9 11 1234 5678' },
-  { code: 'CL', dial: '+56', labelEn: 'Chile', labelAr: 'تشيلي', nameEn: 'Chile', nameAr: 'تشيلي', startDigits: ['9'], minLen: 9, maxLen: 9, placeholder: '9 1234 5678' },
-  { code: 'CO', dial: '+57', labelEn: 'Colombia', labelAr: 'كولومبيا', nameEn: 'Colombia', nameAr: 'كولومبيا', startDigits: ['3'], minLen: 10, maxLen: 10, placeholder: '300 123 4567' },
-  { code: 'ZA', dial: '+27', labelEn: 'South Africa', labelAr: 'جنوب أفريقيا', nameEn: 'South Africa', nameAr: 'جنوب أفريقيا', startDigits: ['6', '7', '8'], minLen: 9, maxLen: 9, placeholder: '71 123 4567' },
-  { code: 'NG', dial: '+234', labelEn: 'Nigeria', labelAr: 'نيجيريا', nameEn: 'Nigeria', nameAr: 'نيجيريا', startDigits: ['7', '8', '9'], minLen: 10, maxLen: 10, placeholder: '802 123 4567' },
-  { code: 'KE', dial: '+254', labelEn: 'Kenya', labelAr: 'كينيا', nameEn: 'Kenya', nameAr: 'كينيا', startDigits: ['7', '1'], minLen: 9, maxLen: 9, placeholder: '712 345678' },
-  { code: 'GH', dial: '+233', labelEn: 'Ghana', labelAr: 'غانا', nameEn: 'Ghana', nameAr: 'غانا', startDigits: ['2', '5'], minLen: 9, maxLen: 9, placeholder: '24 123 4567' },
-  { code: 'SE', dial: '+46', labelEn: 'Sweden', labelAr: 'السويد', nameEn: 'Sweden', nameAr: 'السويد', startDigits: ['7'], minLen: 9, maxLen: 9, placeholder: '70 123 45 67' },
-  { code: 'NO', dial: '+47', labelEn: 'Norway', labelAr: 'النرويج', nameEn: 'Norway', nameAr: 'النرويج', startDigits: ['4', '9'], minLen: 8, maxLen: 8, placeholder: '412 34 567' },
-  { code: 'DK', dial: '+45', labelEn: 'Denmark', labelAr: 'الدنمارك', nameEn: 'Denmark', nameAr: 'الدنمارك', startDigits: ['2', '3', '4', '5', '6', '7', '8', '9'], minLen: 8, maxLen: 8, placeholder: '20 12 34 56' },
-  { code: 'NL', dial: '+31', labelEn: 'Netherlands', labelAr: 'هولندا', nameEn: 'Netherlands', nameAr: 'هولندا', startDigits: ['6'], minLen: 9, maxLen: 9, placeholder: '6 12345678' },
-  { code: 'BE', dial: '+32', labelEn: 'Belgium', labelAr: 'بلجيكا', nameEn: 'Belgium', nameAr: 'بلجيكا', startDigits: ['4'], minLen: 9, maxLen: 9, placeholder: '470 12 34 56' },
-  { code: 'AT', dial: '+43', labelEn: 'Austria', labelAr: 'النمسا', nameEn: 'Austria', nameAr: 'النمسا', startDigits: ['6'], minLen: 10, maxLen: 10, placeholder: '664 1234567' },
-  { code: 'GR', dial: '+30', labelEn: 'Greece', labelAr: 'اليونان', nameEn: 'Greece', nameAr: 'اليونان', startDigits: ['6'], minLen: 10, maxLen: 10, placeholder: '691 234 5678' },
-  { code: 'PT', dial: '+351', labelEn: 'Portugal', labelAr: 'البرتغال', nameEn: 'Portugal', nameAr: 'البرتغال', startDigits: ['9'], minLen: 9, maxLen: 9, placeholder: '912 345 678' },
-  { code: 'PL', dial: '+48', labelEn: 'Poland', labelAr: 'بولندا', nameEn: 'Poland', nameAr: 'بولندا', startDigits: ['5', '6', '7', '8'], minLen: 9, maxLen: 9, placeholder: '512 345 678' },
-  { code: 'RO', dial: '+40', labelEn: 'Romania', labelAr: 'رومانيا', nameEn: 'Romania', nameAr: 'رومانيا', startDigits: ['7'], minLen: 9, maxLen: 9, placeholder: '712 345 678' },
-  { code: 'CZ', dial: '+420', labelEn: 'Czech', labelAr: 'التشيك', nameEn: 'Czech Republic', nameAr: 'التشيك', startDigits: ['6', '7'], minLen: 9, maxLen: 9, placeholder: '601 123 456' },
-  { code: 'HU', dial: '+36', labelEn: 'Hungary', labelAr: 'المجر', nameEn: 'Hungary', nameAr: 'المجر', startDigits: ['2', '3', '7'], minLen: 9, maxLen: 9, placeholder: '20 123 4567' },
-  { code: 'IE', dial: '+353', labelEn: 'Ireland', labelAr: 'أيرلندا', nameEn: 'Ireland', nameAr: 'أيرلندا', startDigits: ['8'], minLen: 9, maxLen: 9, placeholder: '85 123 4567' },
-  { code: 'FI', dial: '+358', labelEn: 'Finland', labelAr: 'فنلندا', nameEn: 'Finland', nameAr: 'فنلندا', startDigits: ['4', '5'], minLen: 9, maxLen: 10, placeholder: '40 123 4567' },
-  { code: 'UA', dial: '+380', labelEn: 'Ukraine', labelAr: 'أوكرانيا', nameEn: 'Ukraine', nameAr: 'أوكرانيا', startDigits: ['5', '6', '7', '8', '9'], minLen: 9, maxLen: 9, placeholder: '50 123 4567' },
-  { code: 'AZ', dial: '+994', labelEn: 'Azerbaijan', labelAr: 'أذربيجان', nameEn: 'Azerbaijan', nameAr: 'أذربيجان', startDigits: ['5', '7', '9'], minLen: 9, maxLen: 9, placeholder: '50 123 45 67' },
-  { code: 'KZ', dial: '+7', labelEn: 'Kazakhstan', labelAr: 'كازاخستان', nameEn: 'Kazakhstan', nameAr: 'كازاخستان', startDigits: ['7'], minLen: 10, maxLen: 10, placeholder: '701 123 4567' },
-  { code: 'UZ', dial: '+998', labelEn: 'Uzbekistan', labelAr: 'أوزبكستان', nameEn: 'Uzbekistan', nameAr: 'أوزبكستان', startDigits: ['9'], minLen: 9, maxLen: 9, placeholder: '90 123 45 67' },
-  { code: 'AF', dial: '+93', labelEn: 'Afghanistan', labelAr: 'أفغانستان', nameEn: 'Afghanistan', nameAr: 'أفغانستان', startDigits: ['7'], minLen: 9, maxLen: 9, placeholder: '70 123 4567' },
-  { code: 'AL', dial: '+355', labelEn: 'Albania', labelAr: 'ألبانيا', nameEn: 'Albania', nameAr: 'ألبانيا', startDigits: ['6'], minLen: 9, maxLen: 9, placeholder: '67 123 4567' },
-  { code: 'CY', dial: '+357', labelEn: 'Cyprus', labelAr: 'قبرص', nameEn: 'Cyprus', nameAr: 'قبرص', startDigits: ['9'], minLen: 8, maxLen: 8, placeholder: '99 123456' },
-  { code: 'MT', dial: '+356', labelEn: 'Malta', labelAr: 'مالطا', nameEn: 'Malta', nameAr: 'مالطا', startDigits: ['7', '9'], minLen: 8, maxLen: 8, placeholder: '9912 3456' },
-  { code: 'IS', dial: '+354', labelEn: 'Iceland', labelAr: 'آيسلندا', nameEn: 'Iceland', nameAr: 'آيسلندا', startDigits: ['6', '7', '8'], minLen: 7, maxLen: 7, placeholder: '612 3456' },
-  { code: 'LU', dial: '+352', labelEn: 'Luxembourg', labelAr: 'لوكسمبورغ', nameEn: 'Luxembourg', nameAr: 'لوكسمبورغ', startDigits: ['6'], minLen: 9, maxLen: 9, placeholder: '621 123 456' },
-  { code: 'MC', dial: '+377', labelEn: 'Monaco', labelAr: 'موناكو', nameEn: 'Monaco', nameAr: 'موناكو', startDigits: ['6'], minLen: 8, maxLen: 8, placeholder: '6 12 34 56 78' },
-  { code: 'AD', dial: '+376', labelEn: 'Andorra', labelAr: 'أندورا', nameEn: 'Andorra', nameAr: 'أندورا', startDigits: ['3', '6', '8'], minLen: 6, maxLen: 6, placeholder: '312 345' },
-  { code: 'SM', dial: '+378', labelEn: 'San Marino', labelAr: 'سان مارينو', nameEn: 'San Marino', nameAr: 'سان مارينو', startDigits: ['6'], minLen: 8, maxLen: 8, placeholder: '66 123456' },
-  { code: 'VA', dial: '+379', labelEn: 'Vatican', labelAr: 'الفاتيكان', nameEn: 'Vatican City', nameAr: 'الفاتيكان', startDigits: ['0', '3', '6'], minLen: 10, maxLen: 10, placeholder: '06 69812345' }
+  // Primary GCC & Middle East
+  { code: 'QA', dial: '+974', labelEn: 'Qatar', labelAr: 'قطر', nameEn: 'Qatar', nameAr: 'قطر', minLen: 8, maxLen: 8, placeholder: '71040746' },
+  { code: 'SA', dial: '+966', labelEn: 'Saudi Arabia', labelAr: 'السعودية', nameEn: 'Saudi Arabia', nameAr: 'المملكة العربية السعودية', minLen: 9, maxLen: 9, placeholder: '501234567' },
+  { code: 'AE', dial: '+971', labelEn: 'UAE', labelAr: 'الإمارات', nameEn: 'United Arab Emirates', nameAr: 'الإمارات العربية المتحدة', minLen: 9, maxLen: 9, placeholder: '501234567' },
+  { code: 'KW', dial: '+965', labelEn: 'Kuwait', labelAr: 'الكويت', nameEn: 'Kuwait', nameAr: 'الكويت', minLen: 8, maxLen: 8, placeholder: '98765432' },
+  { code: 'BH', dial: '+973', labelEn: 'Bahrain', labelAr: 'البحرين', nameEn: 'Bahrain', nameAr: 'البحرين', minLen: 8, maxLen: 8, placeholder: '36001234' },
+  { code: 'OM', dial: '+968', labelEn: 'Oman', labelAr: 'عُمان', nameEn: 'Oman', nameAr: 'سلطنة عمان', minLen: 8, maxLen: 8, placeholder: '91234567' },
+  { code: 'EG', dial: '+20', labelEn: 'Egypt', labelAr: 'مصر', nameEn: 'Egypt', nameAr: 'مصر', minLen: 10, maxLen: 10, placeholder: '1012345678' },
+  { code: 'JO', dial: '+962', labelEn: 'Jordan', labelAr: 'الأردن', nameEn: 'Jordan', nameAr: 'الأردن', minLen: 9, maxLen: 9, placeholder: '791234567' },
+  { code: 'LB', dial: '+961', labelEn: 'Lebanon', labelAr: 'لبنان', nameEn: 'Lebanon', nameAr: 'لبنان', minLen: 7, maxLen: 8, placeholder: '71123456' },
+  { code: 'IQ', dial: '+964', labelEn: 'Iraq', labelAr: 'العراق', nameEn: 'Iraq', nameAr: 'العراق', minLen: 10, maxLen: 10, placeholder: '7701234567' },
+  { code: 'MA', dial: '+212', labelEn: 'Morocco', labelAr: 'المغرب', nameEn: 'Morocco', nameAr: 'المغرب', minLen: 9, maxLen: 9, placeholder: '612345678' },
+  { code: 'TN', dial: '+216', labelEn: 'Tunisia', labelAr: 'تونس', nameEn: 'Tunisia', nameAr: 'تونس', minLen: 8, maxLen: 8, placeholder: '20123456' },
+  { code: 'DZ', dial: '+213', labelEn: 'Algeria', labelAr: 'الجزائر', nameEn: 'Algeria', nameAr: 'الجزائر', minLen: 9, maxLen: 9, placeholder: '551234567' },
+  { code: 'PS', dial: '+970', labelEn: 'Palestine', labelAr: 'فلسطين', nameEn: 'Palestine', nameAr: 'فلسطين', minLen: 9, maxLen: 9, placeholder: '591234567' },
+  { code: 'YE', dial: '+967', labelEn: 'Yemen', labelAr: 'اليمن', nameEn: 'Yemen', nameAr: 'اليمن', minLen: 9, maxLen: 9, placeholder: '771234567' },
+  { code: 'SY', dial: '+963', labelEn: 'Syria', labelAr: 'سوريا', nameEn: 'Syria', nameAr: 'سوريا', minLen: 9, maxLen: 9, placeholder: '944123456' },
+  { code: 'SD', dial: '+249', labelEn: 'Sudan', labelAr: 'السودان', nameEn: 'Sudan', nameAr: 'السودان', minLen: 9, maxLen: 9, placeholder: '912345678' },
+  { code: 'LY', dial: '+218', labelEn: 'Libya', labelAr: 'ليبيا', nameEn: 'Libya', nameAr: 'ليبيا', minLen: 9, maxLen: 9, placeholder: '912345678' },
+
+  // All World Countries from Spreadsheet (Alphabetical)
+  { code: 'AF', dial: '+93', labelEn: 'Afghanistan', labelAr: 'أفغانستان', nameEn: 'Afghanistan', nameAr: 'أفغانستان', minLen: 9, maxLen: 9, placeholder: '701234567' },
+  { code: 'AL', dial: '+355', labelEn: 'Albania', labelAr: 'ألبانيا', nameEn: 'Albania', nameAr: 'ألبانيا', minLen: 9, maxLen: 9, placeholder: '671234567' },
+  { code: 'AD', dial: '+376', labelEn: 'Andorra', labelAr: 'أندورا', nameEn: 'Andorra', nameAr: 'أندورا', minLen: 6, maxLen: 6, placeholder: '312345' },
+  { code: 'AO', dial: '+244', labelEn: 'Angola', labelAr: 'أنغولا', nameEn: 'Angola', nameAr: 'أنغولا', minLen: 9, maxLen: 9, placeholder: '923123456' },
+  { code: 'AG', dial: '+1', labelEn: 'Antigua and Barbuda', labelAr: 'أنتيغوا وبربودا', nameEn: 'Antigua and Barbuda', nameAr: 'أنتيغوا وبربودا', minLen: 10, maxLen: 10, placeholder: '2681234567' },
+  { code: 'AR', dial: '+54', labelEn: 'Argentina', labelAr: 'الأرجنتين', nameEn: 'Argentina', nameAr: 'الأرجنتين', minLen: 10, maxLen: 10, placeholder: '9111234567' },
+  { code: 'AM', dial: '+374', labelEn: 'Armenia', labelAr: 'أرمينيا', nameEn: 'Armenia', nameAr: 'أرمينيا', minLen: 8, maxLen: 8, placeholder: '77123456' },
+  { code: 'AU', dial: '+61', labelEn: 'Australia', labelAr: 'أستراليا', nameEn: 'Australia', nameAr: 'أستراليا', minLen: 9, maxLen: 9, placeholder: '412345678' },
+  { code: 'AT', dial: '+43', labelEn: 'Austria', labelAr: 'النمسا', nameEn: 'Austria', nameAr: 'النمسا', minLen: 10, maxLen: 10, placeholder: '6641234567' },
+  { code: 'AZ', dial: '+994', labelEn: 'Azerbaijan', labelAr: 'أذربيجان', nameEn: 'Azerbaijan', nameAr: 'أذربيجان', minLen: 9, maxLen: 9, placeholder: '501234567' },
+  { code: 'BS', dial: '+1', labelEn: 'Bahamas', labelAr: 'جزر البهاما', nameEn: 'Bahamas', nameAr: 'جزر البهاما', minLen: 10, maxLen: 10, placeholder: '2421234567' },
+  { code: 'BD', dial: '+880', labelEn: 'Bangladesh', labelAr: 'بنغلاديش', nameEn: 'Bangladesh', nameAr: 'بنغلاديش', minLen: 10, maxLen: 10, placeholder: '1712345678' },
+  { code: 'BB', dial: '+1', labelEn: 'Barbados', labelAr: 'بربادوس', nameEn: 'Barbados', nameAr: 'بربادوس', minLen: 10, maxLen: 10, placeholder: '2461234567' },
+  { code: 'BY', dial: '+375', labelEn: 'Belarus', labelAr: 'بيلاروسيا', nameEn: 'Belarus', nameAr: 'بيلاروسيا', minLen: 9, maxLen: 9, placeholder: '291234567' },
+  { code: 'BE', dial: '+32', labelEn: 'Belgium', labelAr: 'بلجيكا', nameEn: 'Belgium', nameAr: 'بلجيكا', minLen: 9, maxLen: 9, placeholder: '470123456' },
+  { code: 'BZ', dial: '+501', labelEn: 'Belize', labelAr: 'بليز', nameEn: 'Belize', nameAr: 'بليز', minLen: 7, maxLen: 7, placeholder: '6123456' },
+  { code: 'BJ', dial: '+229', labelEn: 'Benin', labelAr: 'بنين', nameEn: 'Benin', nameAr: 'بنين', minLen: 8, maxLen: 8, placeholder: '90123456' },
+  { code: 'BT', dial: '+975', labelEn: 'Bhutan', labelAr: 'بوتان', nameEn: 'Bhutan', nameAr: 'بوتان', minLen: 8, maxLen: 8, placeholder: '17123456' },
+  { code: 'BO', dial: '+591', labelEn: 'Bolivia', labelAr: 'بوليفيا', nameEn: 'Bolivia', nameAr: 'بوليفيا', minLen: 8, maxLen: 8, placeholder: '71234567' },
+  { code: 'BA', dial: '+387', labelEn: 'Bosnia and Herzegovina', labelAr: 'البوسنة والهرسك', nameEn: 'Bosnia and Herzegovina', nameAr: 'البوسنة والهرسك', minLen: 8, maxLen: 8, placeholder: '61123456' },
+  { code: 'BW', dial: '+267', labelEn: 'Botswana', labelAr: 'بوتسوانا', nameEn: 'Botswana', nameAr: 'بوتسوانا', minLen: 8, maxLen: 8, placeholder: '71123456' },
+  { code: 'BR', dial: '+55', labelEn: 'Brazil', labelAr: 'البرازيل', nameEn: 'Brazil', nameAr: 'البرازيل', minLen: 10, maxLen: 11, placeholder: '11912345678' },
+  { code: 'BN', dial: '+673', labelEn: 'Brunei', labelAr: 'بروناي', nameEn: 'Brunei', nameAr: 'بروناي', minLen: 7, maxLen: 7, placeholder: '8123456' },
+  { code: 'BG', dial: '+359', labelEn: 'Bulgaria', labelAr: 'بلغاريا', nameEn: 'Bulgaria', nameAr: 'بلغاريا', minLen: 8, maxLen: 9, placeholder: '87123456' },
+  { code: 'BF', dial: '+226', labelEn: 'Burkina Faso', labelAr: 'بوركينا فاسو', nameEn: 'Burkina Faso', nameAr: 'بوركينا فاسو', minLen: 8, maxLen: 8, placeholder: '70123456' },
+  { code: 'BI', dial: '+257', labelEn: 'Burundi', labelAr: 'بوروندي', nameEn: 'Burundi', nameAr: 'بوروندي', minLen: 8, maxLen: 8, placeholder: '79123456' },
+  { code: 'CV', dial: '+238', labelEn: 'Cabo Verde', labelAr: 'الرأس الأخضر', nameEn: 'Cabo Verde', nameAr: 'الرأس الأخضر', minLen: 7, maxLen: 7, placeholder: '9912345' },
+  { code: 'KH', dial: '+855', labelEn: 'Cambodia', labelAr: 'كمبوديا', nameEn: 'Cambodia', nameAr: 'كمبوديا', minLen: 8, maxLen: 9, placeholder: '12123456' },
+  { code: 'CM', dial: '+237', labelEn: 'Cameroon', labelAr: 'الكاميرون', nameEn: 'Cameroon', nameAr: 'الكاميرون', minLen: 9, maxLen: 9, placeholder: '671234567' },
+  { code: 'CA', dial: '+1', labelEn: 'Canada', labelAr: 'كندا', nameEn: 'Canada', nameAr: 'كندا', minLen: 10, maxLen: 10, placeholder: '5551234567' },
+  { code: 'CF', dial: '+236', labelEn: 'Central African Republic', labelAr: 'جمهورية أفريقيا الوسطى', nameEn: 'Central African Republic', nameAr: 'جمهورية أفريقيا الوسطى', minLen: 8, maxLen: 8, placeholder: '75123456' },
+  { code: 'TD', dial: '+235', labelEn: 'Chad', labelAr: 'تشاد', nameEn: 'Chad', nameAr: 'تشاد', minLen: 8, maxLen: 8, placeholder: '66123456' },
+  { code: 'CL', dial: '+56', labelEn: 'Chile', labelAr: 'تشيلي', nameEn: 'Chile', nameAr: 'تشيلي', minLen: 9, maxLen: 9, placeholder: '912345678' },
+  { code: 'CN', dial: '+86', labelEn: 'China', labelAr: 'الصين', nameEn: 'China', nameAr: 'الصين', minLen: 11, maxLen: 11, placeholder: '13812345678' },
+  { code: 'CO', dial: '+57', labelEn: 'Colombia', labelAr: 'كولومبيا', nameEn: 'Colombia', nameAr: 'كولومبيا', minLen: 10, maxLen: 10, placeholder: '3001234567' },
+  { code: 'KM', dial: '+269', labelEn: 'Comoros', labelAr: 'جزر القمر', nameEn: 'Comoros', nameAr: 'جزر القمر', minLen: 7, maxLen: 7, placeholder: '3212345' },
+  { code: 'CD', dial: '+243', labelEn: 'Congo, Dem. Rep.', labelAr: 'جمهورية الكونغو الديمقراطية', nameEn: 'Congo, Dem. Rep.', nameAr: 'جمهورية الكونغو الديمقراطية', minLen: 9, maxLen: 9, placeholder: '811234567' },
+  { code: 'CG', dial: '+242', labelEn: 'Congo, Republic of the', labelAr: 'جمهورية الكونغو', nameEn: 'Congo, Republic of the', nameAr: 'جمهورية الكونغو', minLen: 9, maxLen: 9, placeholder: '061234567' },
+  { code: 'CR', dial: '+506', labelEn: 'Costa Rica', labelAr: 'كوستاريكا', nameEn: 'Costa Rica', nameAr: 'كوستاريكا', minLen: 8, maxLen: 8, placeholder: '83123456' },
+  { code: 'HR', dial: '+385', labelEn: 'Croatia', labelAr: 'كرواتيا', nameEn: 'Croatia', nameAr: 'كرواتيا', minLen: 9, maxLen: 9, placeholder: '911234567' },
+  { code: 'CU', dial: '+53', labelEn: 'Cuba', labelAr: 'كوبا', nameEn: 'Cuba', nameAr: 'كوبا', minLen: 8, maxLen: 8, placeholder: '52123456' },
+  { code: 'CY', dial: '+357', labelEn: 'Cyprus', labelAr: 'قبرص', nameEn: 'Cyprus', nameAr: 'قبرص', minLen: 8, maxLen: 8, placeholder: '99123456' },
+  { code: 'CZ', dial: '+420', labelEn: 'Czech Republic', labelAr: 'التشيك', nameEn: 'Czech Republic', nameAr: 'التشيك', minLen: 9, maxLen: 9, placeholder: '601123456' },
+  { code: 'DK', dial: '+45', labelEn: 'Denmark', labelAr: 'الدنمارك', nameEn: 'Denmark', nameAr: 'الدنمارك', minLen: 8, maxLen: 8, placeholder: '20123456' },
+  { code: 'DJ', dial: '+253', labelEn: 'Djibouti', labelAr: 'جيبوتي', nameEn: 'Djibouti', nameAr: 'جيبوتي', minLen: 8, maxLen: 8, placeholder: '77123456' },
+  { code: 'DM', dial: '+1', labelEn: 'Dominica', labelAr: 'دومينيكا', nameEn: 'Dominica', nameAr: 'دومينيكا', minLen: 10, maxLen: 10, placeholder: '7671234567' },
+  { code: 'DO', dial: '+1', labelEn: 'Dominican Republic', labelAr: 'جمهورية الدومينيكان', nameEn: 'Dominican Republic', nameAr: 'جمهورية الدومينيكان', minLen: 10, maxLen: 10, placeholder: '8091234567' },
+  { code: 'TL', dial: '+670', labelEn: 'East Timor', labelAr: 'تيمور الشرقية', nameEn: 'East Timor', nameAr: 'تيمور الشرقية', minLen: 8, maxLen: 8, placeholder: '77123456' },
+  { code: 'EC', dial: '+593', labelEn: 'Ecuador', labelAr: 'الإكوادور', nameEn: 'Ecuador', nameAr: 'الإكوادور', minLen: 9, maxLen: 9, placeholder: '991234567' },
+  { code: 'SV', dial: '+503', labelEn: 'El Salvador', labelAr: 'السلفادور', nameEn: 'El Salvador', nameAr: 'السلفادور', minLen: 8, maxLen: 8, placeholder: '70123456' },
+  { code: 'GQ', dial: '+240', labelEn: 'Equatorial Guinea', labelAr: 'غينيا الاستوائية', nameEn: 'Equatorial Guinea', nameAr: 'غينيا الاستوائية', minLen: 9, maxLen: 9, placeholder: '222123456' },
+  { code: 'ER', dial: '+291', labelEn: 'Eritrea', labelAr: 'إريتريا', nameEn: 'Eritrea', nameAr: 'إريتريا', minLen: 7, maxLen: 7, placeholder: '7123456' },
+  { code: 'EE', dial: '+372', labelEn: 'Estonia', labelAr: 'إستونيا', nameEn: 'Estonia', nameAr: 'إستونيا', minLen: 7, maxLen: 8, placeholder: '5123456' },
+  { code: 'SZ', dial: '+268', labelEn: 'Eswatini', labelAr: 'إسواتيني', nameEn: 'Eswatini', nameAr: 'إسواتيني', minLen: 8, maxLen: 8, placeholder: '76123456' },
+  { code: 'ET', dial: '+251', labelEn: 'Ethiopia', labelAr: 'إثيوبيا', nameEn: 'Ethiopia', nameAr: 'إثيوبيا', minLen: 9, maxLen: 9, placeholder: '911234567' },
+  { code: 'FJ', dial: '+679', labelEn: 'Fiji', labelAr: 'فيجي', nameEn: 'Fiji', nameAr: 'فيجي', minLen: 7, maxLen: 7, placeholder: '7012345' },
+  { code: 'FI', dial: '+358', labelEn: 'Finland', labelAr: 'فنلندا', nameEn: 'Finland', nameAr: 'فنلندا', minLen: 5, maxLen: 12, placeholder: '401234567' },
+  { code: 'FR', dial: '+33', labelEn: 'France', labelAr: 'فرنسا', nameEn: 'France', nameAr: 'فرنسا', minLen: 9, maxLen: 9, placeholder: '612345678' },
+  { code: 'GA', dial: '+241', labelEn: 'Gabon', labelAr: 'الغابون', nameEn: 'Gabon', nameAr: 'الغابون', minLen: 8, maxLen: 8, placeholder: '06123456' },
+  { code: 'GM', dial: '+220', labelEn: 'Gambia', labelAr: 'غامبيا', nameEn: 'Gambia', nameAr: 'غامبيا', minLen: 7, maxLen: 7, placeholder: '7012345' },
+  { code: 'GE', dial: '+995', labelEn: 'Georgia', labelAr: 'جورجيا', nameEn: 'Georgia', nameAr: 'جورجيا', minLen: 9, maxLen: 9, placeholder: '591234567' },
+  { code: 'DE', dial: '+49', labelEn: 'Germany', labelAr: 'ألمانيا', nameEn: 'Germany', nameAr: 'ألمانيا', minLen: 10, maxLen: 11, placeholder: '15112345678' },
+  { code: 'GH', dial: '+233', labelEn: 'Ghana', labelAr: 'غانا', nameEn: 'Ghana', nameAr: 'غانا', minLen: 9, maxLen: 9, placeholder: '241234567' },
+  { code: 'GR', dial: '+30', labelEn: 'Greece', labelAr: 'اليونان', nameEn: 'Greece', nameAr: 'اليونان', minLen: 10, maxLen: 10, placeholder: '6912345678' },
+  { code: 'GD', dial: '+1', labelEn: 'Grenada', labelAr: 'غرينادا', nameEn: 'Grenada', nameAr: 'غرينادا', minLen: 10, maxLen: 10, placeholder: '4731234567' },
+  { code: 'GT', dial: '+502', labelEn: 'Guatemala', labelAr: 'غواتيمالا', nameEn: 'Guatemala', nameAr: 'غواتيمالا', minLen: 8, maxLen: 8, placeholder: '51234567' },
+  { code: 'GN', dial: '+224', labelEn: 'Guinea', labelAr: 'غينيا', nameEn: 'Guinea', nameAr: 'غينيا', minLen: 9, maxLen: 9, placeholder: '621234567' },
+  { code: 'GW', dial: '+245', labelEn: 'Guinea-Bissau', labelAr: 'غينيا بيساو', nameEn: 'Guinea-Bissau', nameAr: 'غينيا بيساو', minLen: 7, maxLen: 7, placeholder: '9512345' },
+  { code: 'GY', dial: '+592', labelEn: 'Guyana', labelAr: 'غيانا', nameEn: 'Guyana', nameAr: 'غيانا', minLen: 7, maxLen: 7, placeholder: '6012345' },
+  { code: 'HT', dial: '+509', labelEn: 'Haiti', labelAr: 'هايتي', nameEn: 'Haiti', nameAr: 'هايتي', minLen: 8, maxLen: 8, placeholder: '34123456' },
+  { code: 'HN', dial: '+504', labelEn: 'Honduras', labelAr: 'هندوراس', nameEn: 'Honduras', nameAr: 'هندوراس', minLen: 8, maxLen: 8, placeholder: '91234567' },
+  { code: 'HU', dial: '+36', labelEn: 'Hungary', labelAr: 'المجر', nameEn: 'Hungary', nameAr: 'المجر', minLen: 9, maxLen: 9, placeholder: '201234567' },
+  { code: 'IS', dial: '+354', labelEn: 'Iceland', labelAr: 'آيسلندا', nameEn: 'Iceland', nameAr: 'آيسلندا', minLen: 7, maxLen: 7, placeholder: '6123456' },
+  { code: 'IN', dial: '+91', labelEn: 'India', labelAr: 'الهند', nameEn: 'India', nameAr: 'الهند', minLen: 10, maxLen: 10, placeholder: '9876543210' },
+  { code: 'ID', dial: '+62', labelEn: 'Indonesia', labelAr: 'إندونيسيا', nameEn: 'Indonesia', nameAr: 'إندونيسيا', minLen: 9, maxLen: 12, placeholder: '8123456789' },
+  { code: 'IR', dial: '+98', labelEn: 'Iran', labelAr: 'إيران', nameEn: 'Iran', nameAr: 'إيران', minLen: 10, maxLen: 10, placeholder: '9123456789' },
+  { code: 'IE', dial: '+353', labelEn: 'Ireland', labelAr: 'أيرلندا', nameEn: 'Ireland', nameAr: 'أيرلندا', minLen: 9, maxLen: 9, placeholder: '851234567' },
+  { code: 'IL', dial: '+972', labelEn: 'Israel', labelAr: 'إسرائيل', nameEn: 'Israel', nameAr: 'إسرائيل', minLen: 9, maxLen: 9, placeholder: '501234567' },
+  { code: 'IT', dial: '+39', labelEn: 'Italy', labelAr: 'إيطاليا', nameEn: 'Italy', nameAr: 'إيطاليا', minLen: 9, maxLen: 10, placeholder: '3123456789' },
+  { code: 'CI', dial: '+225', labelEn: 'Ivory Coast', labelAr: 'ساحل العاج', nameEn: 'Ivory Coast', nameAr: 'ساحل العاج', minLen: 10, maxLen: 10, placeholder: '0712345678' },
+  { code: 'JM', dial: '+1', labelEn: 'Jamaica', labelAr: 'جامايكا', nameEn: 'Jamaica', nameAr: 'جامايكا', minLen: 10, maxLen: 10, placeholder: '8761234567' },
+  { code: 'JP', dial: '+81', labelEn: 'Japan', labelAr: 'اليابان', nameEn: 'Japan', nameAr: 'اليابان', minLen: 10, maxLen: 10, placeholder: '9012345678' },
+  { code: 'KZ', dial: '+7', labelEn: 'Kazakhstan', labelAr: 'كازاخستان', nameEn: 'Kazakhstan', nameAr: 'كازاخستان', minLen: 10, maxLen: 10, placeholder: '7011234567' },
+  { code: 'KE', dial: '+254', labelEn: 'Kenya', labelAr: 'كينيا', nameEn: 'Kenya', nameAr: 'كينيا', minLen: 9, maxLen: 9, placeholder: '712345678' },
+  { code: 'KI', dial: '+686', labelEn: 'Kiribati', labelAr: 'كيريباتي', nameEn: 'Kiribati', nameAr: 'كيريباتي', minLen: 5, maxLen: 5, placeholder: '72123' },
+  { code: 'KG', dial: '+996', labelEn: 'Kyrgyzstan', labelAr: 'قيرغيزستان', nameEn: 'Kyrgyzstan', nameAr: 'قيرغيزستان', minLen: 9, maxLen: 9, placeholder: '700123456' },
+  { code: 'LA', dial: '+856', labelEn: 'Laos', labelAr: 'لاوس', nameEn: 'Laos', nameAr: 'لاوس', minLen: 8, maxLen: 10, placeholder: '2012345678' },
+  { code: 'LV', dial: '+371', labelEn: 'Latvia', labelAr: 'لاتفيا', nameEn: 'Latvia', nameAr: 'لاتفيا', minLen: 8, maxLen: 8, placeholder: '21234567' },
+  { code: 'LS', dial: '+266', labelEn: 'Lesotho', labelAr: 'ليسوتو', nameEn: 'Lesotho', nameAr: 'ليسوتو', minLen: 8, maxLen: 8, placeholder: '58123456' },
+  { code: 'LR', dial: '+231', labelEn: 'Liberia', labelAr: 'ليبيريا', nameEn: 'Liberia', nameAr: 'ليبيريا', minLen: 9, maxLen: 9, placeholder: '771234567' },
+  { code: 'LI', dial: '+423', labelEn: 'Liechtenstein', labelAr: 'ليختنشتاين', nameEn: 'Liechtenstein', nameAr: 'ليختنشتاين', minLen: 7, maxLen: 9, placeholder: '7912345' },
+  { code: 'LT', dial: '+370', labelEn: 'Lithuania', labelAr: 'ليتوانيا', nameEn: 'Lithuania', nameAr: 'ليتوانيا', minLen: 8, maxLen: 8, placeholder: '61234567' },
+  { code: 'LU', dial: '+352', labelEn: 'Luxembourg', labelAr: 'لوكسمبورغ', nameEn: 'Luxembourg', nameAr: 'لوكسمبورغ', minLen: 9, maxLen: 9, placeholder: '621123456' },
+  { code: 'MG', dial: '+261', labelEn: 'Madagascar', labelAr: 'مدغشقر', nameEn: 'Madagascar', nameAr: 'مدغشقر', minLen: 9, maxLen: 9, placeholder: '321234567' },
+  { code: 'MW', dial: '+265', labelEn: 'Malawi', labelAr: 'مالاوي', nameEn: 'Malawi', nameAr: 'مالاوي', minLen: 9, maxLen: 9, placeholder: '991234567' },
+  { code: 'MY', dial: '+60', labelEn: 'Malaysia', labelAr: 'ماليزيا', nameEn: 'Malaysia', nameAr: 'ماليزيا', minLen: 9, maxLen: 10, placeholder: '123456789' },
+  { code: 'MV', dial: '+960', labelEn: 'Maldives', labelAr: 'المالديف', nameEn: 'Maldives', nameAr: 'المالديف', minLen: 7, maxLen: 7, placeholder: '7912345' },
+  { code: 'ML', dial: '+223', labelEn: 'Mali', labelAr: 'مالي', nameEn: 'Mali', nameAr: 'مالي', minLen: 8, maxLen: 8, placeholder: '65123456' },
+  { code: 'MT', dial: '+356', labelEn: 'Malta', labelAr: 'مالطا', nameEn: 'Malta', nameAr: 'مالطا', minLen: 8, maxLen: 8, placeholder: '99123456' },
+  { code: 'MH', dial: '+692', labelEn: 'Marshall Islands', labelAr: 'جزر مارشال', nameEn: 'Marshall Islands', nameAr: 'جزر مارشال', minLen: 7, maxLen: 7, placeholder: '2351234' },
+  { code: 'MR', dial: '+222', labelEn: 'Mauritania', labelAr: 'موريتانيا', nameEn: 'Mauritania', nameAr: 'موريتانيا', minLen: 8, maxLen: 8, placeholder: '46123456' },
+  { code: 'MU', dial: '+230', labelEn: 'Mauritius', labelAr: 'موريشيوس', nameEn: 'Mauritius', nameAr: 'موريشيوس', minLen: 8, maxLen: 8, placeholder: '52512345' },
+  { code: 'MX', dial: '+52', labelEn: 'Mexico', labelAr: 'المكسيك', nameEn: 'Mexico', nameAr: 'المكسيك', minLen: 10, maxLen: 10, placeholder: '5512345678' },
+  { code: 'FM', dial: '+691', labelEn: 'Micronesia', labelAr: 'ميكرونيزيا', nameEn: 'Micronesia', nameAr: 'ميكرونيزيا', minLen: 7, maxLen: 7, placeholder: '9201234' },
+  { code: 'MD', dial: '+373', labelEn: 'Moldova', labelAr: 'مولدوفا', nameEn: 'Moldova', nameAr: 'مولدوفا', minLen: 8, maxLen: 8, placeholder: '69123456' },
+  { code: 'MC', dial: '+377', labelEn: 'Monaco', labelAr: 'موناكو', nameEn: 'Monaco', nameAr: 'موناكو', minLen: 8, maxLen: 8, placeholder: '61234567' },
+  { code: 'MN', dial: '+976', labelEn: 'Mongolia', labelAr: 'منغوليا', nameEn: 'Mongolia', nameAr: 'منغوليا', minLen: 8, maxLen: 8, placeholder: '88123456' },
+  { code: 'ME', dial: '+382', labelEn: 'Montenegro', labelAr: 'الجبل الأسود', nameEn: 'Montenegro', nameAr: 'الجبل الأسود', minLen: 8, maxLen: 8, placeholder: '67123456' },
+  { code: 'MZ', dial: '+258', labelEn: 'Mozambique', labelAr: 'موزمبيق', nameEn: 'Mozambique', nameAr: 'موزمبيق', minLen: 9, maxLen: 9, placeholder: '841234567' },
+  { code: 'MM', dial: '+95', labelEn: 'Myanmar', labelAr: 'ميانمار', nameEn: 'Myanmar', nameAr: 'ميانمار', minLen: 9, maxLen: 9, placeholder: '912345678' },
+  { code: 'NA', dial: '+264', labelEn: 'Namibia', labelAr: 'ناميبيا', nameEn: 'Namibia', nameAr: 'ناميبيا', minLen: 9, maxLen: 9, placeholder: '811234567' },
+  { code: 'NR', dial: '+674', labelEn: 'Nauru', labelAr: 'ناورو', nameEn: 'Nauru', nameAr: 'ناورو', minLen: 7, maxLen: 7, placeholder: '5551234' },
+  { code: 'NP', dial: '+977', labelEn: 'Nepal', labelAr: 'نيبال', nameEn: 'Nepal', nameAr: 'نيبال', minLen: 10, maxLen: 10, placeholder: '9841234567' },
+  { code: 'NL', dial: '+31', labelEn: 'Netherlands', labelAr: 'هولندا', nameEn: 'Netherlands', nameAr: 'هولندا', minLen: 9, maxLen: 9, placeholder: '612345678' },
+  { code: 'NZ', dial: '+64', labelEn: 'New Zealand', labelAr: 'نيوزيلندا', nameEn: 'New Zealand', nameAr: 'نيوزيلندا', minLen: 8, maxLen: 9, placeholder: '21123456' },
+  { code: 'NI', dial: '+505', labelEn: 'Nicaragua', labelAr: 'نيكاراغوا', nameEn: 'Nicaragua', nameAr: 'نيكاراغوا', minLen: 8, maxLen: 8, placeholder: '81234567' },
+  { code: 'NE', dial: '+227', labelEn: 'Niger', labelAr: 'النيجر', nameEn: 'Niger', nameAr: 'النيجر', minLen: 8, maxLen: 8, placeholder: '96123456' },
+  { code: 'NG', dial: '+234', labelEn: 'Nigeria', labelAr: 'نيجيريا', nameEn: 'Nigeria', nameAr: 'نيجيريا', minLen: 10, maxLen: 10, placeholder: '8021234567' },
+  { code: 'KP', dial: '+850', labelEn: 'North Korea', labelAr: 'كوريا الشمالية', nameEn: 'North Korea', nameAr: 'كوريا الشمالية', minLen: 8, maxLen: 10, placeholder: '1912345678' },
+  { code: 'MK', dial: '+389', labelEn: 'North Macedonia', labelAr: 'مقدونيا الشمالية', nameEn: 'North Macedonia', nameAr: 'مقدونيا الشمالية', minLen: 8, maxLen: 8, placeholder: '70123456' },
+  { code: 'NO', dial: '+47', labelEn: 'Norway', labelAr: 'النرويج', nameEn: 'Norway', nameAr: 'النرويج', minLen: 8, maxLen: 8, placeholder: '41234567' },
+  { code: 'PK', dial: '+92', labelEn: 'Pakistan', labelAr: 'باكستان', nameEn: 'Pakistan', nameAr: 'باكستان', minLen: 10, maxLen: 10, placeholder: '3001234567' },
+  { code: 'PW', dial: '+680', labelEn: 'Palau', labelAr: 'بالاو', nameEn: 'Palau', nameAr: 'بالاو', minLen: 7, maxLen: 7, placeholder: '7751234' },
+  { code: 'PA', dial: '+507', labelEn: 'Panama', labelAr: 'بنما', nameEn: 'Panama', nameAr: 'بنما', minLen: 8, maxLen: 8, placeholder: '61234567' },
+  { code: 'PG', dial: '+675', labelEn: 'Papua New Guinea', labelAr: 'بابوا غينيا الجديدة', nameEn: 'Papua New Guinea', nameAr: 'بابوا غينيا الجديدة', minLen: 8, maxLen: 8, placeholder: '70123456' },
+  { code: 'PY', dial: '+595', labelEn: 'Paraguay', labelAr: 'باراغواي', nameEn: 'Paraguay', nameAr: 'باراغواي', minLen: 9, maxLen: 9, placeholder: '981123456' },
+  { code: 'PE', dial: '+51', labelEn: 'Peru', labelAr: 'بيرو', nameEn: 'Peru', nameAr: 'بيرو', minLen: 9, maxLen: 9, placeholder: '912345678' },
+  { code: 'PH', dial: '+63', labelEn: 'Philippines', labelAr: 'الفلبين', nameEn: 'Philippines', nameAr: 'الفلبين', minLen: 10, maxLen: 10, placeholder: '9171234567' },
+  { code: 'PL', dial: '+48', labelEn: 'Poland', labelAr: 'بولندا', nameEn: 'Poland', nameAr: 'بولندا', minLen: 9, maxLen: 9, placeholder: '512345678' },
+  { code: 'PT', dial: '+351', labelEn: 'Portugal', labelAr: 'البرتغال', nameEn: 'Portugal', nameAr: 'البرتغال', minLen: 9, maxLen: 9, placeholder: '912345678' },
+  { code: 'RO', dial: '+40', labelEn: 'Romania', labelAr: 'رومانيا', nameEn: 'Romania', nameAr: 'رومانيا', minLen: 9, maxLen: 9, placeholder: '712345678' },
+  { code: 'RU', dial: '+7', labelEn: 'Russia', labelAr: 'روسيا', nameEn: 'Russia', nameAr: 'روسيا', minLen: 10, maxLen: 10, placeholder: '9123456789' },
+  { code: 'RW', dial: '+250', labelEn: 'Rwanda', labelAr: 'رواندا', nameEn: 'Rwanda', nameAr: 'رواندا', minLen: 9, maxLen: 9, placeholder: '781234567' },
+  { code: 'KN', dial: '+1', labelEn: 'Saint Kitts and Nevis', labelAr: 'سانت كيتس ونيفيس', nameEn: 'Saint Kitts and Nevis', nameAr: 'سانت كيتس ونيفيس', minLen: 10, maxLen: 10, placeholder: '8691234567' },
+  { code: 'LC', dial: '+1', labelEn: 'Saint Lucia', labelAr: 'سانت لوسيا', nameEn: 'Saint Lucia', nameAr: 'سانت لوسيا', minLen: 10, maxLen: 10, placeholder: '7581234567' },
+  { code: 'VC', dial: '+1', labelEn: 'Saint Vincent', labelAr: 'سانت فنسنت والغرينادين', nameEn: 'Saint Vincent', nameAr: 'سانت فنسنت والغرينادين', minLen: 10, maxLen: 10, placeholder: '7841234567' },
+  { code: 'WS', dial: '+685', labelEn: 'Samoa', labelAr: 'ساموا', nameEn: 'Samoa', nameAr: 'ساموا', minLen: 7, maxLen: 7, placeholder: '7212345' },
+  { code: 'SM', dial: '+378', labelEn: 'San Marino', labelAr: 'سان مارينو', nameEn: 'San Marino', nameAr: 'سان مارينو', minLen: 6, maxLen: 10, placeholder: '66123456' },
+  { code: 'ST', dial: '+239', labelEn: 'Sao Tome and Principe', labelAr: 'ساو تومي وبرينسيبي', nameEn: 'Sao Tome and Principe', nameAr: 'ساو تومي وبرينسيبي', minLen: 7, maxLen: 7, placeholder: '9912345' },
+  { code: 'SN', dial: '+221', labelEn: 'Senegal', labelAr: 'السنغال', nameEn: 'Senegal', nameAr: 'السنغال', minLen: 9, maxLen: 9, placeholder: '771234567' },
+  { code: 'RS', dial: '+381', labelEn: 'Serbia', labelAr: 'صربيا', nameEn: 'Serbia', nameAr: 'صربيا', minLen: 9, maxLen: 9, placeholder: '601234567' },
+  { code: 'SC', dial: '+248', labelEn: 'Seychelles', labelAr: 'سيشل', nameEn: 'Seychelles', nameAr: 'سيشل', minLen: 7, maxLen: 7, placeholder: '2512345' },
+  { code: 'SL', dial: '+232', labelEn: 'Sierra Leone', labelAr: 'سيراليون', nameEn: 'Sierra Leone', nameAr: 'سيراليون', minLen: 8, maxLen: 8, placeholder: '76123456' },
+  { code: 'SG', dial: '+65', labelEn: 'Singapore', labelAr: 'سنغافورة', nameEn: 'Singapore', nameAr: 'سنغافورة', minLen: 8, maxLen: 8, placeholder: '81234567' },
+  { code: 'SK', dial: '+421', labelEn: 'Slovakia', labelAr: 'سلوفاكيا', nameEn: 'Slovakia', nameAr: 'سلوفاكيا', minLen: 9, maxLen: 9, placeholder: '901123456' },
+  { code: 'SI', dial: '+386', labelEn: 'Slovenia', labelAr: 'سلوفينيا', nameEn: 'Slovenia', nameAr: 'سلوفينيا', minLen: 8, maxLen: 8, placeholder: '41123456' },
+  { code: 'SB', dial: '+677', labelEn: 'Solomon Islands', labelAr: 'جزر سليمان', nameEn: 'Solomon Islands', nameAr: 'جزر سليمان', minLen: 7, maxLen: 7, placeholder: '7412345' },
+  { code: 'SO', dial: '+252', labelEn: 'Somalia', labelAr: 'الصومال', nameEn: 'Somalia', nameAr: 'الصومال', minLen: 8, maxLen: 8, placeholder: '61123456' },
+  { code: 'ZA', dial: '+27', labelEn: 'South Africa', labelAr: 'جنوب أفريقيا', nameEn: 'South Africa', nameAr: 'جنوب أفريقيا', minLen: 9, maxLen: 9, placeholder: '711234567' },
+  { code: 'KR', dial: '+82', labelEn: 'South Korea', labelAr: 'كوريا الجنوبية', nameEn: 'South Korea', nameAr: 'كوريا الجنوبية', minLen: 9, maxLen: 10, placeholder: '1012345678' },
+  { code: 'SS', dial: '+211', labelEn: 'South Sudan', labelAr: 'جنوب السودان', nameEn: 'South Sudan', nameAr: 'جنوب السودان', minLen: 9, maxLen: 9, placeholder: '971234567' },
+  { code: 'ES', dial: '+34', labelEn: 'Spain', labelAr: 'إسبانيا', nameEn: 'Spain', nameAr: 'إسبانيا', minLen: 9, maxLen: 9, placeholder: '612345678' },
+  { code: 'LK', dial: '+94', labelEn: 'Sri Lanka', labelAr: 'سريلانكا', nameEn: 'Sri Lanka', nameAr: 'سريلانكا', minLen: 9, maxLen: 9, placeholder: '711234567' },
+  { code: 'SR', dial: '+597', labelEn: 'Suriname', labelAr: 'سورينام', nameEn: 'Suriname', nameAr: 'سورينام', minLen: 7, maxLen: 7, placeholder: '7412345' },
+  { code: 'SE', dial: '+46', labelEn: 'Sweden', labelAr: 'السويد', nameEn: 'Sweden', nameAr: 'السويد', minLen: 9, maxLen: 9, placeholder: '701234567' },
+  { code: 'CH', dial: '+41', labelEn: 'Switzerland', labelAr: 'سويسرا', nameEn: 'Switzerland', nameAr: 'سويسرا', minLen: 9, maxLen: 9, placeholder: '781234567' },
+  { code: 'TW', dial: '+886', labelEn: 'Taiwan', labelAr: 'تايوان', nameEn: 'Taiwan', nameAr: 'تايوان', minLen: 9, maxLen: 9, placeholder: '912345678' },
+  { code: 'TJ', dial: '+992', labelEn: 'Tajikistan', labelAr: 'طاجيكستان', nameEn: 'Tajikistan', nameAr: 'طاجيكستان', minLen: 9, maxLen: 9, placeholder: '918123456' },
+  { code: 'TZ', dial: '+255', labelEn: 'Tanzania', labelAr: 'تنزانيا', nameEn: 'Tanzania', nameAr: 'تنزانيا', minLen: 9, maxLen: 9, placeholder: '712345678' },
+  { code: 'TH', dial: '+66', labelEn: 'Thailand', labelAr: 'تايلاند', nameEn: 'Thailand', nameAr: 'تايلاند', minLen: 9, maxLen: 9, placeholder: '812345678' },
+  { code: 'TG', dial: '+228', labelEn: 'Togo', labelAr: 'توغو', nameEn: 'Togo', nameAr: 'توغو', minLen: 8, maxLen: 8, placeholder: '90123456' },
+  { code: 'TO', dial: '+676', labelEn: 'Tonga', labelAr: 'تونغا', nameEn: 'Tonga', nameAr: 'تونغا', minLen: 5, maxLen: 5, placeholder: '77123' },
+  { code: 'TT', dial: '+1', labelEn: 'Trinidad and Tobago', labelAr: 'ترينيداد وتوباغو', nameEn: 'Trinidad and Tobago', nameAr: 'ترينيداد وتوباغو', minLen: 10, maxLen: 10, placeholder: '8681234567' },
+  { code: 'TR', dial: '+90', labelEn: 'Turkey', labelAr: 'تركيا', nameEn: 'Turkey', nameAr: 'تركيا', minLen: 10, maxLen: 10, placeholder: '5321234567' },
+  { code: 'TM', dial: '+993', labelEn: 'Turkmenistan', labelAr: 'تركمانستان', nameEn: 'Turkmenistan', nameAr: 'تركمانستان', minLen: 8, maxLen: 8, placeholder: '65123456' },
+  { code: 'TV', dial: '+688', labelEn: 'Tuvalu', labelAr: 'توفالو', nameEn: 'Tuvalu', nameAr: 'توفالو', minLen: 5, maxLen: 5, placeholder: '90123' },
+  { code: 'UG', dial: '+256', labelEn: 'Uganda', labelAr: 'أوغندا', nameEn: 'Uganda', nameAr: 'أوغندا', minLen: 9, maxLen: 9, placeholder: '772123456' },
+  { code: 'UA', dial: '+380', labelEn: 'Ukraine', labelAr: 'أوكرانيا', nameEn: 'Ukraine', nameAr: 'أوكرانيا', minLen: 9, maxLen: 9, placeholder: '501234567' },
+  { code: 'GB', dial: '+44', labelEn: 'United Kingdom', labelAr: 'المملكة المتحدة', nameEn: 'United Kingdom', nameAr: 'المملكة المتحدة', minLen: 10, maxLen: 10, placeholder: '7911123456' },
+  { code: 'US', dial: '+1', labelEn: 'United States', labelAr: 'الولايات المتحدة', nameEn: 'United States', nameAr: 'الولايات المتحدة', minLen: 10, maxLen: 10, placeholder: '2025550143' },
+  { code: 'UY', dial: '+598', labelEn: 'Uruguay', labelAr: 'أوروغواي', nameEn: 'Uruguay', nameAr: 'أوروغواي', minLen: 8, maxLen: 8, placeholder: '99123456' },
+  { code: 'UZ', dial: '+998', labelEn: 'Uzbekistan', labelAr: 'أوزبكستان', nameEn: 'Uzbekistan', nameAr: 'أوزبكستان', minLen: 9, maxLen: 9, placeholder: '901234567' },
+  { code: 'VU', dial: '+678', labelEn: 'Vanuatu', labelAr: 'فانواتو', nameEn: 'Vanuatu', nameAr: 'فانواتو', minLen: 7, maxLen: 7, placeholder: '5512345' },
+  { code: 'VA', dial: '+379', labelEn: 'Vatican City', labelAr: 'الفاتيكان', nameEn: 'Vatican City', nameAr: 'الفاتيكان', minLen: 10, maxLen: 10, placeholder: '0669812345' },
+  { code: 'VE', dial: '+58', labelEn: 'Venezuela', labelAr: 'فنزويلا', nameEn: 'Venezuela', nameAr: 'فنزويلا', minLen: 10, maxLen: 10, placeholder: '4121234567' },
+  { code: 'VN', dial: '+84', labelEn: 'Vietnam', labelAr: 'فيتنام', nameEn: 'Vietnam', nameAr: 'فيتنام', minLen: 9, maxLen: 10, placeholder: '912345678' },
+  { code: 'ZM', dial: '+260', labelEn: 'Zambia', labelAr: 'زامبيا', nameEn: 'Zambia', nameAr: 'زامبيا', minLen: 9, maxLen: 9, placeholder: '971234567' },
+  { code: 'ZW', dial: '+263', labelEn: 'Zimbabwe', labelAr: 'زيمبابوي', nameEn: 'Zimbabwe', nameAr: 'زيمبابوي', minLen: 9, maxLen: 9, placeholder: '771234567' }
 ];
 
 const CountriesHelper = {
@@ -115,9 +232,9 @@ const CountriesHelper = {
       }
     }
 
-    // Strip national trunk prefix '0' if present (e.g. 0501234567 -> 501234567)
-    if (country && digits.startsWith('0') && digits.length > country.minLen) {
-      digits = digits.substring(1);
+    // Truncate strictly to country.maxLen
+    if (country && digits.length > country.maxLen) {
+      digits = digits.slice(0, country.maxLen);
     }
 
     return digits;
@@ -128,43 +245,47 @@ const CountriesHelper = {
     const digits = this.cleanPhoneNumber(country, rawNumber);
     if (!digits) return false;
 
-    // Check length requirements
-    if (digits.length < country.minLen || digits.length > country.maxLen) {
-      return false;
-    }
-
-    // Check starting digits rule
-    if (country.startDigits && country.startDigits.length > 0) {
-      const isValidStart = country.startDigits.some(prefix => digits.startsWith(prefix));
-      if (!isValidStart) {
-        return false;
-      }
-    }
-
-    return true;
+    // Check exact local length range (e.g., 8 for Qatar, 10 for Egypt, 10-11 for Brazil, 5-12 for Finland)
+    return digits.length >= country.minLen && digits.length <= country.maxLen;
   },
 
   getValidationHint(country, lang = 'en') {
     if (!country) return '';
     const name = lang === 'ar' ? country.nameAr : country.nameEn;
-    const starts = country.startDigits ? country.startDigits.join(', ') : '';
-    if (lang === 'ar') {
-      return starts 
-        ? `${name} (${country.dial}): يجب أن يبدأ بـ (${starts}) ويتكون من ${country.minLen} أرقام.`
-        : `${name} (${country.dial}): يتكون من ${country.minLen} أرقام.`;
-    } else {
-      return starts
-        ? `${name} (${country.dial}): Must start with (${starts}) and be ${country.minLen} digits.`
+    if (country.minLen === country.maxLen) {
+      return lang === 'ar'
+        ? `${name} (${country.dial}): يتكون من ${country.minLen} أرقام.`
         : `${name} (${country.dial}): Must be ${country.minLen} digits.`;
+    } else {
+      return lang === 'ar'
+        ? `${name} (${country.dial}): يتكون من ${country.minLen} إلى ${country.maxLen} أرقام.`
+        : `${name} (${country.dial}): Between ${country.minLen} and ${country.maxLen} digits.`;
     }
+  },
+
+  getSortedCountries(lang = 'en') {
+    const list = [...COUNTRIES_DATA];
+    if (lang === 'ar') {
+      return list.sort((a, b) => {
+        const textA = (a.labelAr || a.nameAr || '').trim();
+        const textB = (b.labelAr || b.nameAr || '').trim();
+        return textA.localeCompare(textB, 'ar', { sensitivity: 'base' });
+      });
+    }
+    return list.sort((a, b) => {
+      const textA = (a.labelEn || a.nameEn || '').trim();
+      const textB = (b.labelEn || b.nameEn || '').trim();
+      return textA.localeCompare(textB, 'en', { sensitivity: 'base' });
+    });
   },
 
   renderDialSelects() {
     const lang = (typeof I18n !== 'undefined') ? I18n.getLang() : 'en';
+    const sortedCountries = this.getSortedCountries(lang);
     
     document.querySelectorAll('.country-code-select').forEach(select => {
       const currentVal = select.value || '+974';
-      select.innerHTML = COUNTRIES_DATA.map(c => {
+      select.innerHTML = sortedCountries.map(c => {
         const countryLabel = lang === 'ar' ? (c.labelAr || c.nameAr) : (c.labelEn || c.nameEn);
         return `<option value="${c.dial}" data-code="${c.code}" ${c.dial === currentVal ? 'selected' : ''}>${countryLabel} ${c.dial}</option>`;
       }).join('');
@@ -173,7 +294,7 @@ const CountriesHelper = {
 
     document.querySelectorAll('.country-select-dropdown').forEach(select => {
       const currentVal = select.value || 'QA';
-      select.innerHTML = COUNTRIES_DATA.map(c => {
+      select.innerHTML = sortedCountries.map(c => {
         const name = lang === 'ar' ? c.nameAr : c.nameEn;
         return `<option value="${c.code}" data-dial="${c.dial}" ${c.code === currentVal ? 'selected' : ''}>${name}</option>`;
       }).join('');
@@ -192,8 +313,12 @@ const CountriesHelper = {
 
       const country = this.getCountryByDial(dialSelect.value);
       if (country) {
-        input.placeholder = country.placeholder || '7104 0746';
-        input.setAttribute('maxlength', country.maxLen + 4);
+        input.placeholder = '';
+        input.setAttribute('maxlength', country.maxLen);
+        let digits = input.value.replace(/\D/g, '');
+        if (digits.length > country.maxLen) {
+          input.value = digits.slice(0, country.maxLen);
+        }
       }
 
       if (wrap) {
@@ -224,8 +349,12 @@ const CountriesHelper = {
             const phoneInput = form.querySelector('.phone-number-field, input[type="tel"]');
             const wrap = form.querySelector('.phone-input-wrap');
             if (phoneInput) {
-              phoneInput.placeholder = country.placeholder;
-              phoneInput.setAttribute('maxlength', country.maxLen + 4);
+              phoneInput.placeholder = '';
+              phoneInput.setAttribute('maxlength', country.maxLen);
+              let digits = phoneInput.value.replace(/\D/g, '');
+              if (digits.length > country.maxLen) {
+                phoneInput.value = digits.slice(0, country.maxLen);
+              }
               if (wrap) {
                 if (this.validatePhoneNumber(country, phoneInput.value)) {
                   wrap.classList.add('is-valid');
@@ -243,8 +372,12 @@ const CountriesHelper = {
           const phoneInput = group.querySelector('.phone-number-field, input[type="tel"]');
           const wrap = group.querySelector('.phone-input-wrap');
           if (phoneInput && country) {
-            phoneInput.placeholder = country.placeholder;
-            phoneInput.setAttribute('maxlength', country.maxLen + 4);
+            phoneInput.placeholder = '';
+            phoneInput.setAttribute('maxlength', country.maxLen);
+            let digits = phoneInput.value.replace(/\D/g, '');
+            if (digits.length > country.maxLen) {
+              phoneInput.value = digits.slice(0, country.maxLen);
+            }
             if (wrap) {
               if (this.validatePhoneNumber(country, phoneInput.value)) {
                 wrap.classList.add('is-valid');
@@ -299,9 +432,23 @@ const CountriesHelper = {
       if (input) checkWrap(input);
     });
 
+    // Enforce only digits and maximum country.maxLen length strictly on input
     document.addEventListener('input', (e) => {
       if (e.target.classList.contains('phone-number-field') || e.target.type === 'tel') {
-        checkWrap(e.target);
+        const input = e.target;
+        const group = input.closest('.phone-input-group');
+        const dialSelect = group ? group.querySelector('.country-code-select') : document.getElementById('checkout-phone-dial');
+        const dial = dialSelect ? dialSelect.value : '+974';
+        const country = CountriesHelper.getCountryByDial(dial);
+
+        let digits = input.value.replace(/\D/g, '');
+        if (country && digits.length > country.maxLen) {
+          digits = digits.slice(0, country.maxLen);
+        }
+        if (input.value !== digits) {
+          input.value = digits;
+        }
+        checkWrap(input);
       }
     });
 
@@ -372,6 +519,12 @@ const App = {
 
     const openSearch = () => {
       if (!searchModal) return;
+      const mobileDrawer = document.querySelector('.mobile-nav-drawer');
+      const mobileOverlay = document.querySelector('.mobile-nav-overlay');
+      if (mobileDrawer) mobileDrawer.classList.remove('is-open');
+      if (mobileOverlay) mobileOverlay.classList.remove('is-open');
+      document.body.classList.remove('mobile-nav-open');
+
       searchModal.classList.add('is-open');
       document.body.classList.add('modal-open');
       if (searchInput) {
@@ -410,6 +563,15 @@ const App = {
       searchInput.addEventListener('input', (e) => {
         this.renderSearchResults(e.target.value);
       });
+      searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          const val = searchInput.value.trim();
+          if (val) {
+            window.location.href = `shop.html?search=${encodeURIComponent(val)}`;
+          }
+        }
+      });
     }
   },
 
@@ -418,7 +580,13 @@ const App = {
     if (!resultsContainer) return;
 
     const lang = I18n.getLang();
-    const products = ProductService.search(query, lang);
+    const cleanQ = (query || '').trim();
+    const isInitial = cleanQ === '';
+    
+    // When initial/empty, show top 5 featured/popular devices as suggestions
+    const products = isInitial 
+      ? ProductService.getFeatured().slice(0, 5)
+      : ProductService.search(cleanQ, lang);
 
     if (products.length === 0) {
       resultsContainer.innerHTML = `
@@ -430,16 +598,27 @@ const App = {
       return;
     }
 
-    resultsContainer.innerHTML = products.map(p => {
+    const headerText = isInitial
+      ? (lang === 'ar' ? 'الأجهزة الأكثر طلباً وتميزاً' : 'Popular & Featured Devices')
+      : (lang === 'ar' ? `نتائج البحث (${products.length})` : `Search Results (${products.length})`);
+
+    const viewAllLink = !isInitial ? `
+      <a href="shop.html?search=${encodeURIComponent(cleanQ)}" class="search-view-all-link">
+        <span>${lang === 'ar' ? 'عرض الكل في المتجر ←' : 'View all in shop →'}</span>
+      </a>
+    ` : '';
+
+    const listHtml = products.map(p => {
       const name = p.name[lang] || p.name.en;
       const tagline = p.tagline[lang] || p.tagline.en;
+      const brandName = (typeof I18n !== 'undefined') ? I18n.getBrandName(p.brand, lang) : p.brand;
       return `
         <a href="product.html?id=${p.id}" class="search-result-item">
           <div class="search-item-img">
             <img src="${p.images[0]}" alt="${name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=300&q=80'">
           </div>
           <div class="search-item-details">
-            <div class="search-item-brand">${p.brand}</div>
+            <div class="search-item-brand">${brandName}</div>
             <div class="search-item-title">${name}</div>
             <div class="search-item-tagline">${tagline}</div>
           </div>
@@ -449,6 +628,16 @@ const App = {
         </a>
       `;
     }).join('');
+
+    resultsContainer.innerHTML = `
+      <div class="search-results-header-row">
+        <div class="search-section-header">${headerText}</div>
+        ${viewAllLink}
+      </div>
+      <div class="search-items-wrapper">
+        ${listHtml}
+      </div>
+    `;
   },
 
   setupWishlistDrawer() {
@@ -490,13 +679,14 @@ const App = {
 
     container.innerHTML = products.map(p => {
       const name = p.name[lang] || p.name.en;
+      const brandName = (typeof I18n !== 'undefined') ? I18n.getBrandName(p.brand, lang) : p.brand;
       return `
         <div class="cart-drawer-item">
           <div class="cart-drawer-img">
             <img src="${p.images[0]}" alt="${name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=300&q=80'">
           </div>
           <div class="cart-drawer-info">
-            <div class="cart-drawer-brand">${p.brand}</div>
+            <div class="cart-drawer-brand">${brandName}</div>
             <h4 class="cart-drawer-title"><a href="product.html?id=${p.id}">${name}</a></h4>
             <div class="cart-drawer-price">$${p.basePrice.toLocaleString()}</div>
             <button type="button" class="btn btn-primary btn-sm" style="margin-top: 8px; padding: 6px 12px; font-size: 0.78rem;" onclick="Cart.addItem('${p.id}', 1); Cart.toggleWishlist('${p.id}');">
@@ -550,6 +740,7 @@ const App = {
     const lang = I18n.getLang();
     const name = product.name[lang] || product.name.en;
     const desc = product.description[lang] || product.description.en;
+    const brandName = (typeof I18n !== 'undefined') ? I18n.getBrandName(product.brand, lang) : product.brand;
     const modal = document.getElementById('diamond-quickview-modal');
     const content = document.getElementById('quickview-content');
 
@@ -565,7 +756,7 @@ const App = {
     const storageHtml = product.storageOptions ? product.storageOptions.map((s, i) => `
       <label class="storage-option ${i === 0 ? 'active' : ''}">
         <input type="radio" name="qv-storage" value="${s.size}" data-multiplier="${s.priceMultiplier}" ${i === 0 ? 'checked' : ''}>
-        <span class="storage-pill">${s.size}</span>
+        <span class="storage-pill">${(typeof I18n !== 'undefined') ? I18n.formatStorage(s.size, lang) : s.size}</span>
       </label>
     `).join('') : '';
 
@@ -585,15 +776,15 @@ const App = {
         </div>
         <div class="quickview-info">
           <div class="product-card-meta" style="margin-bottom: 8px;">
-            <span class="product-brand" style="margin-bottom: 0;">${product.brand}</span>
+            <span class="product-brand" style="margin-bottom: 0;">${brandName}</span>
             <span class="product-condition-tag ${
               (product.condition || 'new') === 'new' ? 'badge-condition-new' :
               (product.condition || 'new') === 'like-new' ? 'badge-condition-likenew' : 'badge-condition-certified'
             }">
               ${
-                (product.condition || 'new') === 'new' ? (lang === 'ar' ? '✨ غير مستخدم نهائياً' : '✨ Never Used') :
-                (product.condition || 'new') === 'like-new' ? (lang === 'ar' ? '💎 مستعمل كالجديد (<1 سنة)' : '💎 Like New (<1Y)') :
-                (lang === 'ar' ? '🛡️ مجدد معتمد (<3 سنوات)' : '🛡️ Certified (<3Y)')
+                (product.condition || 'new') === 'new' ? (lang === 'ar' ? 'جديد كلياً (كرتونة مغلقة)' : 'Brand New (Sealed Box)') :
+                (product.condition || 'new') === 'like-new' ? (lang === 'ar' ? 'كالجديد (استعمال أقل من سنة)' : 'Like New (Used < 1 Year)') :
+                (lang === 'ar' ? 'مستعمل (استعمال أقل من 3 سنوات)' : 'Pre-Owned (Used < 3 Years)')
               }
             </span>
           </div>
@@ -642,7 +833,7 @@ const App = {
               <span>${I18n.t('addToCart')}</span>
             </button>
             <a href="product.html?id=${product.id}" class="btn btn-outline btn-block">
-              <span>${I18n.t('tabSpecs')} & Details →</span>
+              <span>${I18n.t('quickviewSpecsBtn')}</span>
             </a>
           </div>
         </div>
@@ -771,9 +962,11 @@ const App = {
           <div class="modal-backdrop"></div>
           <div class="search-modal-card">
             <div class="search-modal-header">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-              <input type="text" id="global-search-input" class="search-modal-input" placeholder="${I18n.t('searchPlaceholder')}" autocomplete="off">
-              <button type="button" class="btn-close-search modal-close-btn">&times;</button>
+              <div class="search-input-icon-wrap">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </div>
+              <input type="text" id="global-search-input" class="search-modal-input" placeholder="" autocomplete="off" aria-label="Search">
+              <button type="button" class="btn-close-search" aria-label="Close search">&times;</button>
             </div>
             <div class="search-modal-body">
               <div id="global-search-results" class="search-results-list"></div>
@@ -798,7 +991,7 @@ const App = {
             <div class="auth-card-header">
               <div class="auth-logo-symbol">✦</div>
               <h3 class="auth-title" data-i18n="authSignInTitle">${I18n.t('authSignInTitle')}</h3>
-              <p class="auth-subtitle">Access your orders and account settings.</p>
+              <p class="auth-subtitle" data-i18n="authSignInSubtitle">${I18n.t('authSignInSubtitle')}</p>
             </div>
             <div id="signin-error" class="auth-error-alert" style="display:none;"></div>
             <form id="form-signin" class="auth-form">
@@ -809,9 +1002,9 @@ const App = {
               <div class="form-group">
                 <div class="label-row">
                   <label class="form-label" data-i18n="authPassword">${I18n.t('authPassword')}</label>
-                  <a href="#" class="form-link-subtle" data-i18n="authForgotPassword">${I18n.t('authForgotPassword')}</a>
+                  <button type="button" class="form-link-subtle" onclick="Auth.openForgotModal()" data-i18n="authForgotPassword">${I18n.t('authForgotPassword')}</button>
                 </div>
-                <input type="password" name="password" class="form-input" placeholder="••••••••" required>
+                <input type="password" name="password" class="form-input" placeholder="••••••••" data-i18n-placeholder="authPasswordPlaceholder" required>
               </div>
               <button type="submit" class="btn btn-primary btn-block btn-lg" data-i18n="authSignInBtn">${I18n.t('authSignInBtn')}</button>
             </form>
@@ -830,13 +1023,13 @@ const App = {
             <div class="auth-card-header">
               <div class="auth-logo-symbol">✦</div>
               <h3 class="auth-title" data-i18n="authSignUpTitle">${I18n.t('authSignUpTitle')}</h3>
-              <p class="auth-subtitle">Create an account to track orders and customize your profile.</p>
+              <p class="auth-subtitle" data-i18n="authSignUpSubtitle">${I18n.t('authSignUpSubtitle')}</p>
             </div>
             <div id="signup-error" class="auth-error-alert" style="display:none;"></div>
             <form id="form-signup" class="auth-form">
               <div class="form-group">
                 <label class="form-label" data-i18n="authName">${I18n.t('authName')}</label>
-                <input type="text" name="name" class="form-input" placeholder="Alexander Vance" required>
+                <input type="text" name="name" class="form-input" placeholder="Full Name" data-i18n-placeholder="authNamePlaceholder" required>
               </div>
               <div class="form-group">
                 <label class="form-label" data-i18n="authEmail">${I18n.t('authEmail')}</label>
@@ -844,13 +1037,53 @@ const App = {
               </div>
               <div class="form-group">
                 <label class="form-label" data-i18n="authPassword">${I18n.t('authPassword')}</label>
-                <input type="password" name="password" class="form-input" placeholder="Create password" required minlength="6">
+                <input type="password" name="password" class="form-input" placeholder="••••••••" data-i18n-placeholder="authPasswordPlaceholder" required minlength="6">
               </div>
               <button type="submit" class="btn btn-primary btn-block btn-lg" data-i18n="authSignUpBtn">${I18n.t('authSignUpBtn')}</button>
             </form>
             <div class="auth-footer">
               <span data-i18n="authHaveAccount">${I18n.t('authHaveAccount')}</span>
               <button type="button" class="auth-switch-link" onclick="Auth.openSignInModal()" data-i18n="authSignInBtn">${I18n.t('authSignInBtn')}</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Forgot Password Modal -->
+        <div id="auth-forgot-modal" class="diamond-modal-container auth-modal">
+          <div class="modal-backdrop"></div>
+          <div class="auth-modal-card">
+            <button type="button" class="modal-close-btn btn-close-modal" onclick="Auth.closeModals()">&times;</button>
+            <div class="auth-card-header">
+              <div class="auth-logo-symbol">✦</div>
+              <h3 class="auth-title" data-i18n="authForgotTitle">${I18n.t('authForgotTitle')}</h3>
+              <p class="auth-subtitle" data-i18n="authForgotDesc">${I18n.t('authForgotDesc')}</p>
+            </div>
+            <div id="forgot-error" class="auth-error-alert" style="display:none;"></div>
+            
+            <!-- Step 1: Request Code -->
+            <form id="form-forgot-step1" class="auth-form">
+              <div class="form-group">
+                <label class="form-label" data-i18n="authEmail">${I18n.t('authEmail')}</label>
+                <input type="email" id="forgot-email-input" class="form-input" placeholder="name@example.com" required>
+              </div>
+              <button type="submit" class="btn btn-primary btn-block btn-lg" data-i18n="authSendCodeBtn">${I18n.t('authSendCodeBtn')}</button>
+            </form>
+
+            <!-- Step 2: Enter Code & New Password -->
+            <form id="form-forgot-step2" class="auth-form" style="display:none;">
+              <div class="form-group">
+                <label class="form-label" data-i18n="authVerifyCode">${I18n.t('authVerifyCode')}</label>
+                <input type="text" id="forgot-code-input" class="form-input" placeholder="6-digit code (e.g. 849201)" data-i18n-placeholder="authCodePlaceholder" maxlength="6" required style="letter-spacing: 0.2em; font-weight: 700; text-align: center;">
+              </div>
+              <div class="form-group">
+                <label class="form-label" data-i18n="authNewPassword">${I18n.t('authNewPassword')}</label>
+                <input type="password" id="forgot-newpass-input" class="form-input" placeholder="Enter new password" data-i18n-placeholder="authNewPassPlaceholder" minlength="6" required>
+              </div>
+              <button type="submit" class="btn btn-primary btn-block btn-lg" data-i18n="authResetPasswordBtn">${I18n.t('authResetPasswordBtn')}</button>
+            </form>
+
+            <div class="auth-footer">
+              <button type="button" class="auth-switch-link" onclick="Auth.openSignInModal()" data-i18n="authBackToSignIn">← ${I18n.t('authBackToSignIn')}</button>
             </div>
           </div>
         </div>
@@ -889,7 +1122,7 @@ const App = {
                     <select id="profile-phone-dial" class="country-code-select" aria-label="Country Code"></select>
                   </div>
                   <div class="phone-input-wrap">
-                    <input type="tel" id="profile-phone-input" class="form-input phone-number-field" placeholder="7104 0746">
+                    <input type="tel" id="profile-phone-input" class="form-input phone-number-field" placeholder="">
                   </div>
                 </div>
               </div>
@@ -974,9 +1207,8 @@ const App = {
           </div>
           <button type="button" class="btn-whatsapp-floating" id="btn-whatsapp-floating" aria-label="WhatsApp Concierge">
             <span class="whatsapp-beacon"></span>
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.971.53 1.954.815 2.796.815 3.183 0 5.769-2.587 5.77-5.768 0-3.181-2.587-5.767-5.77-5.767zm0 10.428c-.808 0-1.637-.24-2.348-.662l-.168-.1-1.748.459.467-1.704-.11-.175c-.477-.757-.729-1.554-.728-2.48 0-2.494 2.029-4.523 4.525-4.523 2.495 0 4.525 2.029 4.525 4.523 0 2.495-2.03 4.525-4.525 4.525zm2.483-3.393c-.136-.068-.807-.398-.932-.444-.125-.045-.216-.068-.307.068-.091.136-.352.444-.432.535-.08.091-.159.102-.295.034-.136-.068-.574-.212-1.094-.675-.404-.36-.677-.805-.756-.941-.08-.136-.008-.21.06-.277.062-.061.136-.159.204-.239.068-.08.091-.136.136-.227.045-.091.023-.17-.011-.239-.034-.068-.307-.738-.42-1.011-.11-.266-.223-.23-.307-.234l-.261-.005c-.091 0-.239.034-.364.17-.125.136-.477.466-.477 1.136 0 .67.489 1.318.557 1.409.068.091.962 1.469 2.33 2.059.325.14.579.224.777.287.327.104.624.089.859.054.262-.039.807-.33 1.02-.648.213-.318.213-.591.15-.648-.063-.057-.154-.091-.29-.159z"/>
-              <path d="M12.032 2C6.505 2 2.025 6.48 2.025 12.008c0 1.954.563 3.778 1.541 5.321L2 22l4.832-1.528A9.957 9.957 0 0 0 12.032 22C17.56 22 22.04 17.52 22.04 12.008 22.04 6.48 17.56 2 12.032 2zm0 18.232c-1.637 0-3.177-.47-4.49-1.284l-.322-.199-2.868.906.924-2.8-.218-.347A8.21 8.21 0 0 1 3.808 12.008c0-4.535 3.689-8.225 8.224-8.225 4.536 0 8.225 3.69 8.225 8.225 0 4.535-3.689 8.224-8.225 8.224z"/>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+              <path fill="#ffffff" fill-rule="evenodd" clip-rule="evenodd" d="M18.403 5.638A8.955 8.955 0 0 0 12.053 3c-4.948 0-8.976 4.027-8.978 8.977 0 1.582.413 3.126 1.2 4.488L3 21l4.646-1.218a8.946 8.946 0 0 0 4.405 1.15h.004c4.947 0 8.975-4.027 8.977-8.977a8.926 8.926 0 0 0-2.629-6.317zm-6.35 13.812h-.003a7.446 7.446 0 0 1-3.799-1.041l-.272-.162-2.824.741.753-2.753-.177-.282a7.448 7.448 0 0 1-1.141-3.976c.002-4.114 3.349-7.461 7.465-7.461a7.422 7.422 0 0 1 5.279 2.188 7.42 7.42 0 0 1 2.183 5.28c-.002 4.114-3.349 7.462-7.466 7.462zm4.095-5.591c-.225-.113-1.327-.655-1.533-.73-.205-.075-.354-.112-.504.112s-.58 1.73-.711.88c-.131.15-.262.169-.487.056-.225-.113-.949-.35-1.808-1.115-.668-.596-1.12-1.332-1.251-1.557s-.014-.346.099-.458c.101-.1.225-.262.337-.393s.15-.225.225-.375c.075-.15.037-.281-.019-.394s-.504-1.216-.69-1.665c-.182-.437-.367-.378-.504-.385l-.43-.008c-.15 0-.393.056-.599.281-.206.225-.786.768-.786 1.872s.805 2.172.917 2.322c.112.15 1.583 2.417 3.835 3.39.536.231.954.369 1.28.473.538.171 1.028.147 1.415.089.431-.064 1.327-.542 1.514-1.066.187-.524.187-.973.131-1.066-.056-.093-.206-.15-.431-.262z"/>
             </svg>
           </button>
         </div>

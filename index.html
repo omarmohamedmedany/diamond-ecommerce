@@ -47,12 +47,6 @@
           <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
         </button>
 
-        <!-- Wishlist Link (Opens Wishlist Drawer) -->
-        <button type="button" class="nav-icon-btn btn-wishlist-nav-trigger" aria-label="Wishlist">
-          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-          <span class="wishlist-count-badge" style="display:none;">0</span>
-        </button>
-
         <!-- Cart Button (Opens Drawer) -->
         <button type="button" class="nav-icon-btn btn-cart-trigger" aria-label="Shopping Cart">
           <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
@@ -82,6 +76,12 @@
     </div>
     <ul class="mobile-nav-links">
       <li>
+        <a href="#" class="btn-search-trigger">
+          <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <span data-i18n="navSearch">Search</span>
+        </a>
+      </li>
+      <li>
         <a href="index.html">
           <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
           <span data-i18n="navHome">Home</span>
@@ -105,13 +105,8 @@
           <span data-i18n="navContact">Contact Us</span>
         </a>
       </li>
-      <li>
-        <a href="cart.html">
-          <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-          <span data-i18n="navCart">Cart</span>
-        </a>
-      </li>
     </ul>
+    <div class="drawer-auth-container auth-drawer-container"></div>
   </div>
 
   <main class="main-content">
@@ -123,12 +118,7 @@
       <div class="container hero-grid">
         <!-- Hero Text -->
         <div class="hero-content-col reveal-on-scroll">
-          <div class="hero-badge-pill">
-            <span class="diamond-gem-icon" style="width: 14px; height: 14px;"></span>
-            <span data-i18n="heroBadge">Flagship Collection 2026</span>
-          </div>
-
-          <h1 class="hero-title" data-i18n="heroTitle">Latest Flagship Phones & Tech.</h1>
+          <h1 class="hero-title" data-i18n="heroTitle">Original Flagship Phones & Smart Tech.</h1>
 
           <p class="hero-subtitle" data-i18n="heroSubtitle">
             Explore the world's most powerful smartphones, luxury smartwatches, and studio audio. 100% original with official 2-year warranty.
@@ -191,7 +181,7 @@
               <div class="category-card-icon">📱</div>
               <h3 class="category-card-title" data-i18n="catPhones">Phones</h3>
               <p class="category-card-desc" data-i18n="catPhonesDesc">Latest flagship smartphones with pro cameras and fast performance</p>
-              <span class="category-card-link">Shop Phones →</span>
+              <span class="category-card-link" data-i18n="shopPhonesLink">Shop Phones →</span>
             </div>
           </a>
 
@@ -202,7 +192,7 @@
               <div class="category-card-icon">⌚</div>
               <h3 class="category-card-title" data-i18n="catWatches">Smartwatches</h3>
               <p class="category-card-desc" data-i18n="catWatchesDesc">Fitness tracking, health sensors, and long-lasting battery</p>
-              <span class="category-card-link">Shop Watches →</span>
+              <span class="category-card-link" data-i18n="shopWatchesLink">Shop Watches →</span>
             </div>
           </a>
 
@@ -213,7 +203,7 @@
               <div class="category-card-icon">🎧</div>
               <h3 class="category-card-title" data-i18n="catAudio">AirPods & Audio</h3>
               <p class="category-card-desc" data-i18n="catAudioDesc">Crisp sound quality and active noise cancellation</p>
-              <span class="category-card-link">Shop Audio →</span>
+              <span class="category-card-link" data-i18n="shopAudioLink">Shop Audio →</span>
             </div>
           </a>
 
@@ -224,7 +214,7 @@
               <div class="category-card-icon">⚡</div>
               <h3 class="category-card-title" data-i18n="catAccessories">Accessories</h3>
               <p class="category-card-desc" data-i18n="catAccessoriesDesc">Wireless chargers, fast power banks, adapters, and cases</p>
-              <span class="category-card-link">Shop Accessories →</span>
+              <span class="category-card-link" data-i18n="shopAccessoriesLink">Shop Accessories →</span>
             </div>
           </a>
         </div>
@@ -298,7 +288,7 @@
         <div class="tech-highlight-grid">
           <div class="reveal-on-scroll">
             <span class="section-tag" data-i18n="compareTitle">Engineering Without Compromise</span>
-            <h2 class="section-title">Built with Pure Titanium & Acoustic Mastery</h2>
+            <h2 class="section-title" data-i18n="compareHighlightTitle">Built with Pure Titanium & Acoustic Mastery</h2>
             <p class="section-subtitle" data-i18n="compareSubtitle">Every millimeter sculpted from Grade 5 titanium, aerospace sapphire, and cutting-edge silicon.</p>
 
             <div class="tech-feature-list">
@@ -329,43 +319,43 @@
       <div class="container">
         <div class="section-header reveal-on-scroll">
           <span class="section-tag" data-i18n="testimonialsTitle">Trusted by Global Visionaries</span>
-          <h2 class="section-title">Client Perspectives</h2>
+          <h2 class="section-title" data-i18n="testimonialsHeader">Client Perspectives</h2>
           <p class="section-subtitle" data-i18n="testimonialsSubtitle">Discover what elite tech enthusiasts say about Diamond.</p>
         </div>
 
         <div class="testimonials-grid">
           <div class="testimonial-card reveal-on-scroll">
             <div class="rating-stars">★★★★★</div>
-            <p class="testimonial-quote">"The 24K Gold iPhone 16 Pro is an absolute masterpiece. The weight, the tactile feel of the Damascus engraving, and the diamond logo are unmatched in luxury tech."</p>
+            <p class="testimonial-quote" data-i18n="testimonial1Quote">"The 24K Gold iPhone 16 Pro is an absolute masterpiece. The weight, the tactile feel of the Damascus engraving, and the diamond logo are unmatched in luxury tech."</p>
             <div class="testimonial-author">
               <div class="author-avatar">MS</div>
               <div>
-                <div class="author-name">Mansoor Al-Sulaiti</div>
-                <div class="author-title">Private Equity Director, Doha</div>
+                <div class="author-name" data-i18n="testimonial1Author">Mansoor Al-Sulaiti</div>
+                <div class="author-title" data-i18n="testimonial1Title">Private Equity Director, Doha</div>
               </div>
             </div>
           </div>
 
           <div class="testimonial-card reveal-on-scroll">
             <div class="rating-stars">★★★★★</div>
-            <p class="testimonial-quote">"Diamond's 24-hour courier service delivered the Apple Watch Ultra 2 right to my hotel suite in Dubai. Flawless presentation, authentic warranty, and instant setup support."</p>
+            <p class="testimonial-quote" data-i18n="testimonial2Quote">"Diamond's 24-hour courier service delivered the Apple Watch Ultra 2 right to my hotel suite in Dubai. Flawless presentation, authentic warranty, and instant setup support."</p>
             <div class="testimonial-author">
               <div class="author-avatar">CK</div>
               <div>
-                <div class="author-name">Charlotte Kingston</div>
-                <div class="author-title">Tech Journalist, London</div>
+                <div class="author-name" data-i18n="testimonial2Author">Charlotte Kingston</div>
+                <div class="author-title" data-i18n="testimonial2Title">Tech Journalist, London</div>
               </div>
             </div>
           </div>
 
           <div class="testimonial-card reveal-on-scroll">
             <div class="rating-stars">★★★★★</div>
-            <p class="testimonial-quote">"خدمة عملاء راقية وسرعة استجابة لا مثيل لها عبر الواتساب. جودة الأجهزة أصلية ومغلفة بأعلى معايير الأمان."</p>
+            <p class="testimonial-quote" data-i18n="testimonial3Quote">"Exceptional customer service and instant WhatsApp response. Authentic factory sealed devices with the highest safety standards."</p>
             <div class="testimonial-author">
               <div class="author-avatar">FN</div>
               <div>
-                <div class="author-name">فيصل النعيمي</div>
-                <div class="author-title">رائد أعمال، الرياض</div>
+                <div class="author-name" data-i18n="testimonial3Author">Faisal Al-Nuaimi</div>
+                <div class="author-title" data-i18n="testimonial3Title">Entrepreneur, Riyadh</div>
               </div>
             </div>
           </div>
@@ -413,43 +403,6 @@
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.032 2C6.505 2 2.025 6.48 2.025 12.008c0 1.954.563 3.778 1.541 5.321L2 22l4.832-1.528A9.957 9.957 0 0 0 12.032 22C17.56 22 22.04 17.52 22.04 12.008 22.04 6.48 17.56 2 12.032 2z"/></svg>
             </a>
           </div>
-        </div>
-
-        <!-- Navigation Links -->
-        <div class="footer-links-col">
-          <h4 class="footer-col-title" data-i18n="footerNavQuick">Quick Navigation</h4>
-          <ul class="footer-links-list">
-            <li>
-              <a href="index.html">
-                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                <span data-i18n="navHome">Home</span>
-              </a>
-            </li>
-            <li>
-              <a href="shop.html">
-                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                <span data-i18n="navShop">Shop All</span>
-              </a>
-            </li>
-            <li>
-              <a href="about.html">
-                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-                <span data-i18n="navAbout">About Us</span>
-              </a>
-            </li>
-            <li>
-              <a href="contact.html">
-                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                <span data-i18n="navContact">Contact Us</span>
-              </a>
-            </li>
-            <li>
-              <a href="cart.html">
-                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-                <span data-i18n="navCart">Cart</span>
-              </a>
-            </li>
-          </ul>
         </div>
 
         <!-- Support / Client Care -->
@@ -505,7 +458,7 @@
 
       <div class="footer-bottom">
         <div data-i18n="footerCopyright">© 2026 Diamond Tech Inc. All rights reserved. Precision engineered.</div>
-        <div>Designed with titanium elegance for iOS & Android ecosystems.</div>
+        <div data-i18n="indexFooterDesigned">Designed with titanium elegance for iOS & Android ecosystems.</div>
       </div>
     </div>
   </footer>

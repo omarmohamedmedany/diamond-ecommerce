@@ -48,7 +48,7 @@ const ProductDetail = {
     const tagline = p.tagline[lang] || p.tagline.en;
     const desc = p.description[lang] || p.description.en;
 
-    document.title = `${name} | Diamond Tech Luxury`;
+    document.title = `${name} | ${lang === 'ar' ? 'دايموند تك الفاخرة' : 'Diamond Tech Luxury'}`;
 
     // 1. Breadcrumbs
     const breadcrumbName = document.getElementById('breadcrumb-product-name');
@@ -87,7 +87,7 @@ const ProductDetail = {
 
     // 3. Product Header info
     const brandEl = document.getElementById('product-detail-brand');
-    if (brandEl) brandEl.textContent = p.brand;
+    if (brandEl) brandEl.textContent = (typeof I18n !== 'undefined') ? I18n.getBrandName(p.brand, lang) : p.brand;
 
     const condEl = document.getElementById('product-detail-condition');
     const condition = p.condition || 'new';
@@ -95,13 +95,13 @@ const ProductDetail = {
       let condText = '';
       let condClass = '';
       if (condition === 'new') {
-        condText = lang === 'ar' ? '✨ غير مستخدم نهائياً (مغلف بختم المصنع)' : '✨ Grade A+ • Never Used (Factory Sealed)';
+        condText = lang === 'ar' ? 'جديد كلياً (كرتونة مغلقة)' : 'Brand New (Sealed Box)';
         condClass = 'badge-condition-new';
       } else if (condition === 'like-new') {
-        condText = lang === 'ar' ? '💎 مستعمل كالجديد (استخدام أقل من سنة)' : '💎 Grade A • Like New (Used < 1 Year)';
+        condText = lang === 'ar' ? 'كالجديد (استعمال أقل من سنة)' : 'Like New (Used < 1 Year)';
         condClass = 'badge-condition-likenew';
       } else {
-        condText = lang === 'ar' ? '🛡️ مجدد معتمد (استخدام أقل من 3 سنوات)' : '🛡️ Grade B+ • Certified (Used < 3 Years)';
+        condText = lang === 'ar' ? 'مستعمل (استعمال أقل من 3 سنوات)' : 'Pre-Owned (Used < 3 Years)';
         condClass = 'badge-condition-certified';
       }
       condEl.innerHTML = `<span class="product-condition-tag ${condClass}">${condText}</span>`;
@@ -163,7 +163,7 @@ const ProductDetail = {
       storageContainer.innerHTML = p.storageOptions.map(opt => `
         <label class="storage-pill-label ${opt.size === this.selectedStorage?.size ? 'is-selected' : ''}">
           <input type="radio" name="product-storage-radio" value="${opt.size}" ${opt.size === this.selectedStorage?.size ? 'checked' : ''}>
-          <span class="storage-pill-box">${opt.size}</span>
+          <span class="storage-pill-box">${(typeof I18n !== 'undefined') ? I18n.formatStorage(opt.size, lang) : opt.size}</span>
         </label>
       `).join('');
 
@@ -198,6 +198,28 @@ const ProductDetail = {
     if (priceEl) priceEl.textContent = `$${currPrice.toLocaleString()}`;
   },
 
+  translateBoxItem(item, lang, p) {
+    if (lang !== 'ar') return item;
+    if (item === p.name.en || item === (typeof p.name === 'object' ? p.name.en : p.name)) return (typeof p.name === 'object' ? p.name.ar : p.name) || item;
+    if (item.includes('USB-C to USB-C Braided Cable')) return 'كابل شحن مجدول USB-C إلى USB-C (1 متر)';
+    if (item.includes('USB-C Braided Cable')) return 'كابل شحن USB-C مجدول فاخر';
+    if (item.includes('USB-C Cable')) return 'كابل شحن USB-C أصلي معتمد';
+    if (item.includes('Lightning Cable')) return 'كابل شحن لايتنينغ أصلي';
+    if (item.includes('SIM Ejector Tool')) return 'دبوس إخراج شريحة الاتصال';
+    if (item.includes('Certificate of Authenticity')) return 'شهادة أصالة وضمان معتمدة';
+    if (item.includes('Manual & Documentation')) return 'دليل التشغيل والوثائق الرسمية';
+    if (item.includes('Magnetic Fast Charger')) return 'كابل شحن مغناطيسي سريع';
+    if (item.includes('Silicone Ear Tips')) return 'رؤوس أذن سيليكون بأحجام متعددة';
+    if (item.includes('Wireless Charging Case')) return 'علبة شحن لاسلكية ذكية';
+    if (item.includes('Power Adapter')) return 'محول طاقة جداري سريع';
+    if (item.includes('S Pen')) return 'قلم S Pen الذكي';
+    if (item.includes('Titanium Band')) return 'سوار تيتانيوم فاخر';
+    if (item.includes('Documentation')) return 'كتيب التعليمات والضمان';
+    if (item.includes('Manual')) return 'دليل المستخدم والوثائق';
+    if (item.includes('Quick Start Guide')) return 'دليل البدء السريع';
+    return item;
+  },
+
   renderTabs(p, lang) {
     const tabDesc = document.getElementById('tab-content-description');
     if (tabDesc) {
@@ -209,18 +231,18 @@ const ProductDetail = {
           <div class="features-key-highlights">
             <div class="highlight-box">
               <div class="hl-icon">✦</div>
-              <h4>Aerospace Engineering</h4>
-              <p>Grade 5 titanium alloy frame with highest strength-to-weight ratio in consumer tech.</p>
+              <h4>${I18n.t('featureHl1Title')}</h4>
+              <p>${I18n.t('featureHl1Desc')}</p>
             </div>
             <div class="highlight-box">
               <div class="hl-icon">⚡</div>
-              <h4>Silicon Superiority</h4>
-              <p>Ultra-dense 3nm manufacturing process delivering highest efficiency and on-device AI.</p>
+              <h4>${I18n.t('featureHl2Title')}</h4>
+              <p>${I18n.t('featureHl2Desc')}</p>
             </div>
             <div class="highlight-box">
               <div class="hl-icon">🛡️</div>
-              <h4>Diamond Care+ Warranty</h4>
-              <p>2-Year comprehensive global protection covering accidental drops and official service.</p>
+              <h4>${I18n.t('featureHl3Title')}</h4>
+              <p>${I18n.t('featureHl3Desc')}</p>
             </div>
           </div>
         </div>
@@ -250,7 +272,7 @@ const ProductDetail = {
           ${p.inTheBox.map(item => `
             <li>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <span>${item}</span>
+              <span>${this.translateBoxItem(item, lang, p)}</span>
             </li>
           `).join('')}
         </ul>
@@ -330,30 +352,32 @@ const ProductDetail = {
     const reviewsContainer = document.getElementById('product-reviews-list');
     if (!reviewsContainer) return;
 
+    const lang = I18n.getLang();
+
     const mockReviews = [
       {
-        author: "Julian H. Sterling",
-        badge: "Verified Buyer",
+        author: lang === 'ar' ? "جوليان ستيرلينغ" : "Julian H. Sterling",
+        badge: I18n.t('verifiedBuyer') || "Verified Buyer",
         rating: 5,
-        date: "October 14, 2025",
-        title: "Absolute pinnacle of craftsmanship and performance.",
-        content: "The titanium finish and acoustic resonance surpass anything else on the market. Diamond's express courier delivered it in flawless museum-grade packaging."
+        date: lang === 'ar' ? "14 أكتوبر 2025" : "October 14, 2025",
+        title: lang === 'ar' ? "قمة الفخامة والإتقان الهندسي والأداء الاستثنائي" : "Absolute pinnacle of craftsmanship and performance.",
+        content: lang === 'ar' ? "خامات التيتانيوم المصقولة والنقاء الصوتي فائق الدقة لا مثيل لهما. التوصيل كان سريعاً وفخماً للغاية والتغليف بأعلى معايير الحماية." : "The titanium finish and acoustic resonance surpass anything else on the market. Diamond's express courier delivered it in flawless museum-grade packaging."
       },
       {
-        author: "Rashid Al-Kuwari",
-        badge: "Verified Buyer",
+        author: lang === 'ar' ? "راشد الكواري" : "Rashid Al-Kuwari",
+        badge: I18n.t('verifiedBuyer') || "Verified Buyer",
         rating: 5,
-        date: "December 02, 2025",
-        title: "قمة الفخامة والأداء الاستثنائي",
-        content: "تجربة شحن وسرعة استجابة مذهلة. خامات التيتانيوم خفيفة جداً والكاميرا تلتقط تفاصيل فائقة النقاء."
+        date: lang === 'ar' ? "02 ديسمبر 2025" : "December 02, 2025",
+        title: lang === 'ar' ? "قمة الفخامة والأداء الاستثنائي" : "Pinnacle of Luxury and Performance",
+        content: lang === 'ar' ? "تجربة شحن وسرعة استجابة مذهلة. خامات التيتانيوم خفيفة جداً والكاميرا تلتقط تفاصيل فائقة النقاء." : "Incredible dispatch speed and build quality. The titanium chassis is ultra-light and the pro camera captures stunning details."
       },
       {
-        author: "Elena Rostova",
-        badge: "Verified Buyer",
+        author: lang === 'ar' ? "إيلينا فاسيليفا" : "Elena Rostova",
+        badge: I18n.t('verifiedBuyer') || "Verified Buyer",
         rating: 4.8,
-        date: "January 19, 2026",
-        title: "Exceeded my highest expectations.",
-        content: "From the display brightness under direct sunlight to the battery endurance, this is the definitive flagship device."
+        date: lang === 'ar' ? "19 يناير 2026" : "January 19, 2026",
+        title: lang === 'ar' ? "تجاوز كافة توقعاتي بأعلى المعايير" : "Exceeded my highest expectations.",
+        content: lang === 'ar' ? "من سطوع الشاشة تحت أشعة الشمس المباشرة وحتى عمر البطارية الطويل، هذا هو الجهاز الرائد بلا منازع." : "From the display brightness under direct sunlight to the battery endurance, this is the definitive flagship device."
       }
     ];
 

@@ -172,6 +172,102 @@ const Auth = {
     document.body.classList.add('modal-open');
   },
 
+  openForgotModal() {
+    this.closeModals();
+    const modal = document.getElementById('auth-forgot-modal');
+    if (modal) {
+      // Reset forms
+      const step1 = document.getElementById('form-forgot-step1');
+      const step2 = document.getElementById('form-forgot-step2');
+      const errEl = document.getElementById('forgot-error');
+      if (step1) step1.style.display = 'block';
+      if (step2) step2.style.display = 'none';
+      if (errEl) errEl.style.display = 'none';
+      modal.classList.add('is-open');
+    }
+    document.body.classList.add('modal-open');
+  },
+
+  forgotPasswordState: { email: '', code: '' },
+
+  sendResetCode(email) {
+    if (!email || !email.includes('@')) {
+      const errEl = document.getElementById('forgot-error');
+      if (errEl) {
+        errEl.textContent = I18n.getLang() === 'ar' ? 'يرجى إدخال بريد إلكتروني صحيح.' : 'Please enter a valid email address.';
+        errEl.style.display = 'block';
+      }
+      return false;
+    }
+
+    const code = Math.floor(100000 + Math.random() * 900000).toString();
+    this.forgotPasswordState = {
+      email: email.trim().toLowerCase(),
+      code: code
+    };
+
+    const step1 = document.getElementById('form-forgot-step1');
+    const step2 = document.getElementById('form-forgot-step2');
+    const errEl = document.getElementById('forgot-error');
+    if (errEl) errEl.style.display = 'none';
+    if (step1) step1.style.display = 'none';
+    if (step2) step2.style.display = 'block';
+
+    const codeInput = document.getElementById('forgot-code-input');
+    if (codeInput) {
+      codeInput.value = '';
+      codeInput.focus();
+    }
+
+    Toast.show(`${I18n.t('authCodeSentToast')} ${code}`, 'success', 8000);
+    return true;
+  },
+
+  verifyAndResetPassword(code, newPassword) {
+    const errEl = document.getElementById('forgot-error');
+    if (!this.forgotPasswordState.code || code.trim() !== this.forgotPasswordState.code) {
+      if (errEl) {
+        errEl.textContent = I18n.getLang() === 'ar' ? 'رمز التحقق غير صحيح. يرجى التأكد من الرمز والمحاولة مجدداً.' : 'Invalid verification code. Please check and try again.';
+        errEl.style.display = 'block';
+      }
+      return false;
+    }
+
+    if (!newPassword || newPassword.length < 6) {
+      if (errEl) {
+        errEl.textContent = I18n.getLang() === 'ar' ? 'يجب أن تتكون كلمة المرور من 6 أحرف على الأقل.' : 'Password must be at least 6 characters.';
+        errEl.style.display = 'block';
+      }
+      return false;
+    }
+
+    const users = this.getUsers();
+    const cleanEmail = this.forgotPasswordState.email;
+    const userIndex = users.findIndex(u => u.email.toLowerCase() === cleanEmail);
+
+    if (userIndex > -1) {
+      users[userIndex].password = newPassword;
+      localStorage.setItem(this.usersDbKey, JSON.stringify(users));
+    } else {
+      // If user wasn't registered yet, create one
+      const newUser = {
+        id: `usr_${Date.now()}`,
+        name: cleanEmail.split('@')[0],
+        email: cleanEmail,
+        password: newPassword,
+        phone: '+974 7104 0746',
+        avatar: null,
+        memberSince: '2026'
+      };
+      users.push(newUser);
+      localStorage.setItem(this.usersDbKey, JSON.stringify(users));
+    }
+
+    Toast.show(I18n.t('authPasswordResetSuccess'), 'success', 5000);
+    this.openSignInModal();
+    return true;
+  },
+
   openProfileModal() {
     this.closeModals();
     const user = this.getCurrentUser();
@@ -247,7 +343,10 @@ const Auth = {
       if (container) {
         container.innerHTML = orders.map(order => {
           const itemsText = order.items.map(i => `${i.name[lang] || i.name.en} (x${i.quantity})`).join(', ');
-          const waUrl = `https://wa.me/97471040746?text=${encodeURIComponent(`Hello Diamond, inquiring about status for Order ID: ${order.orderId}`)}`;
+          const waMsg = lang === 'ar' 
+            ? `مرحباً دايموند تك، أود الاستفسار عن حالة الطلب رقم: ${order.orderId}`
+            : `Hello Diamond, inquiring about status for Order ID: ${order.orderId}`;
+          const waUrl = `https://wa.me/97471040746?text=${encodeURIComponent(waMsg)}`;
           return `
             <div class="order-history-item">
               <div class="order-item-header">
@@ -264,7 +363,7 @@ const Auth = {
               <div class="order-item-actions">
                 <a href="${waUrl}" target="_blank" rel="noopener noreferrer" class="btn-order-wa-track">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12.032 2C6.505 2 2.025 6.48 2.025 12.008c0 1.954.563 3.778 1.541 5.321L2 22l4.832-1.528A9.957 9.957 0 0 0 12.032 22C17.56 22 22.04 17.52 22.04 12.008 22.04 6.48 17.56 2 12.032 2z"/></svg>
-                  <span>WhatsApp Tracking</span>
+                  <span>${I18n.t('trackOnWhatsApp')}</span>
                 </a>
               </div>
             </div>
@@ -285,6 +384,7 @@ const Auth = {
   updateNavbarUI() {
     const user = this.getCurrentUser();
     const authTriggers = document.querySelectorAll('.auth-nav-container');
+    const drawerAuthTriggers = document.querySelectorAll('.auth-drawer-container');
 
     authTriggers.forEach(container => {
       if (user) {
@@ -307,7 +407,7 @@ const Auth = {
               </div>
               <div class="dropdown-divider"></div>
               <button type="button" class="dropdown-item" onclick="Auth.openOrdersModal()">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
                 <span data-i18n="navOrders">${I18n.t('navOrders')}</span>
               </button>
               <button type="button" class="dropdown-item" onclick="Auth.openProfileModal()">
@@ -331,6 +431,56 @@ const Auth = {
         `;
       }
     });
+
+    drawerAuthTriggers.forEach(container => {
+      if (user) {
+        const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+        const avatarHtml = user.avatar
+          ? `<img src="${user.avatar}" alt="${user.name}" class="navbar-avatar-img" style="width:40px;height:40px;border-radius:50%;">`
+          : `<span class="user-avatar-initials" style="width:40px;height:40px;font-size:0.9rem;">${initials}</span>`;
+
+        container.innerHTML = `
+          <div class="drawer-user-card">
+            <div class="drawer-user-info">
+              ${avatarHtml}
+              <div>
+                <div class="drawer-user-name">${user.name}</div>
+                <div class="drawer-user-email">${user.email}</div>
+              </div>
+            </div>
+            <div class="drawer-user-actions">
+              <button type="button" class="drawer-user-btn" onclick="Auth.openOrdersModal(); Auth.closeDrawerNav();">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                <span data-i18n="navOrders">${I18n.t('navOrders')}</span>
+              </button>
+              <button type="button" class="drawer-user-btn" onclick="Auth.openProfileModal(); Auth.closeDrawerNav();">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                <span data-i18n="navProfileSettings">${I18n.t('navProfileSettings')}</span>
+              </button>
+              <button type="button" class="drawer-user-btn btn-logout-drawer" onclick="Auth.logout()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                <span data-i18n="navLogout">${I18n.t('navLogout')}</span>
+              </button>
+            </div>
+          </div>
+        `;
+      } else {
+        container.innerHTML = `
+          <button type="button" class="btn btn-primary btn-block btn-lg" onclick="Auth.openSignInModal(); Auth.closeDrawerNav();">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <span data-i18n="navSignIn">${I18n.t('navSignIn')}</span>
+          </button>
+        `;
+      }
+    });
+  },
+
+  closeDrawerNav() {
+    const mobileDrawer = document.querySelector('.mobile-nav-drawer');
+    const mobileOverlay = document.querySelector('.mobile-nav-overlay');
+    if (mobileDrawer) mobileDrawer.classList.remove('is-open');
+    if (mobileOverlay) mobileOverlay.classList.remove('is-open');
+    document.body.classList.remove('mobile-nav-open');
   },
 
   init() {
@@ -378,6 +528,15 @@ const Auth = {
             errEl.style.display = 'block';
           }
         }
+      } else if (e.target.id === 'form-forgot-step1') {
+        e.preventDefault();
+        const email = document.getElementById('forgot-email-input')?.value;
+        this.sendResetCode(email);
+      } else if (e.target.id === 'form-forgot-step2') {
+        e.preventDefault();
+        const code = document.getElementById('forgot-code-input')?.value;
+        const newPass = document.getElementById('forgot-newpass-input')?.value;
+        this.verifyAndResetPassword(code, newPass);
       } else if (e.target.id === 'form-profile-settings') {
         e.preventDefault();
         const name = document.getElementById('profile-name-input')?.value;

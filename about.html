@@ -159,11 +159,6 @@
           <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
         </button>
 
-        <button type="button" class="nav-icon-btn btn-wishlist-nav-trigger" aria-label="Wishlist">
-          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-          <span class="wishlist-count-badge" style="display:none;">0</span>
-        </button>
-
         <button type="button" class="nav-icon-btn btn-cart-trigger" aria-label="Shopping Cart">
           <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
           <span class="cart-count-badge" style="display:none;">0</span>
@@ -190,6 +185,12 @@
     </div>
     <ul class="mobile-nav-links">
       <li>
+        <a href="#" class="btn-search-trigger">
+          <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <span data-i18n="navSearch">Search</span>
+        </a>
+      </li>
+      <li>
         <a href="index.html">
           <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
           <span data-i18n="navHome">Home</span>
@@ -213,13 +214,8 @@
           <span data-i18n="navContact">Contact Us</span>
         </a>
       </li>
-      <li>
-        <a href="cart.html">
-          <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-          <span data-i18n="navCart">Cart</span>
-        </a>
-      </li>
     </ul>
+    <div class="drawer-auth-container auth-drawer-container"></div>
   </div>
 
   <main class="main-content">
@@ -259,7 +255,7 @@
     <section class="pillars-section">
       <div class="container">
         <div class="section-header">
-          <span class="section-tag">Core Tenets</span>
+          <span class="section-tag" data-i18n="aboutCoreTenets">Core Tenets</span>
           <h2 class="section-title" data-i18n="aboutPillarsTitle">Our Defining Pillars</h2>
         </div>
 
@@ -279,7 +275,7 @@
           <div class="pillar-card">
             <div class="pillar-icon">👑</div>
             <h3 data-i18n="aboutPillar3">White-Glove Client Care</h3>
-            <p data-i18n="aboutPillar3Desc">Direct WhatsApp concierge line, 2-Year Diamond Care+, and armored courier service.</p>
+            <p data-i18n="aboutPillar3Desc">Direct WhatsApp concierge line, 2-Year Diamond Care+, and express tracked courier delivery.</p>
           </div>
         </div>
       </div>
@@ -309,42 +305,6 @@
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.032 2C6.505 2 2.025 6.48 2.025 12.008c0 1.954.563 3.778 1.541 5.321L2 22l4.832-1.528A9.957 9.957 0 0 0 12.032 22C17.56 22 22.04 17.52 22.04 12.008 22.04 6.48 17.56 2 12.032 2z"/></svg>
             </a>
           </div>
-        </div>
-
-        <div class="footer-links-col">
-          <h4 class="footer-col-title" data-i18n="footerNavQuick">Quick Navigation</h4>
-          <ul class="footer-links-list">
-            <li>
-              <a href="index.html">
-                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                <span data-i18n="navHome">Home</span>
-              </a>
-            </li>
-            <li>
-              <a href="shop.html">
-                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                <span data-i18n="navShop">Shop All</span>
-              </a>
-            </li>
-            <li>
-              <a href="about.html" class="is-active">
-                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-                <span data-i18n="navAbout">About Us</span>
-              </a>
-            </li>
-            <li>
-              <a href="contact.html">
-                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                <span data-i18n="navContact">Contact Us</span>
-              </a>
-            </li>
-            <li>
-              <a href="cart.html">
-                <svg class="footer-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-                <span data-i18n="navCart">Cart</span>
-              </a>
-            </li>
-          </ul>
         </div>
 
         <div class="footer-links-col">
@@ -398,7 +358,7 @@
 
       <div class="footer-bottom">
         <div data-i18n="footerCopyright">© 2026 Diamond Tech Inc. All rights reserved. Precision engineered.</div>
-        <div>Crafted with Grade 5 Aerospace Titanium.</div>
+        <div data-i18n="aboutFooterCrafted">Crafted with Grade 5 Aerospace Titanium.</div>
       </div>
     </div>
   </footer>

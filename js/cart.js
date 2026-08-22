@@ -227,9 +227,12 @@ const Cart = {
     if (drawerFooter) drawerFooter.style.display = 'block';
 
     drawerContainer.innerHTML = cart.map(item => {
-      const name = item.name[lang] || item.name.en;
-      const colorName = item.color.name[lang] || item.color.name.en;
-      const storageSize = item.storage ? item.storage.size : '';
+      const prod = ProductService.getById(item.productId);
+      const name = prod ? (prod.name[lang] || prod.name.en) : (typeof item.name === 'object' ? (item.name[lang] || item.name.en) : item.name);
+      const brand = prod ? prod.brand : item.brand;
+      const brandName = (typeof I18n !== 'undefined') ? I18n.getBrandName(brand, lang) : brand;
+      const colorName = (item.color && typeof item.color.name === 'object') ? (item.color.name[lang] || item.color.name.en) : (item.color?.name || '');
+      const storageSize = item.storage ? ((typeof I18n !== 'undefined') ? I18n.formatStorage(item.storage, lang) : (item.storage.size || item.storage)) : '';
 
       return `
         <div class="cart-drawer-item" data-cart-id="${item.cartItemId}">
@@ -237,7 +240,7 @@ const Cart = {
             <img src="${item.image}" alt="${name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=200&q=80'">
           </div>
           <div class="cart-drawer-info">
-            <div class="cart-drawer-brand">${item.brand}</div>
+            <div class="cart-drawer-brand">${brandName}</div>
             <h4 class="cart-drawer-title">${name}</h4>
             <div class="cart-drawer-variant">
               <span class="color-dot" style="background-color: ${item.color.hex}"></span>

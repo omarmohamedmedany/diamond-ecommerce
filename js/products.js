@@ -3402,16 +3402,97 @@ const ProductService = {
       .filter(p => p.id !== id && (p.category === current.category || p.brand === current.brand))
       .slice(0, limit);
   },
+  normalizeSearchText: function(text) {
+    if (!text) return '';
+    return text
+      .toString()
+      .toLowerCase()
+      .replace(/[أإآ]/g, 'ا')
+      .replace(/ة/g, 'ه')
+      .replace(/ى/g, 'ي')
+      .replace(/[\u064B-\u065F]/g, '')
+      .replace(/[-_]/g, ' ')
+      .trim();
+  },
   search: function(query, lang = 'en') {
     if (!query || query.trim() === '') return this.getAll();
-    const q = query.toLowerCase().trim();
-    return this.getAll().filter(p => {
-      const name = (p.name[lang] || p.name.en).toLowerCase();
-      const desc = (p.description[lang] || p.description.en).toLowerCase();
-      const brand = p.brand.toLowerCase();
-      const category = p.category.toLowerCase();
-      const condition = p.condition || '';
-      return name.includes(q) || desc.includes(q) || brand.includes(q) || category.includes(q) || condition.includes(q);
+    
+    const rawQ = query.trim();
+    const normQ = this.normalizeSearchText(rawQ);
+    const qTokens = normQ.split(/\s+/).filter(t => t.length > 0);
+    if (qTokens.length === 0) return this.getAll();
+
+    const categorySynonyms = {
+      phones: ['phone', 'phones', 'هاتف', 'هواتف', 'جوال', 'جوالات', 'موبايل', 'موبايلات', 'ايفون', 'آيفون', 'iphone', 'galaxy', 'جالكسي', 'فولد', 'fold', 'ultra'],
+      watches: ['watch', 'watches', 'ساعة', 'ساعات', 'smartwatch', 'apple watch', 'ساعة ابل', 'ساعة آبل', 'ultra 2'],
+      audio: ['audio', 'airpods', 'airpod', 'earbuds', 'headphones', 'صوت', 'صوتيات', 'سماعة', 'سماعات', 'ايربودز', 'إيربودز', 'ماكس', 'max', 'anc'],
+      accessories: ['accessories', 'accessory', 'charger', 'case', 'magsafe', 'اكسسوارات', 'إكسسوارات', 'ملحقات', 'شاحن', 'شواحن', 'كفر', 'جراب', 'بطارية', 'power bank']
+    };
+
+    const brandSynonyms = {
+      apple: ['apple', 'آبل', 'ابل', 'iphone', 'ipad', 'ios', 'mac', 'airpods'],
+      samsung: ['samsung', 'سامسونج', 'سامسونغ', 'galaxy', 'جالكسي'],
+      xiaomi: ['xiaomi', 'شاومي', 'mi'],
+      huawei: ['huawei', 'هواوي', 'mate', 'pura'],
+      sony: ['sony', 'سوني', 'xperia'],
+      google: ['google', 'جوجل', 'غوغل', 'pixel', 'بيكسل', 'بكسل']
+    };
+
+    const scored = [];
+
+    this.getAll().forEach(p => {
+      const nameEn = this.normalizeSearchText(p.name?.en || '');
+      const nameAr = this.normalizeSearchText(p.name?.ar || '');
+      const taglineEn = this.normalizeSearchText(p.tagline?.en || '');
+      const taglineAr = this.normalizeSearchText(p.tagline?.ar || '');
+      const descEn = this.normalizeSearchText(p.description?.en || '');
+      const descAr = this.normalizeSearchText(p.description?.ar || '');
+      const brand = this.normalizeSearchText(p.brand || '');
+      const cat = this.normalizeSearchText(p.category || '');
+      const condition = this.normalizeSearchText(p.condition || '');
+      
+      const brandAliases = (brandSynonyms[brand] || []).map(b => this.normalizeSearchText(b));
+      const catAliases = (categorySynonyms[cat] || []).map(c => this.normalizeSearchText(c));
+      const colorAliases = (p.colors || []).flatMap(c => [
+        this.normalizeSearchText(c.name?.en || ''),
+        this.normalizeSearchText(c.name?.ar || '')
+      ]);
+
+      const searchableBlob = [
+        nameEn, nameAr,
+        taglineEn, taglineAr,
+        descEn, descAr,
+        brand, ...brandAliases,
+        cat, ...catAliases,
+        condition,
+        ...colorAliases
+      ].join(' ');
+
+      // Check if all tokens match
+      const allTokensMatch = qTokens.every(token => searchableBlob.includes(token));
+      if (!allTokensMatch) return;
+
+      let score = 0;
+      // Exact name match
+      if (nameEn === normQ || nameAr === normQ) score += 100;
+      // Name starts with query
+      else if (nameEn.startsWith(normQ) || nameAr.startsWith(normQ)) score += 60;
+      // Name contains full query
+      else if (nameEn.includes(normQ) || nameAr.includes(normQ)) score += 40;
+      // Brand match
+      if (brand.includes(normQ) || brandAliases.some(b => b === normQ)) score += 30;
+      // Category match
+      if (cat.includes(normQ) || catAliases.some(c => c === normQ)) score += 20;
+      // Tagline match
+      if (taglineEn.includes(normQ) || taglineAr.includes(normQ)) score += 15;
+      // Featured / Bestseller bonus
+      if (p.isFeatured) score += 5;
+      if (p.isBestSeller) score += 3;
+
+      scored.push({ product: p, score: score });
     });
+
+    scored.sort((a, b) => b.score - a.score);
+    return scored.map(s => s.product);
   }
 };
