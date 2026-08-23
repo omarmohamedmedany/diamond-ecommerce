@@ -1887,6 +1887,15 @@ document.addEventListener('click', (e) => {
 
 window.App = App;
 
+// Register Service Worker for PWA & Offline Support
+if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => console.log('Diamond Service Worker active', reg.scope))
+      .catch(err => console.log('Service Worker skipped', err));
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   App.init();
 });

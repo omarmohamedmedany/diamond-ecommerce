@@ -393,10 +393,15 @@ const Toast = {
 
   init() {
     if (!this.container) {
-      this.container = document.createElement('div');
-      this.container.id = 'diamond-toast-container';
-      this.container.className = 'diamond-toast-container';
-      document.body.appendChild(this.container);
+      this.container = document.getElementById('diamond-toast-container');
+      if (!this.container) {
+        this.container = document.createElement('div');
+        this.container.id = 'diamond-toast-container';
+        this.container.className = 'diamond-toast-container';
+        this.container.setAttribute('role', 'status');
+        this.container.setAttribute('aria-live', 'polite');
+        document.body.appendChild(this.container);
+      }
     }
   },
 
