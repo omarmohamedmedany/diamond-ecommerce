@@ -3,6 +3,14 @@
  * Handles Navigation, Search Modal, Wishlist Drawer, WhatsApp Concierge, Country Selectors, and Shared Modals
  */
 
+import './products.js';
+import './i18n.js';
+import './cart.js';
+import './auth.js';
+import './shop.js';
+import './product-detail.js';
+import './checkout.js';
+
 const COUNTRIES_DATA = [
   // Primary GCC & Middle East
   { code: 'QA', dial: '+974', labelEn: 'Qatar', labelAr: 'قطر', nameEn: 'Qatar', nameAr: 'قطر', minLen: 8, maxLen: 8, placeholder: '71040746' },
@@ -1896,6 +1904,8 @@ if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || wi
   });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => App.init());
+} else {
   App.init();
-});
+}

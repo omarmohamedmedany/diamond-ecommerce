@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https:; img-src 'self' data: blob: https: https://images.unsplash.com; font-src 'self' data: https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:;">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob: https:; img-src 'self' data: blob: https: https://images.unsplash.com; font-src 'self' data: https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline';">
   <title>Flagship Device Details — Diamond Luxury Tech</title>
   <meta name="description" content="Detailed technical specifications, titanium finishes, and high fidelity acoustics of Diamond flagship devices.">
   <link rel="canonical" href="https://diamondtech.luxury/product.html">
@@ -396,13 +397,7 @@
     </div>
   </footer>
 
-  <!-- Deferred Scripts -->
-  <script src="js/products.js" defer></script>
-  <script src="js/i18n.js" defer></script>
-  <script src="js/cart.js" defer></script>
-  <script src="js/auth.js" defer></script>
-  <script src="js/shop.js" defer></script>
-  <script src="js/product-detail.js" defer></script>
-  <script src="js/app.js" defer></script>
+  <!-- Application Script Module -->
+  <script type="module" src="js/app.js"></script>
 </body>
 </html>
