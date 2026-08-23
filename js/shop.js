@@ -513,7 +513,45 @@ const Shop = {
     return list;
   },
 
-  renderProducts() {
+  renderSkeletons(count = 6) {
+    const container = document.getElementById('shop-products-container');
+    if (!container) return;
+
+    const skeletons = Array.from({ length: count }).map(() => `
+      <div class="skeleton-card">
+        <div class="skeleton-shimmer skeleton-img-wrap"></div>
+        <div class="skeleton-body">
+          <div class="skeleton-shimmer skeleton-line skeleton-line-sm"></div>
+          <div class="skeleton-shimmer skeleton-line skeleton-line-title"></div>
+          <div class="skeleton-shimmer skeleton-line skeleton-line-sub"></div>
+          <div class="skeleton-shimmer skeleton-line skeleton-line-stars"></div>
+          <div class="skeleton-footer">
+            <div class="skeleton-shimmer skeleton-price"></div>
+            <div class="skeleton-shimmer skeleton-btn"></div>
+          </div>
+        </div>
+      </div>
+    `).join('');
+
+    container.innerHTML = skeletons;
+  },
+
+  renderProducts(withShimmer = true) {
+    const container = document.getElementById('shop-products-container');
+    if (!container) return;
+
+    if (withShimmer) {
+      if (this._shimmerTimer) clearTimeout(this._shimmerTimer);
+      this.renderSkeletons(6);
+      this._shimmerTimer = setTimeout(() => {
+        this._executeRenderProducts();
+      }, 160);
+    } else {
+      this._executeRenderProducts();
+    }
+  },
+
+  _executeRenderProducts() {
     const container = document.getElementById('shop-products-container');
     const countDisplay = document.getElementById('shop-results-count');
     if (!container) return;

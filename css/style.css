@@ -2124,6 +2124,150 @@ body.rtl-layout .view-toggle-btns {
 }
 
 /* ==========================================================================
+   SKELETON SHIMMER EFFECT (Catalog Instant Filtering Animation)
+   ========================================================================== */
+@keyframes shimmerWave {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes skeletonCardFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    #f1f5f9 0%,
+    #e2e8f0 35%,
+    #f8fafc 50%,
+    #e2e8f0 65%,
+    #f1f5f9 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmerWave 1.4s infinite linear;
+  border-radius: 6px;
+}
+
+.skeleton-card {
+  background: #ffffff;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  animation: skeletonCardFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.skeleton-card .skeleton-img-wrap {
+  width: 100%;
+  height: 260px;
+  border-radius: 0;
+}
+
+.skeleton-card .skeleton-body {
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skeleton-card .skeleton-line-sm {
+  width: 35%;
+  height: 12px;
+}
+
+.skeleton-card .skeleton-line-title {
+  width: 80%;
+  height: 20px;
+}
+
+.skeleton-card .skeleton-line-sub {
+  width: 95%;
+  height: 14px;
+}
+
+.skeleton-card .skeleton-line-stars {
+  width: 45%;
+  height: 14px;
+}
+
+.skeleton-card .skeleton-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.skeleton-card .skeleton-price {
+  width: 32%;
+  height: 24px;
+}
+
+.skeleton-card .skeleton-btn {
+  width: 48%;
+  height: 38px;
+  border-radius: var(--radius-sm);
+}
+
+/* Skeleton List View */
+.shop-products-grid.list-view .skeleton-card {
+  display: grid !important;
+  grid-template-columns: 280px 1fr !important;
+  min-height: 240px !important;
+}
+
+.shop-products-grid.list-view .skeleton-card .skeleton-img-wrap {
+  height: 100% !important;
+  min-height: 240px !important;
+}
+
+@media (max-width: 768px) {
+  .shop-products-grid.list-view .skeleton-card {
+    grid-template-columns: 140px minmax(0, 1fr) !important;
+    min-height: 140px !important;
+  }
+  .shop-products-grid.list-view .skeleton-card .skeleton-img-wrap {
+    min-height: 140px !important;
+  }
+  .shop-products-grid.list-view .skeleton-card .skeleton-body {
+    padding: 12px 14px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .skeleton-card .skeleton-img-wrap {
+    height: 200px;
+  }
+  .skeleton-card .skeleton-body {
+    padding: 14px 12px;
+  }
+  .shop-products-grid.list-view .skeleton-card {
+    grid-template-columns: 105px minmax(0, 1fr) !important;
+    min-height: 115px !important;
+  }
+  .shop-products-grid.list-view .skeleton-card .skeleton-img-wrap {
+    min-height: 115px !important;
+  }
+}
+
+/* ==========================================================================
    PRODUCT DETAIL PAGE
    ========================================================================== */
 .breadcrumb-bar {
