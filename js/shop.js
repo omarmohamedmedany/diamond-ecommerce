@@ -376,10 +376,12 @@ const Shop = {
     const sidebar = document.getElementById('shop-sidebar');
     const overlay = document.getElementById('filter-drawer-overlay');
     const toggleBtn = document.getElementById('btn-toggle-filters');
+    const toggleText = document.getElementById('btn-toggle-filters-text');
 
     if (sidebar) sidebar.classList.add('drawer-open');
     if (overlay) overlay.classList.add('is-active');
     if (toggleBtn) toggleBtn.classList.add('is-active');
+    if (toggleText) toggleText.textContent = (typeof I18n !== 'undefined' && I18n.t) ? I18n.t('btnHideFilters') : 'Hide Filters';
     document.body.style.overflow = 'hidden';
   },
 
@@ -388,10 +390,12 @@ const Shop = {
     const sidebar = document.getElementById('shop-sidebar');
     const overlay = document.getElementById('filter-drawer-overlay');
     const toggleBtn = document.getElementById('btn-toggle-filters');
+    const toggleText = document.getElementById('btn-toggle-filters-text');
 
     if (sidebar) sidebar.classList.remove('drawer-open');
     if (overlay) overlay.classList.remove('is-active');
     if (toggleBtn) toggleBtn.classList.remove('is-active');
+    if (toggleText) toggleText.textContent = (typeof I18n !== 'undefined' && I18n.t) ? I18n.t('btnShowFilters') : 'Show Filters';
     document.body.style.overflow = '';
   },
 

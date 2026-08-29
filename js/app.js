@@ -1849,6 +1849,28 @@ document.addEventListener('click', (e) => {
     return;
   }
 
+  // Filter Toggle Click Interceptor (Works for touch and click across all mobile & desktop viewports)
+  const filterToggleBtn = e.target.closest('#btn-toggle-filters, .btn-filter-trigger, [data-action="toggle-filters"]');
+  if (filterToggleBtn) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (typeof Shop !== 'undefined' && Shop.toggleFilters) {
+      Shop.toggleFilters();
+    }
+    return;
+  }
+
+  // Filter Drawer Close & Apply Interceptor
+  const filterCloseBtn = e.target.closest('#btn-close-filter-drawer, .btn-close-filter-drawer, #filter-drawer-overlay, #btn-apply-filter-drawer, .btn-drawer-apply');
+  if (filterCloseBtn) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (typeof Shop !== 'undefined' && Shop.closeFilterDrawer) {
+      Shop.closeFilterDrawer();
+    }
+    return;
+  }
+
   // Clear / Reset Filters Interceptor
   const resetFiltersBtn = e.target.closest('#btn-reset-empty-filters, .btn-reset-empty, #btn-clear-filters, .btn-clear-filters, [data-action="reset-filters"]');
   if (resetFiltersBtn) {

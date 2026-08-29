@@ -141,7 +141,7 @@
     <!-- Main Catalog Layout with Sticky Independent Filter Scroll -->
     <section class="shop-layout-section">
       <!-- Filter Drawer Overlay for Mobile & Collapsed States -->
-      <div id="filter-drawer-overlay" class="filter-drawer-overlay"></div>
+      <div id="filter-drawer-overlay" class="filter-drawer-overlay" onclick="if(window.Shop && Shop.closeFilterDrawer) { event.preventDefault(); Shop.closeFilterDrawer(); }"></div>
 
       <div class="container shop-grid-container sidebar-collapsed" id="shop-grid-container">
         
@@ -154,7 +154,7 @@
             </div>
             <div class="sidebar-header-actions">
               <button type="button" class="btn-clear-filters" id="btn-clear-filters" onclick="event.preventDefault(); event.stopPropagation(); Shop.resetFilters()" data-i18n="filterClearAll">Reset All</button>
-              <button type="button" class="btn-close-filter-drawer" id="btn-close-filter-drawer" aria-label="Close Filters">&times;</button>
+              <button type="button" class="btn-close-filter-drawer" id="btn-close-filter-drawer" aria-label="Close Filters" onclick="if(window.Shop && Shop.closeFilterDrawer) { event.preventDefault(); Shop.closeFilterDrawer(); }">&times;</button>
             </div>
           </div>
 
@@ -233,7 +233,7 @@
 
           <!-- Mobile / Drawer Apply Footer -->
           <div class="sidebar-apply-footer">
-            <button type="button" class="btn-drawer-apply" id="btn-apply-filter-drawer">
+            <button type="button" class="btn-drawer-apply" id="btn-apply-filter-drawer" onclick="if(window.Shop && Shop.closeFilterDrawer) { event.preventDefault(); Shop.closeFilterDrawer(); }">
               <span data-i18n="btnApplyFilters">Apply Filters</span>
             </button>
           </div>
@@ -244,7 +244,7 @@
           <!-- Top Control Bar -->
           <div class="shop-control-bar">
             <div class="shop-control-left">
-              <button type="button" id="btn-toggle-filters" class="btn-filter-trigger" title="Toggle Filters">
+              <button type="button" id="btn-toggle-filters" class="btn-filter-trigger" title="Toggle Filters" onclick="if(window.Shop && Shop.toggleFilters) { event.preventDefault(); Shop.toggleFilters(); }">
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <line x1="4" y1="21" x2="4" y2="14"></line>
                   <line x1="4" y1="10" x2="4" y2="3"></line>
